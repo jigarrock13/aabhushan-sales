@@ -247,7 +247,7 @@ function openCart(){
     let m='🛍️ *New Order — '+(settings.name||'Catalogue')+'*'+NL+'—————————————'+NL;
     L2.forEach((l,i)=>{m+=(i+1)+'. '+l.p.name+(l.p.code?' ('+l.p.code+')':'')+NL+'    '+l.qty+' x '+money(l.p.price)+' = '+money(l.line)+NL;});
     m+='—————————————'+NL+'*Total: '+money(total)+'*  ('+pcs+' pcs)';if(nm)m+=NL+NL+'From: '+nm;
-    window.open('https://wa.me/'+(settings.whatsapp||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(m),'_blank');};
+    globalThis.open('https://wa.me/'+(settings.whatsapp||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(m),'_blank');};
   open('cartSheet');
 }
 
