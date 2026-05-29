@@ -229,7 +229,7 @@ function fab(){const n=Object.values(cart).reduce((a,b)=>a+b,0);$('#fab').classL
 function lines(){return Object.entries(cart).map(([id,q])=>{const p=products.find(x=>x.id===id);return p?{p,qty:q,line:(+p.price||0)*q}:null;}).filter(Boolean);}
 function openCart(){
   const L=lines(),b=$('#cartBody');
-  if(!L.length){b.innerHTML='<div class="empty"><p>Your order is empty.</p></div>';return open('cartSheet');}
+  if(!L.length){b.innerHTML='<div class="empty"><p>Your order is empty.</p></div>';return openSheet('cartSheet');}
   b.innerHTML=L.map(({p,qty})=>{const moq=Math.max(1,+p.moq||1);return `<div class="ci" data-id="${p.id}"><div class="t">${p.img?`<img src="${esc(p.img)}">`:''}</div>
     <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13.5px">${esc(p.name)}</div><div style="font-size:11px;color:var(--muted)">${money(p.price)} each</div>
     <div class="step" style="margin-top:5px"><button data-d>−</button><input type="number" value="${qty}"><button data-i>+</button></div></div>
@@ -247,8 +247,8 @@ function openCart(){
     let m='🛍️ *New Order — '+(settings.name||'Catalogue')+'*'+NL+'—————————————'+NL;
     L2.forEach((l,i)=>{m+=(i+1)+'. '+l.p.name+(l.p.code?' ('+l.p.code+')':'')+NL+'    '+l.qty+' x '+money(l.p.price)+' = '+money(l.line)+NL;});
     m+='—————————————'+NL+'*Total: '+money(total)+'*  ('+pcs+' pcs)';if(nm)m+=NL+NL+'From: '+nm;
-    globalThis.open('https://wa.me/'+(settings.whatsapp||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(m),'_blank');};
-  open('cartSheet');
+    var waUrl='https://wa.me/'+(settings.whatsapp||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(m);var w=window.open(waUrl,'_blank');if(!w)window.location.href=waUrl;};
+  openSheet('cartSheet');
 }
 
 /* ---------- owner ---------- */
@@ -260,7 +260,7 @@ async function login(){
   owner=true;closeAll();ownerOn();await loadAll();render();toast('Logged in');
 }
 function ownerOn(){owner=true;$('#ownerBtn').textContent='Manage';$('#ownerBtn').onclick=()=>openSettings();$('#fab').classList.add('hide');render();}
-async function logout(){await sb.auth.signOut();owner=false;$('#ownerBtn').textContent='Owner';$('#ownerBtn').onclick=()=>open('loginSheet');closeAll();render();toast('Logged out');}
+async function logout(){await sb.auth.signOut();owner=false;$('#ownerBtn').textContent='Owner';$('#ownerBtn').onclick=()=>openSheet('loginSheet');closeAll();render();toast('Logged out');}
 
 async function setStock(p,v){const n=Math.max(0,Math.floor(+v||0));p.stock=n;const {error}=await sb.from('products').update({stock:n}).eq('id',p.id);if(error)toast(error.message);}
 
@@ -271,7 +271,7 @@ function openForm(id){
   $('#f_name').value=p?p.name:'';$('#f_code').value=p?p.code:'';$('#f_cat').value=p?p.cat:'';
   $('#f_price').value=p?p.price:'';$('#f_moq').value=p?p.moq:'';$('#f_stock').value=p?p.stock:'';
   setPhoto(p?p.img:'');$('#delProd').classList.toggle('hide',!p);
-  open('formSheet');
+  openSheet('formSheet');
 }
 function setPhoto(src){const box=$('#photoBox');box.querySelectorAll('img,.x').forEach(e=>e.remove());const pl=box.querySelector('.pl');
   if(src){pl.style.display='none';const im=document.createElement('img');im.src=src;box.insertBefore(im,box.firstChild);}else pl.style.display='block';}
@@ -300,7 +300,7 @@ async function deleteProduct(){if(!editingId)return;if(!confirm('Remove this pro
   const {error}=await sb.from('products').delete().eq('id',editingId);if(error)return toast(error.message);
   closeAll();await loadAll();render();toast('Removed');}
 
-function openSettings(){$('#s_name').value=settings.name||'';$('#s_sub').value=settings.sub||'';$('#s_wa').value=settings.whatsapp||'';$('#s_cur').value=settings.currency||'₹';$('#s_low').value=settings.low_stock||10;open('setSheet');}
+function openSettings(){$('#s_name').value=settings.name||'';$('#s_sub').value=settings.sub||'';$('#s_wa').value=settings.whatsapp||'';$('#s_cur').value=settings.currency||'₹';$('#s_low').value=settings.low_stock||10;openSheet('setSheet');}
 async function saveSettings(){
   const row={id:1,name:$('#s_name').value.trim()||'My Store',sub:$('#s_sub').value.trim(),whatsapp:$('#s_wa').value.replace(/[^0-9]/g,''),currency:$('#s_cur').value.trim()||'₹',low_stock:Math.max(0,+$('#s_low').value||0)};
   const {error}=await sb.from('settings').upsert(row);if(error)return toast(error.message);
@@ -309,13 +309,13 @@ async function saveSettings(){
 }
 
 /* ---------- sheets ---------- */
-function open(id){$('#scrim').classList.add('on');$('#'+id).classList.add('on');}
+function openSheet(id){$('#scrim').classList.add('on');$('#'+id).classList.add('on');}
 function closeAll(){$('#scrim').classList.remove('on');$$('.sheet').forEach(s=>s.classList.remove('on'));}
 
 function bind(){
   $('#scrim').onclick=closeAll;$$('[data-close]').forEach(b=>b.onclick=closeAll);
   $('#fab').onclick=openCart;
-  $('#ownerBtn').onclick=()=> owner?openSettings():open('loginSheet');
+  $('#ownerBtn').onclick=()=> owner?openSettings():openSheet('loginSheet');
   $('#loginBtn').onclick=login;
   $('#saveProd').onclick=saveProduct;$('#delProd').onclick=deleteProduct;
   $('#saveSet').onclick=saveSettings;$('#logoutBtn').onclick=logout;
