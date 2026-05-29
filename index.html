@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Aabhushan Sales</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--green:#13392f;--gold:#c9a24b;--gold-soft:#e7cf94;--cream:#f7f2e7;--cream2:#efe7d4;--ink:#21251f;--muted:#6e6a5e;--line:#e2d8c0;--white:#fffdf7;--danger:#b4452f}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--cream)}
+h1,h2{font-family:'Fraunces',serif;margin:0}
+.top{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,#13392f,#1d4f41);color:var(--cream);padding:15px 16px;display:flex;align-items:center;gap:12px}
+.crest{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--gold-soft),var(--gold));display:grid;place-items:center;color:#13392f;font-family:'Fraunces';font-weight:700;font-size:20px}
+.top h1{font-size:19px;color:var(--cream)}.top .s{font-size:10px;color:var(--gold-soft);letter-spacing:.14em;text-transform:uppercase}
+.wrap{max-width:780px;margin:0 auto;padding:14px 14px 110px}
+.search{display:flex;gap:8px;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:10px}
+.search input{border:none;outline:none;flex:1;background:none;font-size:15px}
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:8px}
+.chip{white-space:nowrap;padding:7px 13px;border-radius:999px;background:var(--white);border:1px solid var(--line);color:var(--muted);font-weight:600;font-size:13px}
+.chip.on{background:var(--green);color:var(--cream)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.th{aspect-ratio:1/1;background:linear-gradient(135deg,var(--cream2),#e6dcc4);position:relative}
+.th img{width:100%;height:100%;object-fit:cover}
+.ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--gold);font-size:30px;font-family:'Fraunces';opacity:.55}
+.bd{padding:10px;display:flex;flex-direction:column;gap:3px;flex:1}
+.cd{font-size:10px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.nm{font-weight:600;font-size:13.5px;line-height:1.2}
+.pr{font-family:'Fraunces';font-size:18px;font-weight:600;color:var(--green);margin-top:auto;padding-top:4px}
+.bt{margin-top:8px;background:var(--green);color:var(--cream);font-weight:600;padding:9px;border-radius:10px;font-size:13.5px;width:100%;border:none}
+.bt:disabled{background:var(--line);color:var(--muted)}
+.b-out{position:absolute;top:8px;left:8px;background:var(--danger);color:#fff;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700}
+.fab{position:fixed;right:16px;bottom:18px;background:#1ebe5d;color:#fff;border:none;border-radius:999px;padding:14px 18px;font-weight:700;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.fab .c{background:#fff;color:#127a3c;border-radius:999px;padding:0 7px;margin-left:6px}
+.scrim{position:fixed;inset:0;background:rgba(19,57,47,.5);display:none}.scrim.on{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:780px;margin:0 auto;background:var(--cream);border-radius:20px 20px 0 0;max-height:85vh;overflow:auto;padding:16px;transform:translateY(110%);transition:.25s}
+.sheet.on{transform:none}
+.ci{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
+.ci .t{width:46px;height:46px;border-radius:9px;background:var(--cream2);overflow:hidden;flex:none}
+.ci .t img{width:100%;height:100%;object-fit:cover}
+.step{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--white)}
+.step button{width:30px;height:32px;font-size:17px;color:var(--green);font-weight:700;border:none;background:none}
+.step input{width:38px;text-align:center;border:none;border-left:1px solid var(--line);border-right:1px solid var(--line);height:32px}
+.tot{font-family:'Fraunces';font-size:20px;color:var(--green);display:flex;justify-content:space-between;margin:8px 0}
+.wa{width:100%;background:#1ebe5d;color:#fff;border:none;font-weight:700;font-size:16px;padding:14px;border-radius:12px;margin-top:10px}
+.fld input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin:6px 0;font-size:15px}</style></head><body><div id="root"></div><script>var DATA={"products":[{"id":"prfulram94b","name":"Kundan Bridal Necklace Set","code":"KN-101","cat":"Necklace Set","price":540,"moq":2,"stock":48,"img":""},{"id":"pd43d5dz94b","name":"Antique Jhumka Earrings","code":"JH-203","cat":"Earrings","price":130,"moq":6,"stock":9,"img":""},{"id":"pphz4fdv94b","name":"AD Stone Bangles (Set of 4)","code":"BG-310","cat":"Bangles","price":320,"moq":4,"stock":0,"img":""},{"id":"p73mrjsj94b","name":"Pearl Maang Tikka","code":"MT-044","cat":"Maang Tikka","price":160,"moq":6,"stock":35,"img":""},{"id":"p6ui6gos94b","name":"Polki Choker Set","code":"CH-512","cat":"Necklace Set","price":780,"moq":1,"stock":14,"img":""},{"id":"pcyf9y2s94b","name":"Meenakari Nose Ring","code":"NR-019","cat":"Nose Ring","price":45,"moq":24,"stock":600,"img":""}],"settings":{"name":"Aabhushan Sales","sub":"Imitation Jewellery · Rajkot","whatsapp":"","currency":"₹","lowStock":10}};
+(function(){
+var P=DATA.products||[],S=DATA.settings||{},cart={},cat='All';
+var NL=String.fromCharCode(10),cur=S.currency||'₹';
+function money(n){return cur+Number(n||0).toLocaleString('en-IN');}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function find(id){for(var i=0;i<P.length;i++)if(P[i].id===id)return P[i];return null;}
+var root=document.getElementById('root');
+root.innerHTML='<div class="top"><div class="crest">'+(S.name?esc(S.name.charAt(0)):'A')+'</div><div><h1>'+esc(S.name||'Catalogue')+'</h1><div class="s">'+esc(S.sub||'')+'</div></div></div><div class="wrap"><div class="search"><span>🔎</span><input id="q" placeholder="Search name or design code…"></div><div class="chips" id="chips"></div><div class="grid" id="grid"></div></div><button class="fab" id="fab" style="display:none">🛒 Order<span class="c" id="fc">0</span></button><div class="scrim" id="scrim"></div><div class="sheet" id="sheet"></div>';
+function cats(){var s={},a=['All'];P.forEach(function(p){if(p.cat)s[p.cat]=1;});Object.keys(s).sort().forEach(function(c){a.push(c);});return a;}
+function filtered(){var q=(document.getElementById('q').value||'').toLowerCase();return P.filter(function(p){if(cat!=='All'&&p.cat!==cat)return false;if(!q)return true;return (p.name||'').toLowerCase().indexOf(q)>=0||(p.code||'').toLowerCase().indexOf(q)>=0;});}
+function fabCount(){var n=0;for(var k in cart)n+=cart[k];var f=document.getElementById('fab');f.style.display=n>0?'block':'none';document.getElementById('fc').textContent=n;}
+function render(){
+document.getElementById('chips').innerHTML=cats().map(function(c){return '<button class="chip'+(c===cat?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>';}).join('');
+var list=filtered();
+document.getElementById('grid').innerHTML=list.length?list.map(function(p){var out=(Number(p.stock)||0)<=0;return '<div class="card"><div class="th">'+(out?'<span class="b-out">Out</span>':'')+(p.img?'<img class="pimg" src="'+esc(p.img)+'">':'<div class="ph">❖</div>')+'</div><div class="bd">'+(p.code?'<div class="cd">'+esc(p.code)+'</div>':'')+'<div class="nm">'+esc(p.name)+'</div><div class="pr">'+money(p.price)+(Number(p.moq)>1?' <span style="font-size:10px;color:#6e6a5e">/ MOQ '+p.moq+'</span>':'')+'</div><button class="bt" data-add="'+p.id+'"'+(out?' disabled':'')+'>'+(out?'Out of stock':'Add to order')+'</button></div></div>';}).join(''):'<p style="color:#6e6a5e;text-align:center;padding:40px;grid-column:1/-1">No products found.</p>';
+var im=document.getElementById('grid').querySelectorAll('img.pimg');for(var i=0;i<im.length;i++){im[i].onerror=function(){this.style.display='none';};}
+fabCount();
+}
+function lines(){var a=[];for(var k in cart){var p=find(k);if(p)a.push({p:p,qty:cart[k],line:(Number(p.price)||0)*cart[k]});}return a;}
+function close(){document.getElementById('scrim').classList.remove('on');document.getElementById('sheet').classList.remove('on');}
+function openCart(){
+var L=lines(),sheet=document.getElementById('sheet');if(!L.length){close();return;}
+var total=0,pcs=0;L.forEach(function(l){total+=l.line;pcs+=l.qty;});
+sheet.innerHTML='<h2 style="color:#13392f;margin-bottom:10px">Your order</h2>'+L.map(function(l){return '<div class="ci"><div class="t">'+(l.p.img?'<img src="'+esc(l.p.img)+'">':'')+'</div><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13.5px">'+esc(l.p.name)+'</div><div style="font-size:11px;color:#6e6a5e">'+money(l.p.price)+' each</div><div class="step" style="margin-top:5px"><button data-d="'+l.p.id+'">−</button><input readonly value="'+l.qty+'"><button data-i="'+l.p.id+'">+</button></div></div><div style="font-weight:700;white-space:nowrap">'+money(l.line)+'</div></div>';}).join('')+'<div class="fld"><input id="cn" placeholder="Your shop / name"></div><div class="tot"><span>Total ('+pcs+' pcs)</span><span>'+money(total)+'</span></div><button class="wa" id="send">📲 Send order on WhatsApp</button>'+(S.whatsapp?'':'<p style="color:#b4452f;font-size:12px;text-align:center;margin-top:8px">No WhatsApp number set.</p>');
+document.getElementById('scrim').classList.add('on');sheet.classList.add('on');
+var dd=sheet.querySelectorAll('[data-d]');for(var a=0;a<dd.length;a++){dd[a].onclick=function(){var id=this.getAttribute('data-d'),p=find(id),moq=Math.max(1,Number(p.moq)||1);cart[id]=Math.max(moq,(cart[id]||moq)-1);openCart();fabCount();};}
+var ii=sheet.querySelectorAll('[data-i]');for(var b=0;b<ii.length;b++){ii[b].onclick=function(){var id=this.getAttribute('data-i');cart[id]=(cart[id]||0)+1;openCart();fabCount();};}
+document.getElementById('send').onclick=function(){var nm=(document.getElementById('cn').value||'').trim();var m='🛍️ *New Order — '+(S.name||'Catalogue')+'*'+NL+'—————————————'+NL;L.forEach(function(l,i){m+=(i+1)+'. '+l.p.name+(l.p.code?' ('+l.p.code+')':'')+NL+'    '+l.qty+' x '+money(l.p.price)+' = '+money(l.line)+NL;});m+='—————————————'+NL+'*Total: '+money(total)+'*  ('+pcs+' pcs)';if(nm)m+=NL+NL+'From: '+nm;var num=(S.whatsapp||'').replace(/[^0-9]/g,'');window.open('https://wa.me/'+num+'?text='+encodeURIComponent(m),'_blank');};
+}
+document.getElementById('q').addEventListener('input',render);
+document.getElementById('chips').addEventListener('click',function(e){var b=e.target.closest('[data-c]');if(b){cat=b.getAttribute('data-c');render();}});
+document.getElementById('grid').addEventListener('click',function(e){var b=e.target.closest('[data-add]');if(b){var p=find(b.getAttribute('data-add'));if(p){var moq=Math.max(1,Number(p.moq)||1);cart[p.id]=(cart[p.id]||0)+moq;fabCount();}}});
+document.getElementById('scrim').addEventListener('click',close);
+document.getElementById('fab').addEventListener('click',openCart);
+render();
+})();</script></body></html>
