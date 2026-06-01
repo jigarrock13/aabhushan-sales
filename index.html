@@ -109,6 +109,19 @@
 #shop a,#shop .chip,#shop .act,#shop .addbtn,#shop .editl,#shop .step button,
 .sheet .primary,.sheet .ghost,.sheet .danger,.sheet .x,.sheet .wa,.fab,.shop-owner{cursor:pointer}
 #shop .spin{color:var(--gold-soft)}
+.pstrip{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
+.pthumb{position:relative;width:84px;height:84px;border-radius:10px;overflow:hidden;flex:none;border:1px solid var(--line);background:var(--cream2)}
+.pthumb img{width:100%;height:100%;object-fit:cover}
+.pthumb .del{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border-radius:50%;width:20px;height:20px;font-size:12px;line-height:20px;text-align:center;cursor:pointer}
+.padd{width:84px;height:84px;border-radius:10px;border:2px dashed var(--gold);display:grid;place-items:center;color:var(--gold);font-size:26px;flex:none;background:var(--white);cursor:pointer}
+.pcount{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;z-index:2}
+.boxtag{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--cream2);color:var(--green);border:1px solid var(--line);margin:3px 0;width:fit-content}
+.gbody{display:flex;flex-direction:column;gap:10px}
+.gbody img{width:100%;border-radius:12px;display:block}
+.barright{display:flex;gap:8px;align-items:center}
+.boxsel{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--green);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.chip.newchip{background:linear-gradient(135deg,#b4452f,#d46a3f);color:#fff;border-color:transparent}
+.chip.newchip.on{background:linear-gradient(135deg,#7e2d1e,#a83e29);color:#fff}
 </style>
 </head>
 <body>
@@ -625,12 +638,12 @@
                 <option value="">Select Product Category</option>
                 <option>Rings</option>
                 <option>Earrings</option>
-                <option>Sui Dhaga</option>
-                <option>Dokiya</option>
-                <option>Bracelet</option>
                 <option>Pendant</option>
-                <option>Bangles</option>
                 <option>Necklace</option>
+                <option>Bangles</option>
+                <option>Bracelet</option>
+                <option>Chain</option>
+                <option>Nose Pin</option>
                 <option>Custom Order</option>
               </select>
             </div>
@@ -725,11 +738,13 @@
 <!-- product form -->
 <div class="sheet" id="formSheet"><div class="shead"><h2 id="formTitle">Add product</h2><button class="x" data-close>✕</button></div>
   <div class="sbody">
-    <div class="photo" id="photoBox"><div class="pl"><div class="cam">📷</div><div style="font-size:13px;margin-top:6px">Tap to add a photo</div></div>
-      <input type="file" id="photoInput" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0"/></div>
+    <label style="display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px">Photos — add as many as you like</label>
+    <div class="pstrip" id="photoStrip"></div>
+    <input type="file" id="photoInput" accept="image/*" multiple style="display:none"/>
     <div class="fld"><label>Product name *</label><input id="f_name"/></div>
     <div class="two"><div class="fld"><label>Design code</label><input id="f_code"/></div><div class="fld"><label>Type *</label><select id="f_cat"></select></div></div>
     <div class="fld hide" id="subWrap"><label>Sub-type</label><select id="f_subcat"></select></div>
+    <div class="fld"><label>Box type</label><select id="f_box"><option value="">— Not specified —</option><option value="Mix designs">Mix designs (assorted in one box)</option><option value="Single design">Single design (one design per box)</option></select></div>
     <div class="two"><div class="fld"><label>Wholesale rate (₹) *</label><input id="f_price" type="number" inputmode="numeric"/></div><div class="fld"><label>Min order qty</label><input id="f_moq" type="number" inputmode="numeric"/></div></div>
     <div class="fld"><label>Stock quantity</label><input id="f_stock" type="number" inputmode="numeric"/></div>
     <button class="primary" id="saveProd">Save product</button>
@@ -749,6 +764,9 @@
   </div>
 </div>
 
+<!-- photo gallery -->
+<div class="sheet" id="galSheet"><div class="shead"><h2 id="galTitle">Photos</h2><button class="x" data-close>✕</button></div><div class="sbody gbody" id="galBody"></div></div>
+
 <div class="toast" id="toast"></div>
 
   <!-- Cursor -->
@@ -767,7 +785,7 @@
 /* ============================================================
    1) PASTE YOUR SUPABASE DETAILS HERE (both are PUBLIC keys — safe)
    ============================================================ */
-const SUPABASE_URL = "https://hkwmeeeajkuxycgovevc.supabase.co";       // e.g. https://abcd1234.supabase.co
+const SUPABASE_URL = "https://hkwmeeeajkuxycgovevc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_oA7vBAjke-TU7ipfUyW8oQ_7vIHshPf";
 const PHOTO_BUCKET = "product-photos";
 /* ============================================================ */
@@ -775,7 +793,7 @@ const PHOTO_BUCKET = "product-photos";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let sb=null, products=[], settings={name:'Aabhushan Sales',sub:'',whatsapp:'',currency:'₹',low_stock:10};
-let cart={}, owner=false, activeCat='All', activeSub='All', editingId=null, pendingFile=null, pendingPreview='';
+let cart={}, owner=false, activeCat='All', activeSub='All', activeBox='All', editingId=null, pendingFiles=[], formImages=[];
 const cur=()=>settings.currency||'₹';
 const money=n=>cur()+Number(n||0).toLocaleString('en-IN');
 let tT;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('on'),2200);};
@@ -800,7 +818,7 @@ async function loadAll(){
   try{
     const ps = await sb.from('products').select('*').order('created_at',{ascending:false});
     if(ps.error) throw ps.error;
-    products = (ps.data||[]).map(r=>({id:r.id,name:r.name,code:r.code||'',cat:r.category||'',subcat:r.subcategory||'',price:r.price||0,moq:r.moq||1,stock:r.stock||0,img:r.image_url||''}));
+    products = (ps.data||[]).map(r=>{var imgs=[];try{imgs=r.images?JSON.parse(r.images):[];}catch(e){imgs=[];}if(!imgs.length&&r.image_url)imgs=[r.image_url];return {id:r.id,name:r.name,code:r.code||'',cat:r.category||'',subcat:r.subcategory||'',price:r.price||0,moq:r.moq||1,stock:r.stock||0,img:(imgs[0]||r.image_url||''),imgs:imgs,box:r.box_type||'',_new:(r.created_at?(Date.now()-new Date(r.created_at).getTime()<2592000000):false)};});
     const ss = await sb.from('settings').select('*').eq('id',1).maybeSingle();
     if(ss.data) settings=Object.assign(settings,{name:ss.data.name,sub:ss.data.sub,whatsapp:ss.data.whatsapp,currency:ss.data.currency||'₹',low_stock:ss.data.low_stock||10});
   }catch(e){ $('#boot').innerHTML='Could not load data.<br><span style="font-size:12px">'+esc(e.message||'')+'</span>'; }
@@ -808,26 +826,28 @@ async function loadAll(){
 }
 function brand(){ document.title=settings.name||'Aabhushan Sales'; var bn=$('#bizName'); if(bn)bn.textContent=settings.name||''; var bs=$('#bizSub'); if(bs)bs.textContent=settings.sub||''; }
 
-const TAXO={"Rings":["Ladies","Gents"],"Earrings":[],"Sui Dhaga":[],"Dokiya":[],"Bracelet":["Ladies","Gents"],"Pendant":["Chain Pendant","MS Pendant"],"Bangles":[],"Necklace":[]};
+const TAXO={"Rings":["Gents Ring","Ladies Ring"],"Earrings":["Tops","Long Earrings","Sui Dhaga","Screw Pech"],"Pendant":["Mangalsutra Pendant","Chain Pendant"],"Necklace":[],"Bangles":[],"Bracelet":["Gents","Ladies"],"Chain":["Gents","Ladies"],"Nose Pin":[]};
 function cats(){var order=Object.keys(TAXO);var present=order.filter(c=>products.some(p=>p.cat===c));var extra=[...new Set(products.map(p=>p.cat).filter(c=>c&&order.indexOf(c)<0))].sort();return ['All'].concat(present).concat(extra);}
 function subsFor(c){var subs=TAXO[c]||[];var pr=subs.filter(sx=>products.some(p=>p.cat===c&&p.subcat===sx));var ex=[...new Set(products.filter(p=>p.cat===c&&p.subcat&&subs.indexOf(p.subcat)<0).map(p=>p.subcat))];return pr.concat(ex);}
 function fillCatSelect(selCat,selSub){var sel=$('#f_cat');sel.innerHTML='<option value="">Select type…</option>'+Object.keys(TAXO).map(c=>`<option value="${esc(c)}"${c===selCat?' selected':''}>${esc(c)}</option>`).join('');updateSubSelect(selSub||'');}
 function updateSubSelect(selSub){var c=$('#f_cat').value,subs=TAXO[c]||[],wrap=$('#subWrap'),ss=$('#f_subcat');if(subs.length){wrap.classList.remove('hide');ss.innerHTML='<option value="">Select sub-type…</option>'+subs.map(sx=>`<option value="${esc(sx)}"${sx===selSub?' selected':''}>${esc(sx)}</option>`).join('');}else{wrap.classList.add('hide');ss.innerHTML='';}}
-function filtered(){const q=($('#q')?$('#q').value:'').trim().toLowerCase();return products.filter(p=>{if(activeCat!=='All'&&p.cat!==activeCat)return false;if(activeCat!=='All'&&activeSub!=='All'&&(p.subcat||'')!==activeSub)return false;if(!q)return true;return (p.name||'').toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q);});}
+function filtered(){const q=($('#q')?$('#q').value:'').trim().toLowerCase();return products.filter(p=>{if(activeCat==='New'){if(!p._new)return false;}else{if(activeCat!=='All'&&p.cat!==activeCat)return false;if(activeCat!=='All'&&activeSub!=='All'&&(p.subcat||'')!==activeSub)return false;}if(activeBox!=='All'&&(p.box||'')!==activeBox)return false;if(!q)return true;return (p.name||'').toLowerCase().includes(q)||(p.code||'').toLowerCase().includes(q);});}
 function badge(p){const s=+p.stock||0;if(s<=0)return '<span class="b-out">Out</span>';if(s<=(+settings.low_stock||0))return '<span class="b-low">Low '+s+'</span>';return '';}
 
 function render(){
   const w=$('#wrap');
   w.innerHTML=`<div class="search"><span>🔎</span><input id="q" placeholder="Search name or design code…"></div><div class="chips" id="chips"></div><div class="chips" id="subchips" style="display:none;margin-top:-2px"></div>
-    <div class="bar"><span id="count"></span>${owner?'<button class="addbtn" id="addP">＋ Add product</button>':''}</div>
+    <div class="bar"><span id="count"></span><div class="barright"><select id="boxFilter" class="boxsel"><option value="All">All boxes</option><option value="Mix designs">Mix box</option><option value="Single design">Single box</option></select>${owner?'<button class="addbtn" id="addP">＋ Add product</button>':''}</div></div>
     <div class="grid" id="grid"></div>`;
   $('#q').addEventListener('input',render2);
+  if($('#boxFilter')){$('#boxFilter').value=activeBox;$('#boxFilter').onchange=e=>{activeBox=e.target.value;render2();};}
   if(owner) $('#addP').onclick=()=>openForm(null);
   render2();
 }
 function render2(){
   if(!$('#chips')) return render();
-  $('#chips').innerHTML=cats().map(c=>`<button class="chip${c===activeCat?' on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  var _cl=cats(); if(products.some(p=>p._new)) _cl.splice(1,0,'New');
+  $('#chips').innerHTML=_cl.map(c=>`<button class="chip${c===activeCat?' on':''}${c==='New'?' newchip':''}" data-c="${esc(c)}">${c==='New'?'🆕 New Arrivals':esc(c)}</button>`).join('');
   $$('#chips .chip').forEach(b=>b.onclick=()=>{activeCat=b.getAttribute('data-c');activeSub='All';render2();});
   var subEl=$('#subchips');var subs=(activeCat!=='All')?subsFor(activeCat):[];
   if(subs.length){subEl.style.display='flex';subEl.innerHTML=['All'].concat(subs).map(sx=>`<button class="chip${sx===activeSub?' on':''}" data-s="${esc(sx)}">${esc(sx)}</button>`).join('');$$('#subchips .chip').forEach(b=>b.onclick=()=>{activeSub=b.getAttribute('data-s');render2();});}
@@ -840,10 +860,11 @@ function render2(){
   list.forEach(p=>{
     const out=(+p.stock||0)<=0;
     const el=document.createElement('div');el.className='card';
-    el.innerHTML=`<div class="th">${badge(p)}${p.img?`<img src="${esc(p.img)}">`:'<div class="ph">❖</div>'}</div>
-      <div class="bd">${p.code?`<div class="cd">${esc(p.code)}</div>`:''}<div class="nm">${esc(p.name)}</div>${p.cat?'<div style="font-size:11px;color:var(--muted)">'+esc(p.cat)+(p.subcat?' · '+esc(p.subcat):'')+'</div>':''}
+    el.innerHTML=`<div class="th">${badge(p)}${(p.imgs&&p.imgs.length>1)?`<span class="pcount">📷 ${p.imgs.length}</span>`:''}${p.img?`<img src="${esc(p.img)}">`:'<div class="ph">❖</div>'}</div>
+      <div class="bd">${p.code?`<div class="cd">${esc(p.code)}</div>`:''}<div class="nm">${esc(p.name)}</div>${p.cat?'<div style="font-size:11px;color:var(--muted)">'+esc(p.cat)+(p.subcat?' · '+esc(p.subcat):'')+'</div>':''}${p.box?`<span class="boxtag">${p.box==='Mix designs'?'Mix box':(p.box==='Single design'?'Single box':esc(p.box))}</span>`:''}
       <div class="pr">${money(p.price)}${(+p.moq>1)?` <span style="font-size:10px;color:var(--muted)">/ MOQ ${p.moq}</span>`:''}</div></div>`;
     const bd=el.querySelector('.bd');
+    var _th=el.querySelector('.th'); if(_th) _th.onclick=()=>openGallery(p);
     if(owner){
       const c=document.createElement('div');c.className='ownerctl';
       c.innerHTML=`<div class="step"><button data-d>−</button><input type="number" value="${+p.stock||0}"><button data-i>+</button></div><button class="editl">Edit ✎</button>`;
@@ -882,12 +903,31 @@ function openCart(){
   $('#send').onclick=()=>{const L2=lines(),total=L2.reduce((s,l)=>s+l.line,0),pcs=L2.reduce((s,l)=>s+l.qty,0);
     const nm=($('#cn').value||'').trim();const NL=String.fromCharCode(10);
     let m='🛍️ *New Order — '+(settings.name||'Catalogue')+'*'+NL+'—————————————'+NL;
-    L2.forEach((l,i)=>{m+=(i+1)+'. '+l.p.name+(l.p.code?' ('+l.p.code+')':'')+NL+'    '+l.qty+' x '+money(l.p.price)+' = '+money(l.line)+NL;if(l.p.img)m+='    📷 '+l.p.img+NL;});
+    L2.forEach((l,i)=>{m+=(i+1)+'. '+l.p.name+(l.p.code?' ('+l.p.code+')':'')+(l.p.box?' ['+l.p.box+']':'')+NL+'    '+l.qty+' x '+money(l.p.price)+' = '+money(l.line)+NL;if(l.p.img)m+='    📷 '+l.p.img+NL;});
     m+='—————————————'+NL+'*Total: '+money(total)+'*  ('+pcs+' pcs)';if(nm)m+=NL+NL+'From: '+nm;
     var waUrl='https://wa.me/'+(settings.whatsapp||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(m);var w=window.open(waUrl,'_blank');if(!w)window.location.href=waUrl;};
   openSheet('cartSheet');
 }
 
+function openGallery(p){
+  var imgs=(p.imgs&&p.imgs.length)?p.imgs:(p.img?[p.img]:[]);
+  var b=$('#galBody');
+  b.innerHTML=(imgs.length?imgs.map(u=>`<img src="${esc(u)}">`).join(''):'<div class="empty">No photos yet</div>')
+    +`<div style="margin-top:4px"><div class="nm" style="font-size:16px">${esc(p.name)}</div>${p.code?`<div class="cd">${esc(p.code)}</div>`:''}${p.box?`<span class="boxtag">${esc(p.box)}</span>`:''}<div class="pr">${money(p.price)}</div></div>`;
+  $('#galTitle').textContent=p.name||'Photos';
+  if(!owner){var out=(+p.stock||0)<=0;var act=document.createElement('button');act.className='wa';act.disabled=out;act.textContent=out?'Out of stock':'Add to order';
+    act.onclick=()=>{const step=Math.max(1,+p.moq||1);cart[p.id]=(cart[p.id]||0)+step;fab();toast('Added '+p.name);closeAll();};b.appendChild(act);}
+  openSheet('galSheet');
+}
+function renderPhotos(){
+  var s=$('#photoStrip'); if(!s)return; var html='';
+  formImages.forEach((u,i)=>{html+=`<div class="pthumb"><img src="${esc(u)}"><div class="del" data-delex="${i}">✕</div></div>`;});
+  pendingFiles.forEach((f,i)=>{html+=`<div class="pthumb"><img src="${esc(f.url)}"><div class="del" data-delpf="${i}">✕</div></div>`;});
+  html+=`<div class="padd" id="addPhoto">＋</div>`; s.innerHTML=html;
+  $('#addPhoto').onclick=()=>$('#photoInput').click();
+  s.querySelectorAll('[data-delex]').forEach(b=>b.onclick=e=>{e.stopPropagation();formImages.splice(+b.getAttribute('data-delex'),1);renderPhotos();});
+  s.querySelectorAll('[data-delpf]').forEach(b=>b.onclick=e=>{e.stopPropagation();pendingFiles.splice(+b.getAttribute('data-delpf'),1);renderPhotos();});
+}
 /* ---------- owner ---------- */
 async function login(){
   const email=$('#lg_email').value.trim(),pass=$('#lg_pass').value;
@@ -902,12 +942,15 @@ async function logout(){await sb.auth.signOut();owner=false;$('#ownerBtn').textC
 async function setStock(p,v){const n=Math.max(0,Math.floor(+v||0));p.stock=n;const {error}=await sb.from('products').update({stock:n}).eq('id',p.id);if(error)toast(error.message);}
 
 function openForm(id){
-  editingId=id;pendingFile=null;pendingPreview='';
+  editingId=id;pendingFiles=[];formImages=[];
   const p=id?products.find(x=>x.id===id):null;
   $('#formTitle').textContent=p?'Edit product':'Add product';
   $('#f_name').value=p?p.name:'';$('#f_code').value=p?p.code:'';fillCatSelect(p?p.cat:'',p?p.subcat:'');
   $('#f_price').value=p?p.price:'';$('#f_moq').value=p?p.moq:'';$('#f_stock').value=p?p.stock:'';
-  setPhoto(p?p.img:'');$('#delProd').classList.toggle('hide',!p);
+  $('#f_box').value=p?(p.box||''):'';
+  formImages=(p&&p.imgs)?p.imgs.slice():[];
+  renderPhotos();
+  $('#delProd').classList.toggle('hide',!p);
   openSheet('formSheet');
 }
 function setPhoto(src){const box=$('#photoBox');box.querySelectorAll('img,.x').forEach(e=>e.remove());const pl=box.querySelector('.pl');
@@ -916,17 +959,20 @@ $('#photoInput')&&0;
 async function saveProduct(){
   const name=$('#f_name').value.trim(),price=$('#f_price').value;
   if(!name)return toast('Enter a name');if(price===''||isNaN(+price))return toast('Enter a valid rate');
-  let imgUrl = editingId ? (products.find(x=>x.id===editingId)||{}).img||'' : '';
-  if(pendingFile){
-    toast('Uploading photo…');
-    const ext=(pendingFile.name.split('.').pop()||'jpg').toLowerCase();
-    const path='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)+'.'+ext;
-    const up=await sb.storage.from(PHOTO_BUCKET).upload(path,pendingFile,{upsert:true,contentType:pendingFile.type});
-    if(up.error)return toast('Photo upload failed: '+up.error.message);
-    imgUrl=sb.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl;
+  let images=formImages.slice();
+  if(pendingFiles.length){
+    toast('Uploading photos…');
+    for(const pf of pendingFiles){
+      const f=pf.file,ext=(f.name.split('.').pop()||'jpg').toLowerCase();
+      const path='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)+'.'+ext;
+      const up=await sb.storage.from(PHOTO_BUCKET).upload(path,f,{upsert:true,contentType:f.type});
+      if(up.error)return toast('Photo upload failed: '+up.error.message);
+      images.push(sb.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl);
+    }
   }
-  const row={name,code:$('#f_code').value.trim(),category:$('#f_cat').value,subcategory:($('#subWrap').classList.contains('hide')?'':$('#f_subcat').value),price:Math.max(0,+price),
-    moq:Math.max(1,+$('#f_moq').value||1),stock:Math.max(0,Math.floor(+$('#f_stock').value||0)),image_url:imgUrl};
+  const row={name,code:$('#f_code').value.trim(),category:$('#f_cat').value,subcategory:($('#subWrap').classList.contains('hide')?'':$('#f_subcat').value),
+    box_type:$('#f_box').value,price:Math.max(0,+price),
+    moq:Math.max(1,+$('#f_moq').value||1),stock:Math.max(0,Math.floor(+$('#f_stock').value||0)),image_url:(images[0]||''),images:JSON.stringify(images)};
   let res;
   if(editingId) res=await sb.from('products').update(row).eq('id',editingId);
   else res=await sb.from('products').insert(row);
@@ -957,7 +1003,7 @@ function bind(){
   $('#saveProd').onclick=saveProduct;$('#delProd').onclick=deleteProduct;
   $('#f_cat').onchange=()=>updateSubSelect('');
   $('#saveSet').onclick=saveSettings;$('#logoutBtn').onclick=logout;
-  $('#photoInput').onchange=e=>{const f=e.target.files[0];if(!f)return;pendingFile=f;const r=new FileReader();r.onload=()=>setPhoto(r.result);r.readAsDataURL(f);};
+  $('#photoInput').onchange=e=>{[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{pendingFiles.push({file:f,url:r.result});renderPhotos();};r.readAsDataURL(f);});e.target.value='';};
 }
 
 function showSetup(){
