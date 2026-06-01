@@ -122,6 +122,13 @@
 .boxsel{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--green);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
 .chip.newchip{background:linear-gradient(135deg,#b4452f,#d46a3f);color:#fff;border-color:transparent}
 .chip.newchip.on{background:linear-gradient(135deg,#7e2d1e,#a83e29);color:#fff}
+*{cursor:auto!important}
+input,textarea{cursor:text!important}
+a,button,select,label,.chip,.padd,.del,.act,.addbtn,.card,.th,.fab,[data-c],[data-close]{cursor:pointer!important}
+#cursor,#cursorFollower,.cursor,.cursor-follower{display:none!important}
+#shop select,.sheet select{-webkit-appearance:none;-moz-appearance:none;appearance:none;font-family:inherit;font-size:16px;line-height:1.2;min-height:46px;padding:11px 40px 11px 14px;color:var(--ink);background-color:var(--white);border:1px solid var(--line);border-radius:12px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b4452f' stroke-width='3'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 14px center;background-size:13px}
+#shop input,.sheet input{font-size:16px;min-height:46px}
+.boxsel{border-radius:999px!important;color:var(--green)!important;min-height:40px!important;padding:8px 36px 8px 14px!important;font-size:14px!important}
 </style>
 </head>
 <body>
@@ -191,7 +198,7 @@
         Each piece a masterpiece. Every detail, intentional.
       </p>
       <div class="hero-actions reveal-up">
-        <a href="#shop" class="btn-primary">Explore Collections</a>
+        <a href="#shop" class="btn-primary">🛒 Browse Catalogue &amp; Order</a>
         <a href="#about" class="btn-ghost">Our Story</a>
       </div>
     </div>
@@ -214,6 +221,18 @@
         <span class="stat-num" data-target="100">0</span><span class="stat-suffix">%</span>
         <p>Quality Checked</p>
       </div>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="container shop-head">
+      <div class="section-tag reveal-up">Shop Online</div>
+      <h2 class="section-title reveal-up">Browse &amp; <span class="gold-text">Order</span></h2>
+      <p class="section-subtitle reveal-up">Tap a product to add it to your order, then send it to us on WhatsApp.</p>
+      <button id="ownerBtn" class="shop-owner">Owner</button>
+    </div>
+    <div class="wrap" id="wrap">
+      <div class="spin" id="boot">Loading catalogue…</div>
     </div>
   </section>
 
@@ -405,17 +424,7 @@
   </section>
 
   <!-- LIVE SHOP (built-in catalogue) -->
-  <section id="shop">
-    <div class="container shop-head">
-      <div class="section-tag reveal-up">Shop Online</div>
-      <h2 class="section-title reveal-up">Browse &amp; <span class="gold-text">Order</span></h2>
-      <p class="section-subtitle reveal-up">Tap a product to add it to your order, then send it to us on WhatsApp.</p>
-      <button id="ownerBtn" class="shop-owner">Owner</button>
-    </div>
-    <div class="wrap" id="wrap">
-      <div class="spin" id="boot">Loading catalogue…</div>
-    </div>
-  </section>
+  
 
   <!-- 3D Showcase -->
   <section id="showcase">
@@ -860,7 +869,7 @@ function render2(){
   list.forEach(p=>{
     const out=(+p.stock||0)<=0;
     const el=document.createElement('div');el.className='card';
-    el.innerHTML=`<div class="th">${badge(p)}${(p.imgs&&p.imgs.length>1)?`<span class="pcount">📷 ${p.imgs.length}</span>`:''}${p.img?`<img src="${esc(p.img)}">`:'<div class="ph">❖</div>'}</div>
+    el.innerHTML=`<div class="th">${badge(p)}${(p.imgs&&p.imgs.length>1)?`<span class="pcount">📷 ${p.imgs.length}</span>`:''}${p.img?`<img loading="lazy" src="${esc(p.img)}">`:'<div class="ph">❖</div>'}</div>
       <div class="bd">${p.code?`<div class="cd">${esc(p.code)}</div>`:''}<div class="nm">${esc(p.name)}</div>${p.cat?'<div style="font-size:11px;color:var(--muted)">'+esc(p.cat)+(p.subcat?' · '+esc(p.subcat):'')+'</div>':''}${p.box?`<span class="boxtag">${p.box==='Mix designs'?'Mix box':(p.box==='Single design'?'Single box':esc(p.box))}</span>`:''}
       <div class="pr">${money(p.price)}${(+p.moq>1)?` <span style="font-size:10px;color:var(--muted)">/ MOQ ${p.moq}</span>`:''}</div></div>`;
     const bd=el.querySelector('.bd');
@@ -888,7 +897,7 @@ function lines(){return Object.entries(cart).map(([id,q])=>{const p=products.fin
 function openCart(){
   const L=lines(),b=$('#cartBody');
   if(!L.length){b.innerHTML='<div class="empty"><p>Your order is empty.</p></div>';return openSheet('cartSheet');}
-  b.innerHTML=L.map(({p,qty})=>{const moq=Math.max(1,+p.moq||1);return `<div class="ci" data-id="${p.id}"><div class="t">${p.img?`<img src="${esc(p.img)}">`:''}</div>
+  b.innerHTML=L.map(({p,qty})=>{const moq=Math.max(1,+p.moq||1);return `<div class="ci" data-id="${p.id}"><div class="t">${p.img?`<img loading="lazy" src="${esc(p.img)}">`:''}</div>
     <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13.5px">${esc(p.name)}</div><div style="font-size:11px;color:var(--muted)">${money(p.price)} each</div>
     <div class="step" style="margin-top:5px"><button data-d>−</button><input type="number" value="${qty}"><button data-i>+</button></div></div>
     <div style="font-weight:700">${money((+p.price||0)*qty)}</div></div>`;}).join('')+
@@ -912,7 +921,7 @@ function openCart(){
 function openGallery(p){
   var imgs=(p.imgs&&p.imgs.length)?p.imgs:(p.img?[p.img]:[]);
   var b=$('#galBody');
-  b.innerHTML=(imgs.length?imgs.map(u=>`<img src="${esc(u)}">`).join(''):'<div class="empty">No photos yet</div>')
+  b.innerHTML=(imgs.length?imgs.map(u=>`<img loading="lazy" src="${esc(u)}">`).join(''):'<div class="empty">No photos yet</div>')
     +`<div style="margin-top:4px"><div class="nm" style="font-size:16px">${esc(p.name)}</div>${p.code?`<div class="cd">${esc(p.code)}</div>`:''}${p.box?`<span class="boxtag">${esc(p.box)}</span>`:''}<div class="pr">${money(p.price)}</div></div>`;
   $('#galTitle').textContent=p.name||'Photos';
   if(!owner){var out=(+p.stock||0)<=0;var act=document.createElement('button');act.className='wa';act.disabled=out;act.textContent=out?'Out of stock':'Add to order';
@@ -921,7 +930,7 @@ function openGallery(p){
 }
 function renderPhotos(){
   var s=$('#photoStrip'); if(!s)return; var html='';
-  formImages.forEach((u,i)=>{html+=`<div class="pthumb"><img src="${esc(u)}"><div class="del" data-delex="${i}">✕</div></div>`;});
+  formImages.forEach((u,i)=>{html+=`<div class="pthumb"><img loading="lazy" src="${esc(u)}"><div class="del" data-delex="${i}">✕</div></div>`;});
   pendingFiles.forEach((f,i)=>{html+=`<div class="pthumb"><img src="${esc(f.url)}"><div class="del" data-delpf="${i}">✕</div></div>`;});
   html+=`<div class="padd" id="addPhoto">＋</div>`; s.innerHTML=html;
   $('#addPhoto').onclick=()=>$('#photoInput').click();
@@ -956,6 +965,21 @@ function openForm(id){
 function setPhoto(src){const box=$('#photoBox');box.querySelectorAll('img,.x').forEach(e=>e.remove());const pl=box.querySelector('.pl');
   if(src){pl.style.display='none';const im=document.createElement('img');im.src=src;box.insertBefore(im,box.firstChild);}else pl.style.display='block';}
 $('#photoInput')&&0;
+function compressImage(file){
+  return new Promise(resolve=>{
+    if(!file||!/^image\//.test(file.type))return resolve(file);
+    var url=URL.createObjectURL(file),img=new Image();
+    img.onload=function(){URL.revokeObjectURL(url);
+      var max=1200,w=img.width,h2=img.height;
+      if(w>h2){if(w>max){h2=Math.round(h2*max/w);w=max;}}else{if(h2>max){w=Math.round(w*max/h2);h2=max;}}
+      var c=document.createElement('canvas');c.width=w;c.height=h2;
+      c.getContext('2d').drawImage(img,0,0,w,h2);
+      c.toBlob(function(b){resolve(b||file);},'image/jpeg',0.82);
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);resolve(file);};
+    img.src=url;
+  });
+}
 async function saveProduct(){
   const name=$('#f_name').value.trim(),price=$('#f_price').value;
   if(!name)return toast('Enter a name');if(price===''||isNaN(+price))return toast('Enter a valid rate');
@@ -963,9 +987,9 @@ async function saveProduct(){
   if(pendingFiles.length){
     toast('Uploading photos…');
     for(const pf of pendingFiles){
-      const f=pf.file,ext=(f.name.split('.').pop()||'jpg').toLowerCase();
-      const path='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)+'.'+ext;
-      const up=await sb.storage.from(PHOTO_BUCKET).upload(path,f,{upsert:true,contentType:f.type});
+      const blob=await compressImage(pf.file);
+      const path='p_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)+'.jpg';
+      const up=await sb.storage.from(PHOTO_BUCKET).upload(path,blob,{upsert:true,contentType:'image/jpeg'});
       if(up.error)return toast('Photo upload failed: '+up.error.message);
       images.push(sb.storage.from(PHOTO_BUCKET).getPublicUrl(path).data.publicUrl);
     }
