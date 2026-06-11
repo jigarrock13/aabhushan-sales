@@ -142,8 +142,31 @@ nav.shrunk .lm{transform:scale(.92)}
 .sec-head.center .sec-sub{margin-left:auto;margin-right:auto}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-.rv.in{opacity:1;transform:none}
+/* SAFE-BY-DEFAULT REVEALS — content is ALWAYS visible by default.
+   Entrance motion is a time-based CSS animation (fill-mode:both): it always
+   finishes on its own, with no dependency on IntersectionObserver, scroll,
+   resize, innerHeight or viewport settling. Progressive enhancement only. */
+.rv{opacity:1;transform:none;visibility:visible}
+@keyframes rvIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+html.anim .rv:not(.card){animation:rvIn .6s var(--ease) both}
+html.anim .rv.in,html.js-ready .rv.in{opacity:1;transform:none}
+.reveal,
+.animate-on-scroll,
+[data-reveal]{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+}
+.js-ready .reveal{
+  opacity:0;
+}
+.js-ready .reveal.is-visible{
+  opacity:1;
+  transform:none;
+}
+@supports (animation-timeline: view()){
+  /* animations can be added here only for supported browsers */
+}
 
 /* category cards */
 .catgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -377,7 +400,8 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
   opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
 #scrim.on{opacity:1;visibility:visible}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:110;background:var(--ivory);
-  border-radius:24px 24px 0 0;max-height:90vh;display:flex;flex-direction:column;
+  border-radius:24px 24px 0 0;max-height:90vh;max-height:90svh;max-height:90dvh;
+  display:flex;flex-direction:column;
   transform:translateY(105%);transition:transform .45s var(--ease);
   box-shadow:0 -16px 50px rgba(30,3,9,.35)}
 .sheet.on{transform:none}
@@ -447,7 +471,7 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
 #zoom{position:fixed;inset:0;z-index:140;background:rgba(20,2,6,.96);display:none;
   align-items:center;justify-content:center}
 #zoom.on{display:flex}
-#zoom img{max-width:96vw;max-height:88vh;object-fit:contain}
+#zoom img{max-width:96vw;max-height:88vh;max-height:88svh;max-height:88dvh;object-fit:contain}
 #zoom .xbtn{position:absolute;top:16px;right:16px;background:rgba(239,228,205,.15);color:var(--champagne)}
 
 /* photo strip (owner) */
@@ -474,10 +498,12 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
 #boot{text-align:center;color:var(--muted);font-size:13px;padding:6px 0 14px}
 
 /* intro */
-#intro{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+#intro{position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:16px;
   background:radial-gradient(120% 90% at 50% 12%,var(--wine) 0%,var(--wine-deep) 72%);
-  transition:opacity .5s ease,visibility .5s}
+  transition:opacity .5s ease,visibility .5s;
+  animation:introSafe .6s ease 2.6s forwards}
+@keyframes introSafe{to{opacity:0;visibility:hidden;pointer-events:none}}
 #intro.gone{opacity:0;visibility:hidden;pointer-events:none}
 #intro .ilogo{width:118px;height:118px;border-radius:24px;overflow:hidden;
   box-shadow:0 0 0 1px rgba(195,154,74,.45),0 24px 60px rgba(0,0,0,.5);
@@ -855,6 +881,47 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
 /* ════════════════════════════════════════════════════════════
    1) SUPABASE DETAILS (public keys — safe to keep here)
    ════════════════════════════════════════════════════════════ */
+/* iOS-SAFE BOOTSTRAP: enable scroll animations ONLY when the browser proves support.
+   If anything ever fails, revealFailsafe() makes every section visible and removes the intro. */
+try{
+  if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)){
+    document.documentElement.classList.add("anim");
+    document.documentElement.classList.add("js-ready");
+  }
+}catch(e){}
+/* Runs on first load (NOT only on resize): forces layout recalculation and
+   marks every reveal element visible. Safe to call repeatedly. */
+function initialisePage(){
+  try{ window.dispatchEvent(new Event("resize")); }catch(e){}
+  try{
+    var els = document.querySelectorAll(".rv, .reveal, .animate-on-scroll, [data-reveal]");
+    for (var i=0;i<els.length;i++){ els[i].classList.add("in"); els[i].classList.add("is-visible"); }
+  }catch(e){}
+}
+window.addEventListener("DOMContentLoaded", initialisePage);
+window.addEventListener("load", initialisePage);
+window.addEventListener("pageshow", initialisePage);
+try{
+  requestAnimationFrame(function(){ requestAnimationFrame(initialisePage); });
+}catch(e){}
+setTimeout(initialisePage, 150);
+function revealFailsafe(){
+  try{
+    document.documentElement.classList.remove("anim");
+    var els = document.querySelectorAll(".rv,.reveal,.animate-on-scroll,[data-reveal]");
+    for (var i=0;i<els.length;i++){ els[i].classList.add("in"); els[i].style.opacity="1"; els[i].style.transform="none"; els[i].style.visibility="visible"; }
+    var it = document.getElementById("intro"); if (it && it.parentNode) it.parentNode.removeChild(it);
+  }catch(e){}
+}
+window.addEventListener("error", revealFailsafe);
+window.addEventListener("unhandledrejection", revealFailsafe);
+setTimeout(function(){
+  try{
+    initialisePage();
+    var it = document.getElementById("intro"); if (it && it.parentNode) it.parentNode.removeChild(it);
+  }catch(e){}
+}, 3200);
+
 const SUPABASE_URL = "https://hkwmeeeajkuxycgovevc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_oA7vBAjke-TU7ipfUyW8oQ_7vIHshPf";
 const PHOTO_BUCKET = "product-photos";
@@ -1550,27 +1617,37 @@ function resetFilters(){
   syncHash(); render();
 }
 
-/* reveal observer */
-let rvObs;
+/* reveal init — NO IntersectionObserver dependency (iOS Safari portrait bug:
+   IO callbacks may not fire until a rotate/resize). Visibility never waits on it. */
 function observeRv(){
-  if (!("IntersectionObserver" in window)){ $$(".rv").forEach(e => e.classList.add("in")); return; }
-  rvObs = rvObs || new IntersectionObserver(es => es.forEach(en => {
-    if (en.isIntersecting){ en.target.classList.add("in"); rvObs.unobserve(en.target); }
-  }), { rootMargin: "0px 0px -8% 0px" });
-  $$(".rv:not(.in)").forEach(e => rvObs.observe(e));
+  $$(".rv").forEach(e => { e.classList.add("in"); e.classList.add("is-visible"); });
 }
 
 /* intro */
 (function(){
-  const intro = $("#intro");
-  const seen = sessionStorage.getItem("as_intro");
-  if (seen || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)){ intro.remove(); return; }
-  sessionStorage.setItem("as_intro","1");
-  setTimeout(() => intro.classList.add("gone"), 1500);
-  setTimeout(() => intro.remove(), 2200);
+  try{
+    const intro = $("#intro");
+    if (!intro) return;
+    let seen = null;
+    try{ seen = sessionStorage.getItem("as_intro"); }catch(e){}
+    if (seen || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)){ intro.remove(); return; }
+    try{ sessionStorage.setItem("as_intro","1"); }catch(e){}
+    setTimeout(() => { try{ intro.classList.add("gone"); }catch(e){} }, 1500);
+    setTimeout(() => { try{ if (intro.parentNode) intro.remove(); }catch(e){} }, 2200);
+  }catch(e){
+    try{ var it = document.getElementById("intro"); if (it && it.parentNode) it.parentNode.removeChild(it); }catch(e2){}
+  }
 })();
 
-document.addEventListener("DOMContentLoaded", () => { observeRv(); init(); });
+function boot(){
+  try{ observeRv(); }catch(e){ revealFailsafe(); }
+  try{
+    var p = init();
+    if (p && p.catch) p.catch(function(e){ revealFailsafe(); });
+  }catch(e){ revealFailsafe(); }
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+else boot();
 </script>
 </body>
 </html>
