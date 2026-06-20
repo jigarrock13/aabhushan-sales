@@ -1,1115 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<meta name="theme-color" content="#3D0A18">
-<title>Aabhushan Sales — Premium Micro Jewellery</title>
-<style>
-/* ============================================================
-   AABHUSHAN SALES — Mobile-first jewellery catalogue
-   Palette: deep maroon + gold. Everything sized for 360–390px first.
-   ============================================================ */
-:root{
-  --maroon-900:#2E0712;
-  --maroon-800:#3D0A18;
-  --maroon-700:#5A0E22;
-  --maroon-600:#74122C;
-  --maroon-card:#46101F;
-  --gold:#D9B45B;
-  --gold-bright:#E8C66A;
-  --gold-soft:#C8A24A;
-  --cream:#F3E9D8;
-  --cream-dim:#C9B89A;
-  --line:rgba(217,180,91,.22);
-  --line-strong:rgba(217,180,91,.42);
-  --ok:#3FA66A;
-  --shadow:0 6px 22px rgba(0,0,0,.38);
-  --r:14px;
-  --r-sm:10px;
-  --header-h:54px;
-  --bottomnav-h:60px;
-  --maxw:1180px;
-  --ff-display:'Cormorant Garamond',Georgia,'Times New Roman',serif;
-  --ff-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;}
-html{ -webkit-text-size-adjust:100%; }
-html,body{ max-width:100%; overflow-x:hidden; }
-body{
-  margin:0;
-  font-family:var(--ff-body);
-  color:var(--cream);
-  background:
-    radial-gradient(1200px 600px at 50% -10%, var(--maroon-700), transparent 60%),
-    linear-gradient(180deg,var(--maroon-800),var(--maroon-900));
-  background-attachment:fixed;
-  min-height:100vh;
-  line-height:1.45;
-  -webkit-font-smoothing:antialiased;
-  padding-bottom:calc(var(--bottomnav-h) + env(safe-area-inset-bottom));
-}
-img{ max-width:100%; display:block; }
-button{ font-family:inherit; cursor:pointer; }
-a{ color:inherit; text-decoration:none; }
-:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
-.wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 12px; }
-.serif{ font-family:var(--ff-display); }
-.gold{ color:var(--gold); }
-.sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Aabhushan Sales — Premium Micro Jewellery Wholesale</title>
+  <meta name="description" content="Aabhushan Sales — premium micro / imitation jewellery wholesale from Surat, India. Order by the box on WhatsApp. Wholesale pricing, micro polish, latest designs, fast dispatch." />
+  <meta name="theme-color" content="#4a1320" />
 
-/* ---------- Header ---------- */
-.header{
-  position:sticky; top:0; z-index:60;
-  background:linear-gradient(180deg,var(--maroon-800),rgba(61,10,24,.96));
-  border-bottom:1px solid var(--line);
-  backdrop-filter:saturate(140%) blur(6px);
-  padding-top:env(safe-area-inset-top);
-}
-.header-row{
-  height:var(--header-h);
-  display:flex; align-items:center; gap:8px;
-  max-width:var(--maxw); margin:0 auto; padding:0 10px;
-}
-.logo{ display:flex; align-items:center; gap:8px; min-width:0; }
-.logo-badge{
-  width:36px; height:36px; flex:0 0 36px; border-radius:50%;
-  display:grid; place-items:center;
-  background:radial-gradient(circle at 30% 25%,var(--maroon-600),var(--maroon-900));
-  border:1.5px solid var(--gold);
-  font-family:var(--ff-display); font-weight:700; font-size:16px; letter-spacing:.5px;
-  color:var(--gold-bright);
-  box-shadow:inset 0 0 8px rgba(217,180,91,.25);
-}
-.logo-text{ min-width:0; line-height:1; }
-.logo-text b{
-  font-family:var(--ff-display); font-size:17px; font-weight:600;
-  color:var(--gold-bright); letter-spacing:.4px; white-space:nowrap;
-  display:block;
-}
-.logo-text span{
-  font-size:8.5px; letter-spacing:2.2px; text-transform:uppercase;
-  color:var(--cream-dim); white-space:nowrap;
-}
-.header-actions{ margin-left:auto; display:flex; align-items:center; gap:2px; }
-.icon-btn{
-  width:40px; height:40px; flex:0 0 40px; border-radius:50%;
-  background:transparent; border:0; color:var(--gold);
-  display:grid; place-items:center; position:relative;
-}
-.icon-btn:active{ background:rgba(217,180,91,.12); }
-.icon-btn svg{ width:21px; height:21px; }
-.badge-count{
-  position:absolute; top:3px; right:3px; min-width:16px; height:16px; padding:0 4px;
-  background:var(--gold); color:var(--maroon-900); border-radius:9px;
-  font-size:10px; font-weight:800; line-height:16px; text-align:center;
-}
-.admin-pill{
-  flex:0 0 auto; height:32px; padding:0 11px; border-radius:16px;
-  background:transparent; border:1px solid var(--line-strong); color:var(--gold);
-  font-size:11.5px; font-weight:700; letter-spacing:.3px;
-  display:flex; align-items:center; gap:4px; white-space:nowrap;
-}
-.admin-pill svg{ width:14px; height:14px; }
+  <!-- Open Graph -->
+  <meta property="og:title" content="Aabhushan Sales — Premium Micro Jewellery Wholesale" />
+  <meta property="og:description" content="Premium imitation jewellery wholesale. Order by the box on WhatsApp." />
+  <meta property="og:type" content="website" />
 
-/* ---------- Search bar (under header) ---------- */
-.searchbar{
-  max-width:var(--maxw); margin:0 auto; padding:8px 10px 4px;
-}
-.searchbar input{
-  width:100%; height:40px; border-radius:20px; border:1px solid var(--line-strong);
-  background:rgba(0,0,0,.22); color:var(--cream); padding:0 14px 0 38px; font-size:14px;
-}
-.searchbar input::placeholder{ color:var(--cream-dim); }
-.searchbar .sb-wrap{ position:relative; }
-.searchbar svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); width:17px; height:17px; color:var(--gold-soft); }
-
-/* ---------- Hero strip ---------- */
-.hero{
-  max-width:var(--maxw); margin:6px auto 2px; padding:14px 16px;
-}
-.hero h1{
-  font-family:var(--ff-display); font-weight:600;
-  font-size:23px; line-height:1.12; margin:0; color:var(--cream);
-}
-.hero h1 em{ color:var(--gold-bright); font-style:italic; }
-.hero p{ margin:5px 0 0; font-size:12px; color:var(--cream-dim); letter-spacing:.2px; }
-.hero .rule{ height:1px; background:linear-gradient(90deg,var(--gold-soft),transparent); margin-top:11px; }
-
-/* ---------- Filter chips ---------- */
-.chips{
-  display:flex; gap:8px; overflow-x:auto; padding:10px 10px 4px;
-  max-width:var(--maxw); margin:0 auto;
-  scrollbar-width:none; -webkit-overflow-scrolling:touch;
-}
-.chips::-webkit-scrollbar{ display:none; }
-.chip{
-  flex:0 0 auto; height:32px; padding:0 14px; border-radius:16px;
-  border:1px solid var(--line-strong); background:transparent; color:var(--cream-dim);
-  font-size:12.5px; font-weight:600; white-space:nowrap;
-}
-.chip.active{ background:var(--gold); border-color:var(--gold); color:var(--maroon-900); }
-.chips-label{
-  font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-soft);
-  max-width:var(--maxw); margin:12px auto 0; padding:0 14px;
-}
-
-/* ---------- Product grid ---------- */
-.grid{
-  display:grid; gap:11px;
-  grid-template-columns:repeat(2,1fr);   /* phones: 2 per row */
-  max-width:var(--maxw); margin:8px auto 18px; padding:0 12px;
-}
-@media (max-width:359px){ .grid{ grid-template-columns:1fr; } }  /* very small: 1 per row */
-@media (min-width:768px){ .grid{ grid-template-columns:repeat(3,1fr); gap:16px; } }
-@media (min-width:1024px){ .grid{ grid-template-columns:repeat(4,1fr); } } /* desktop: 4 per row */
-
-.card{
-  background:linear-gradient(180deg,var(--maroon-card),var(--maroon-800));
-  border:1px solid var(--line); border-radius:var(--r);
-  overflow:hidden; display:flex; flex-direction:column; position:relative;
-}
-.card-imgwrap{
-  position:relative; width:100%; aspect-ratio:1/1; background:#1c0610;
-  overflow:hidden;
-}
-.card-imgwrap img{ width:100%; height:100%; object-fit:cover; }
-.tag{
-  position:absolute; top:8px; left:8px; z-index:2;
-  font-size:9px; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
-  padding:3px 7px; border-radius:6px; color:var(--maroon-900);
-  background:var(--gold-bright);
-}
-.tag.dark{ background:rgba(0,0,0,.55); color:var(--gold-bright); border:1px solid var(--line); }
-.wish-mini{
-  position:absolute; top:6px; right:6px; z-index:2; width:30px; height:30px; border-radius:50%;
-  background:rgba(0,0,0,.42); border:0; color:var(--gold); display:grid; place-items:center;
-}
-.wish-mini svg{ width:16px; height:16px; }
-.wish-mini.on svg{ fill:var(--gold-bright); color:var(--gold-bright); }
-.card-body{ padding:9px 10px 10px; display:flex; flex-direction:column; gap:3px; flex:1; }
-.card-name{
-  font-size:13px; font-weight:600; color:var(--cream); line-height:1.25;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-  min-height:32px;
-}
-.card-code{ font-size:10.5px; color:var(--gold-soft); letter-spacing:.4px; }
-.card-box{ font-size:11px; color:var(--cream-dim); }
-.card-price{ font-size:14px; font-weight:800; color:var(--gold-bright); margin-top:1px; }
-.card-price small{ font-size:10px; color:var(--cream-dim); font-weight:500; }
-.card-actions{ display:flex; gap:6px; margin-top:8px; }
-.btn{
-  border:0; border-radius:9px; font-weight:700; font-size:12px;
-  display:flex; align-items:center; justify-content:center; gap:5px;
-  min-height:38px; padding:0 10px; line-height:1;
-}
-.btn svg{ width:15px; height:15px; }
-.btn-gold{ background:var(--gold); color:var(--maroon-900); flex:1; }
-.btn-gold:active{ background:var(--gold-soft); }
-.btn-wa{ background:#1faa54; color:#fff; flex:0 0 42px; padding:0; }
-.btn-outline{ background:transparent; border:1px solid var(--line-strong); color:var(--gold); flex:1; }
-.btn-ghost{ background:rgba(217,180,91,.10); color:var(--gold); flex:1; }
-
-/* skeleton */
-.skel{ background:linear-gradient(100deg,#3a0d1a 30%,#4d1325 50%,#3a0d1a 70%); background-size:200% 100%; animation:sh 1.1s infinite; }
-@keyframes sh{ to{ background-position:-200% 0; } }
-.skel-card{ border-radius:var(--r); overflow:hidden; border:1px solid var(--line); }
-.skel-card .a{ aspect-ratio:1/1; } .skel-card .b{ height:58px; }
-
-.empty{
-  max-width:var(--maxw); margin:30px auto; padding:30px 20px; text-align:center; color:var(--cream-dim);
-}
-.empty svg{ width:44px; height:44px; color:var(--gold-soft); margin-bottom:10px; }
-
-/* ---------- Bottom nav ---------- */
-.bottomnav{
-  position:fixed; left:0; right:0; bottom:0; z-index:70;
-  height:calc(var(--bottomnav-h) + env(safe-area-inset-bottom));
-  padding-bottom:env(safe-area-inset-bottom);
-  background:linear-gradient(180deg,rgba(46,7,18,.92),var(--maroon-900));
-  border-top:1px solid var(--line-strong);
-  display:flex; align-items:stretch;
-}
-.bn-item{
-  flex:1; background:transparent; border:0; color:var(--cream-dim);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
-  font-size:9.5px; font-weight:600; letter-spacing:.2px; position:relative;
-}
-.bn-item svg{ width:21px; height:21px; }
-.bn-item.active{ color:var(--gold-bright); }
-.bn-item .badge-count{ top:4px; right:50%; margin-right:-22px; }
-.bn-wa{ color:#43c97a; }
-@media (min-width:1024px){ .bottomnav{ display:none; } body{ padding-bottom:0; } }
-
-/* ---------- Modal / Drawer shell ---------- */
-.overlay{
-  position:fixed; inset:0; z-index:90; background:rgba(10,2,6,.66);
-  opacity:0; pointer-events:none; transition:opacity .22s ease;
-}
-.overlay.open{ opacity:1; pointer-events:auto; }
-
-/* Cart drawer (right on desktop, bottom sheet on phone) */
-.drawer{
-  position:fixed; z-index:95; background:var(--maroon-800);
-  display:flex; flex-direction:column; transition:transform .26s cubic-bezier(.2,.8,.2,1);
-}
-.cart-drawer{
-  right:0; top:0; bottom:0; width:100%; max-width:420px;
-  border-left:1px solid var(--line-strong);
-  transform:translateX(100%);
-}
-.cart-drawer.open{ transform:translateX(0); }
-.drawer-head{
-  display:flex; align-items:center; gap:10px; padding:14px 14px;
-  border-bottom:1px solid var(--line); padding-top:calc(14px + env(safe-area-inset-top));
-}
-.drawer-head h3{ font-family:var(--ff-display); font-size:19px; margin:0; color:var(--gold-bright); font-weight:600; }
-.drawer-head .close{ margin-left:auto; }
-.close{ width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,.25); border:1px solid var(--line); color:var(--gold); display:grid; place-items:center; }
-.close svg{ width:18px; height:18px; }
-.drawer-body{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:10px 12px; }
-.drawer-foot{
-  border-top:1px solid var(--line); padding:12px;
-  padding-bottom:calc(12px + env(safe-area-inset-bottom)); background:var(--maroon-900);
-}
-
-/* cart line */
-.cline{ display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); }
-.cline-img{ width:62px; height:62px; flex:0 0 62px; border-radius:9px; overflow:hidden; background:#1c0610; border:1px solid var(--line); }
-.cline-img img{ width:100%; height:100%; object-fit:cover; }
-.cline-info{ flex:1; min-width:0; }
-.cline-info .n{ font-size:13px; font-weight:600; line-height:1.2; }
-.cline-info .c{ font-size:10.5px; color:var(--gold-soft); }
-.cline-info .m{ font-size:11px; color:var(--cream-dim); }
-.cline-info .p{ font-size:13px; font-weight:800; color:var(--gold-bright); }
-.cline-right{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
-.cline-remove{ background:transparent; border:0; color:var(--cream-dim); font-size:11px; }
-
-/* box stepper */
-.stepper{ display:inline-flex; align-items:center; border:1px solid var(--line-strong); border-radius:10px; overflow:hidden; }
-.stepper button{ width:34px; height:34px; background:rgba(217,180,91,.10); border:0; color:var(--gold-bright); font-size:18px; font-weight:700; line-height:1; }
-.stepper .val{ min-width:54px; text-align:center; font-size:13px; font-weight:700; color:var(--cream); }
-.stepper .val small{ display:block; font-size:9px; color:var(--cream-dim); font-weight:500; }
-
-.totrow{ display:flex; justify-content:space-between; font-size:13px; color:var(--cream-dim); margin:3px 0; }
-.totrow.big{ font-size:16px; color:var(--cream); }
-.totrow.big b{ color:var(--gold-bright); font-size:18px; }
-
-.btn-block{ width:100%; min-height:50px; border-radius:12px; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:8px; border:0; }
-.btn-block.wa{ background:#1faa54; color:#fff; }
-.btn-block.gold{ background:var(--gold); color:var(--maroon-900); }
-.linklike{ background:transparent; border:0; color:var(--cream-dim); font-size:12px; text-decoration:underline; margin-top:8px; width:100%; padding:6px; }
-
-/* ---------- Product detail (full-screen sheet on phone) ---------- */
-.sheet{
-  right:0; left:0; top:0; bottom:0; width:100%;
-  transform:translateY(100%); background:var(--maroon-800);
-}
-.sheet.open{ transform:translateY(0); }
-@media (min-width:680px){
-  .sheet{ left:auto; max-width:480px; transform:translateX(100%); border-left:1px solid var(--line-strong); }
-  .sheet.open{ transform:translateX(0); }
-}
-.sheet-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-.gallery{
-  display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-  scrollbar-width:none; background:#1a0510;
-}
-.gallery::-webkit-scrollbar{ display:none; }
-.gallery .gimg{
-  flex:0 0 100%; scroll-snap-align:center; aspect-ratio:1/1; display:grid; place-items:center; background:#1a0510;
-}
-.gallery .gimg img{ width:100%; height:100%; object-fit:contain; } /* contain so jewellery isn't cropped */
-.gdots{ display:flex; justify-content:center; gap:6px; padding:8px 0 2px; }
-.gdot{ width:7px; height:7px; border-radius:50%; background:var(--line-strong); }
-.gdot.on{ background:var(--gold-bright); width:18px; border-radius:4px; }
-.thumbs{ display:flex; gap:8px; overflow-x:auto; padding:8px 12px; scrollbar-width:none; }
-.thumbs::-webkit-scrollbar{ display:none; }
-.thumb{ flex:0 0 52px; width:52px; height:52px; border-radius:8px; overflow:hidden; border:1.5px solid var(--line); background:#1c0610; }
-.thumb.on{ border-color:var(--gold-bright); }
-.thumb img{ width:100%; height:100%; object-fit:cover; }
-.zoom-hint{ position:absolute; bottom:10px; right:14px; background:rgba(0,0,0,.5); color:var(--gold-bright); font-size:10px; padding:4px 9px; border-radius:12px; border:1px solid var(--line); display:flex; gap:4px; align-items:center; }
-.zoom-hint svg{ width:13px; height:13px; }
-.gallery-wrap{ position:relative; }
-
-.detail-pad{ padding:12px 14px 16px; }
-.detail-pad h2{ font-family:var(--ff-display); font-size:22px; font-weight:600; margin:0 0 2px; line-height:1.15; }
-.detail-meta{ display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12px; color:var(--gold-soft); margin-bottom:8px; }
-.detail-price{ font-size:24px; font-weight:800; color:var(--gold-bright); }
-.detail-price small{ font-size:12px; color:var(--cream-dim); font-weight:500; }
-.spec{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
-.spec .s{ background:rgba(0,0,0,.18); border:1px solid var(--line); border-radius:10px; padding:9px 11px; }
-.spec .s .k{ font-size:10px; letter-spacing:.6px; text-transform:uppercase; color:var(--gold-soft); }
-.spec .s .v{ font-size:14px; font-weight:700; color:var(--cream); }
-.boxpick{ display:flex; align-items:center; justify-content:space-between; gap:10px; background:rgba(0,0,0,.18); border:1px solid var(--line-strong); border-radius:12px; padding:11px 12px; margin:10px 0; }
-.boxpick .lbl{ font-size:12px; color:var(--cream-dim); }
-.boxpick .lbl b{ display:block; color:var(--cream); font-size:14px; }
-.detail-actions{ display:flex; gap:9px; margin-top:6px; }
-.sheet-foot{
-  border-top:1px solid var(--line); padding:11px 12px; display:flex; gap:9px;
-  padding-bottom:calc(11px + env(safe-area-inset-bottom)); background:var(--maroon-900);
-}
-.sheet-head{ display:flex; align-items:center; padding:10px 12px; gap:10px; border-bottom:1px solid var(--line); padding-top:calc(10px + env(safe-area-inset-top)); }
-.sheet-head .t{ font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-soft); }
-
-/* ---------- Fullscreen zoom viewer ---------- */
-.zoomer{
-  position:fixed; inset:0; z-index:120; background:#0a0206; display:none;
-  flex-direction:column;
-}
-.zoomer.open{ display:flex; }
-.zoomer-top{ display:flex; align-items:center; justify-content:space-between; padding:12px; padding-top:calc(12px + env(safe-area-inset-top)); color:var(--gold-bright); font-size:12px; }
-.zoomer-stage{ flex:1; overflow:hidden; touch-action:none; display:grid; place-items:center; position:relative; }
-.zoomer-stage img{ max-width:100%; max-height:100%; object-fit:contain; transform-origin:center center; will-change:transform; user-select:none; -webkit-user-drag:none; }
-.zoomer-tip{ text-align:center; color:var(--cream-dim); font-size:11px; padding:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom)); }
-
-/* ---------- Admin ---------- */
-.admin-sheet{ right:0; left:0; top:0; bottom:0; width:100%; transform:translateY(100%); background:var(--maroon-900); }
-.admin-sheet.open{ transform:translateY(0); }
-@media (min-width:680px){ .admin-sheet{ left:auto; max-width:520px; transform:translateX(100%); } .admin-sheet.open{ transform:translateX(0);} }
-.admin-body{ flex:1; overflow-y:auto; padding:12px 14px; padding-bottom:calc(20px + env(safe-area-inset-bottom)); }
-.field{ margin-bottom:12px; }
-.field label{ display:block; font-size:11px; letter-spacing:.5px; text-transform:uppercase; color:var(--gold-soft); margin-bottom:5px; }
-.field input,.field select,.field textarea{
-  width:100%; min-height:44px; border-radius:10px; border:1px solid var(--line-strong);
-  background:rgba(0,0,0,.25); color:var(--cream); padding:10px 12px; font-size:14px; font-family:inherit;
-}
-.field .two{ display:flex; gap:10px; } .field .two > *{ flex:1; }
-.imgrow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
-.imgthumb{ width:64px; height:64px; border-radius:9px; overflow:hidden; position:relative; border:1px solid var(--line); }
-.imgthumb img{ width:100%; height:100%; object-fit:cover; }
-.imgthumb .main-flag{ position:absolute; bottom:0; left:0; right:0; background:var(--gold); color:var(--maroon-900); font-size:8px; font-weight:800; text-align:center; padding:1px; }
-.imgthumb .x{ position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; background:rgba(0,0,0,.6); color:#fff; border:0; font-size:11px; line-height:1; }
-.imgthumb .mv{ position:absolute; top:2px; left:2px; display:flex; gap:1px; }
-.imgthumb .mv button{ width:16px; height:16px; background:rgba(0,0,0,.6); color:var(--gold); border:0; font-size:10px; line-height:1; border-radius:3px; }
-.admin-list-item{ display:flex; gap:10px; align-items:center; padding:9px 0; border-bottom:1px solid var(--line); }
-.admin-list-item img{ width:46px; height:46px; border-radius:8px; object-fit:cover; flex:0 0 46px; background:#1c0610; }
-.admin-list-item .n{ font-size:13px; font-weight:600; line-height:1.2; }
-.admin-list-item .c{ font-size:10.5px; color:var(--gold-soft); }
-.pill-status{ font-size:9px; font-weight:800; padding:2px 7px; border-radius:8px; }
-.pill-status.on{ background:rgba(63,166,106,.2); color:#6dd39a; border:1px solid rgba(63,166,106,.4);}
-.pill-status.off{ background:rgba(0,0,0,.3); color:var(--cream-dim); border:1px solid var(--line);}
-.admin-tabs{ display:flex; gap:8px; padding:0 14px 4px; }
-.admin-tab{ flex:1; min-height:40px; border-radius:10px; border:1px solid var(--line-strong); background:transparent; color:var(--cream-dim); font-weight:700; font-size:13px; }
-.admin-tab.active{ background:var(--gold); color:var(--maroon-900); border-color:var(--gold); }
-.mini-actions{ display:flex; gap:8px; margin-left:auto; }
-.mini-actions button{ width:34px; height:34px; border-radius:8px; border:1px solid var(--line); background:rgba(0,0,0,.2); color:var(--gold); display:grid; place-items:center; }
-.mini-actions svg{ width:15px; height:15px; }
-
-.note{ font-size:11px; color:var(--cream-dim); background:rgba(0,0,0,.2); border:1px solid var(--line); border-radius:9px; padding:9px 11px; line-height:1.4; }
-
-/* toast */
-.toast{ position:fixed; left:50%; bottom:calc(var(--bottomnav-h) + 16px); transform:translateX(-50%) translateY(20px); z-index:200;
-  background:var(--maroon-600); color:var(--cream); border:1px solid var(--gold-soft); border-radius:12px; padding:11px 18px; font-size:13px; font-weight:600;
-  box-shadow:var(--shadow); opacity:0; transition:.25s; max-width:90vw; text-align:center; }
-.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-
-.footer{ text-align:center; padding:18px 16px 26px; color:var(--cream-dim); font-size:11px; line-height:1.6; }
-.footer .b{ color:var(--gold-soft); font-family:var(--ff-display); font-size:15px; }
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
-<header class="header">
-  <div class="header-row">
-    <a class="logo" href="#" onclick="goHome();return false;">
-      <span class="logo-badge">AS</span>
-      <span class="logo-text"><b>Aabhushan Sales</b><span>Premium Micro Jewellery</span></span>
-    </a>
-    <div class="header-actions">
-      <button class="icon-btn" aria-label="Search" onclick="focusSearch()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
-      <button class="icon-btn" aria-label="Saved" onclick="openWishlist()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0 0 12 5 4.5 4.5 0 0 0 2 8.5C2 12 5 14 12 20c1.7-1.4 3.2-2.7 4.5-3.9"/></svg>
-        <span class="badge-count" id="wishCount" style="display:none">0</span>
-      </button>
-      <button class="icon-btn" aria-label="Cart" onclick="openCart()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-        <span class="badge-count" id="cartCount" style="display:none">0</span>
-      </button>
-      <button class="admin-pill" onclick="openAdmin()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v5c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V7z"/></svg>Owner
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand" aria-label="Aabhushan Sales home">
+        <span class="brand-gem" aria-hidden="true">◆</span>
+        <span class="brand-name">Aabhushan&nbsp;<em>Sales</em></span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#collections">Collection</a>
+        <a href="#benefits">Why Us</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn-wa header-wa" data-wa="general" href="#">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        WhatsApp
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+        <span></span><span></span><span></span>
       </button>
     </div>
-  </div>
-  <div class="searchbar">
-    <div class="sb-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="searchInput" type="search" placeholder="Search by name or code…" oninput="onSearch(this.value)" autocomplete="off">
-    </div>
-  </div>
-</header>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <h1>Handpicked <em>micro jewellery</em>, made to order in boxes.</h1>
-  <p>Browse the collection, pick your boxes, and send your order straight to us on WhatsApp.</p>
-  <div class="rule"></div>
-</section>
+    <nav class="nav-mobile" id="navMobile" aria-label="Mobile">
+      <a href="#collections">Collection</a>
+      <a href="#benefits">Why Us</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-wa btn-block" data-wa="general" href="#">Order on WhatsApp</a>
+    </nav>
+  </header>
 
-<!-- ============ CATEGORY CHIPS ============ -->
-<div class="chips-label">Quick filters</div>
-<div class="chips" id="quickChips"></div>
-<div class="chips-label">Categories</div>
-<div class="chips" id="catChips"></div>
-
-<!-- ============ PRODUCT GRID ============ -->
-<main id="grid" class="grid" aria-live="polite"></main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="b">Aabhushan Sales</div>
-  Shop No-03/04/05, Beside Kuber Hotel,<br>Sant Kabir Road, Rajkot-360003<br>
-  <span class="gold">AS Premium Micro Jewellery</span>
-</footer>
-
-<!-- ============ BOTTOM NAV ============ -->
-<nav class="bottomnav">
-  <button class="bn-item active" id="bnHome" onclick="goHome()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11 12 4l9 7"/><path d="M5 10v9h14v-9"/></svg>Home
-  </button>
-  <button class="bn-item" onclick="scrollToCats()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Categories
-  </button>
-  <button class="bn-item" onclick="focusSearch()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>Search
-  </button>
-  <button class="bn-item" onclick="openCart()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>Cart
-    <span class="badge-count" id="cartCountNav" style="display:none">0</span>
-  </button>
-  <button class="bn-item bn-wa" onclick="openCart()">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2m0 2a8 8 0 1 1-4.1 14.9l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4m4.6 9.6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2 0-.2 0-.3-.1-.4l-.7-1.8c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4 5.3 5.3 0 0 0 3.2.7 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3"/></svg>Order
-  </button>
-</nav>
-
-<!-- ============ OVERLAY ============ -->
-<div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-<!-- ============ CART DRAWER ============ -->
-<aside class="drawer cart-drawer" id="cartDrawer" role="dialog" aria-label="Cart">
-  <div class="drawer-head">
-    <h3>Your Order</h3>
-    <button class="close" onclick="closeAll()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  </div>
-  <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot" id="cartFoot"></div>
-</aside>
-
-<!-- ============ PRODUCT DETAIL SHEET ============ -->
-<aside class="drawer sheet" id="detailSheet" role="dialog" aria-label="Product detail">
-  <div class="sheet-head">
-    <button class="close" onclick="closeAll()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 6-6 6 6 6"/></svg></button>
-    <span class="t">Product Detail</span>
-    <button class="close" style="margin-left:auto" onclick="shareCurrent()" aria-label="Share">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.6M8.2 13.2l7.6 4.6"/></svg>
-    </button>
-  </div>
-  <div class="sheet-scroll" id="detailScroll"></div>
-  <div class="sheet-foot" id="detailFoot"></div>
-</aside>
-
-<!-- ============ FULLSCREEN ZOOMER ============ -->
-<div class="zoomer" id="zoomer">
-  <div class="zoomer-top">
-    <span id="zoomerLabel">Zoom</span>
-    <button class="close" onclick="closeZoom()" aria-label="Close zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  </div>
-  <div class="zoomer-stage" id="zoomStage"><img id="zoomImg" alt="" draggable="false"></div>
-  <div class="zoomer-tip">Double-tap to zoom · pinch to zoom · drag to pan</div>
-</div>
-
-<!-- ============ ADMIN SHEET ============ -->
-<aside class="drawer admin-sheet" id="adminSheet" role="dialog" aria-label="Owner panel">
-  <div class="drawer-head">
-    <h3 id="adminTitle">Owner Panel</h3>
-    <button class="close" onclick="closeAll()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  </div>
-  <div class="admin-tabs">
-    <button class="admin-tab active" id="tabAdd" onclick="adminTab('add')">Add / Edit</button>
-    <button class="admin-tab" id="tabList" onclick="adminTab('list')">Products</button>
-  </div>
-  <div class="admin-body" id="adminBody"></div>
-</aside>
-
-<div class="toast" id="toast"></div>
-
-<script>
-/* ============================================================
-   CONFIG  — edit these 4 lines, nothing else needed to go live.
-   ============================================================ */
-const CONFIG = {
-  WHATSAPP_NUMBER: '919999999999',   // <-- shop WhatsApp number (with country code, no +)
-  ADMIN_PASSCODE : 'as2024',         // <-- owner passcode for the panel
-  CURRENCY       : '₹',
-  SHOW_PRICE     : true,             // set false to hide rates from customers
-  SUPABASE_URL   : '',               // optional: paste project URL to use cloud DB + public image links
-  SUPABASE_KEY   : ''                // optional: paste anon/publishable key
-};
-const SITE_URL = location.origin + location.pathname;
-
-/* Branded fallback shown if any product image is missing or fails to load */
-const PLACEHOLDER='data:image/svg+xml;utf8,'+encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="#1c0610"/><circle cx="250" cy="232" r="74" fill="none" stroke="#D9B45B" stroke-width="3"/><text x="250" y="252" fill="#D9B45B" font-size="52" text-anchor="middle" font-family="Georgia,serif">AS</text><text x="250" y="330" fill="#C9B89A" font-size="17" letter-spacing="3" text-anchor="middle" font-family="Arial">AABHUSHAN SALES</text></svg>');
-document.addEventListener('error', e=>{
-  const t=e.target;
-  if(t && t.tagName==='IMG' && t.dataset.fb!=='1'){ t.dataset.fb='1'; t.src=PLACEHOLDER; }
-}, true);
-
-/* ---------- State ---------- */
-let PRODUCTS = [];
-let cart = load('as_cart', []);
-let wish = load('as_wish', []);
-let activeCat = 'All', activeQuick = 'all', searchTerm = '';
-let current = null;            // product open in detail
-let currentBoxes = 1;
-let supa = null;
-
-/* ---------- Storage helpers ---------- */
-function load(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(e){ return d; } }
-function save(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
-
-/* ---------- Sample seed data (used until owner adds products / Supabase connected) ---------- */
-const SEED = [
-  {id:'p1', name:'Ruby & CZ Bridal Necklace Set', code:'AS-NK-118', category:'Necklace', rate:480, piecesPerBox:20, minBoxes:1, active:true, badge:'New', images:['https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700']},
-  {id:'p2', name:'Gold Polish Jhumka Earrings', code:'AS-ER-204', category:'Earrings', rate:140, piecesPerBox:40, minBoxes:1, active:true, badge:'Best', images:['https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700']},
-  {id:'p3', name:'Kundan Pendant with Chain', code:'AS-PD-076', category:'Pendant', rate:220, piecesPerBox:20, minBoxes:1, active:true, badge:'', images:['https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=700']},
-  {id:'p4', name:'AD Stone Finger Ring (Adjustable)', code:'AS-RG-310', category:'Rings', rate:60, piecesPerBox:40, minBoxes:2, active:true, badge:'Low', images:['https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700']},
-  {id:'p5', name:'Antique Temple Bangles (Pair)', code:'AS-BG-141', category:'Bangles', rate:360, piecesPerBox:12, minBoxes:1, active:true, badge:'Premium', images:['https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=700']},
-  {id:'p6', name:'Rose Gold Charm Bracelet', code:'AS-BR-088', category:'Bracelet', rate:190, piecesPerBox:20, minBoxes:1, active:true, badge:'New', images:['https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=700']},
-  {id:'p7', name:'CZ Solitaire Nose Pin', code:'AS-NP-022', category:'Nose Pin', rate:45, piecesPerBox:50, minBoxes:2, active:true, badge:'Low', images:['https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=700']},
-  {id:'p8', name:'Designer Layered Chain', code:'AS-CH-159', category:'Chain', rate:260, piecesPerBox:20, minBoxes:1, active:true, badge:'', images:['https://images.unsplash.com/photo-1599459183200-59c7687a0275?w=700']},
-];
-const CATEGORIES = ['All','Rings','Earrings','Pendant','Necklace','Bangles','Bracelet','Chain','Nose Pin'];
-const QUICK = [
-  {id:'all', label:'All Items'},
-  {id:'New', label:'New Arrivals'},
-  {id:'Best', label:'Best Sellers'},
-  {id:'Low', label:'Low Price'},
-  {id:'Premium', label:'Premium'},
-];
-
-/* ============================================================
-   INIT
-   ============================================================ */
-async function init(){
-  renderChips();
-  renderGrid(true);                 // skeletons
-  await loadProducts();
-  renderGrid();
-  refreshBadges();
-  handleDeepLink();
-}
-async function loadProducts(){
-  if(CONFIG.SUPABASE_URL && CONFIG.SUPABASE_KEY){
-    try{
-      await ensureSupabase();
-      const { data, error } = await supa.from('products').select('*').order('created_at',{ascending:false});
-      if(error) throw error;
-      PRODUCTS = (data||[]).map(normalize);
-      if(PRODUCTS.length) return;
-    }catch(e){ console.warn('Supabase load failed, using local.', e); }
-  }
-  const localP = load('as_products', null);
-  PRODUCTS = (localP && localP.length) ? localP.map(normalize) : SEED.map(normalize);
-}
-function normalize(p){
-  return {
-    id:p.id||('p'+Math.random().toString(36).slice(2,8)),
-    name:p.name||'Untitled', code:p.code||'', category:p.category||'Other',
-    rate:Number(p.rate)||0, piecesPerBox:Number(p.piecesPerBox||p.pieces_per_box)||20,
-    minBoxes:Number(p.minBoxes||p.min_boxes)||1, active:p.active!==false,
-    badge:p.badge||'', images: Array.isArray(p.images)?p.images:(p.images?[p.images]:[]),
-  };
-}
-async function ensureSupabase(){
-  if(supa) return;
-  await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
-  supa = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
-}
-function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
-
-/* ============================================================
-   CHIPS + GRID
-   ============================================================ */
-function renderChips(){
-  document.getElementById('quickChips').innerHTML = QUICK.map(q=>
-    `<button class="chip ${activeQuick===q.id?'active':''}" onclick="setQuick('${q.id}')">${q.label}</button>`).join('');
-  document.getElementById('catChips').innerHTML = CATEGORIES.map(c=>
-    `<button class="chip ${activeCat===c?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
-}
-function setQuick(id){ activeQuick=id; renderChips(); renderGrid(); }
-function setCat(c){ activeCat=c; renderChips(); renderGrid(); }
-
-function filtered(){
-  return PRODUCTS.filter(p=>{
-    if(!p.active) return false;
-    if(activeCat!=='All' && p.category!==activeCat) return false;
-    if(activeQuick!=='all'){
-      if(activeQuick==='Low'){ if(p.badge!=='Low' && p.rate>120) return false; }
-      else if(p.badge!==activeQuick) return false;
-    }
-    if(searchTerm){
-      const t=searchTerm.toLowerCase();
-      if(!(p.name.toLowerCase().includes(t) || p.code.toLowerCase().includes(t))) return false;
-    }
-    return true;
-  });
-}
-function img1(p){ return p.images[0] || PLACEHOLDER; }
-
-function renderGrid(skeleton){
-  const g=document.getElementById('grid');
-  if(skeleton){
-    g.innerHTML = Array.from({length:6}).map(()=>`<div class="skel-card"><div class="skel a"></div><div class="skel b"></div></div>`).join('');
-    return;
-  }
-  const list=filtered();
-  if(!list.length){
-    g.style.display='block';
-    g.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <div style="font-size:15px;color:var(--cream)">No items found</div>
-      <div style="font-size:12px;margin-top:4px">Try another category or clear the search.</div></div>`;
-    return;
-  }
-  g.style.display='grid';
-  g.innerHTML=list.map(p=>{
-    const wished=wish.includes(p.id);
-    return `<article class="card">
-      <div class="card-imgwrap" onclick="openDetail('${p.id}')">
-        ${p.badge?`<span class="tag ${p.badge==='Premium'?'dark':''}">${badgeText(p.badge)}</span>`:''}
-        <button class="wish-mini ${wished?'on':''}" onclick="event.stopPropagation();toggleWish('${p.id}')" aria-label="Save">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0 0 12 5 4.5 4.5 0 0 0 2 8.5C2 12 5 14 12 20c1.7-1.4 3.2-2.7 4.5-3.9"/></svg>
-        </button>
-        <img loading="lazy" src="${img1(p)}" alt="${esc(p.name)}">
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <span class="eyebrow reveal">Premium Micro Jewellery · Wholesale</span>
+        <h1 class="reveal" data-d="1">Luxury Imitation Jewellery,<br /><span class="gold">Crafted for Resellers</span></h1>
+        <p class="lead reveal" data-d="2">Aabhushan Sales brings you premium micro-polish jewellery at true wholesale prices — ordered simply by the box, straight to your WhatsApp.</p>
+        <div class="hero-cta reveal" data-d="3">
+          <a href="#collections" class="btn btn-gold btn-lg">View Collection</a>
+          <a href="#" class="btn btn-wa btn-lg" data-wa="general">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Order on WhatsApp
+          </a>
+        </div>
+        <ul class="hero-stats reveal" data-d="4">
+          <li><span class="num" data-count="500">0</span><span>+</span><div class="label">Designs</div></li>
+          <li><span class="num" data-count="25">0</span><span>+</span><div class="label">Years Legacy</div></li>
+          <li><span class="num" data-count="1000">0</span><span>+</span><div class="label">Happy Clients</div></li>
+        </ul>
       </div>
-      <div class="card-body">
-        <div class="card-name" onclick="openDetail('${p.id}')">${esc(p.name)}</div>
-        <div class="card-code">${esc(p.code)}</div>
-        <div class="card-box">1 Box = ${p.piecesPerBox} pcs · min ${p.minBoxes}</div>
-        ${CONFIG.SHOW_PRICE?`<div class="card-price">${CONFIG.CURRENCY}${p.rate}<small>/pc</small></div>`:''}
-        <div class="card-actions">
-          <button class="btn btn-gold" onclick="quickAdd('${p.id}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/></svg>Add
-          </button>
-          <button class="btn btn-wa" onclick="shareProduct('${p.id}')" aria-label="Share on WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2m4.6 11.6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2 0-.2 0-.3-.1-.4l-.7-1.8c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4 5.3 5.3 0 0 0 3.2.7 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3"/></svg>
-          </button>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Necklaces</span><span class="dot">◆</span>
+        <span>Bangles</span><span class="dot">◆</span>
+        <span>Earrings</span><span class="dot">◆</span>
+        <span>Rings</span><span class="dot">◆</span>
+        <span>Maang Tikka</span><span class="dot">◆</span>
+        <span>Anklets</span><span class="dot">◆</span>
+        <span>Haath Phool</span><span class="dot">◆</span>
+        <!-- duplicate for seamless loop -->
+        <span>Necklaces</span><span class="dot">◆</span>
+        <span>Bangles</span><span class="dot">◆</span>
+        <span>Earrings</span><span class="dot">◆</span>
+        <span>Rings</span><span class="dot">◆</span>
+        <span>Maang Tikka</span><span class="dot">◆</span>
+        <span>Anklets</span><span class="dot">◆</span>
+        <span>Haath Phool</span><span class="dot">◆</span>
+      </div>
+    </div>
+
+    <!-- ===================== COLLECTIONS / BOX ORDER ===================== -->
+    <section id="collections" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow reveal">Our Collection</span>
+          <h2 class="section-title reveal" data-d="1">Order by the <span class="gold">Box</span></h2>
+          <p class="section-sub reveal" data-d="2">Browse our range, pick how many boxes you need, and send your order on WhatsApp in one tap. Tap any photo to view it larger.</p>
+        </div>
+
+        <!-- Cards rendered from data in main.js -->
+        <div class="product-grid" id="productGrid"></div>
+
+        <noscript>
+          <p style="text-align:center;color:var(--muted);margin-top:20px;">
+            Please enable JavaScript to view the collection, or message us directly on WhatsApp at +91 79905 41616.
+          </p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===================== BENEFITS / TRUST ===================== -->
+    <section id="benefits" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow reveal">Why Aabhushan Sales</span>
+          <h2 class="section-title reveal" data-d="1">Built for <span class="gold">Wholesale Buyers</span></h2>
+          <p class="section-sub reveal" data-d="2">Everything a reseller needs — quality, pricing, and dispatch you can rely on.</p>
+        </div>
+        <div class="benefits-grid">
+          <article class="benefit-card reveal">
+            <div class="benefit-icon" aria-hidden="true">💰</div>
+            <h3>Wholesale Pricing</h3>
+            <p>Factory-direct rates with no middlemen — the best value on every box you order.</p>
+          </article>
+          <article class="benefit-card reveal" data-d="1">
+            <div class="benefit-icon" aria-hidden="true">✨</div>
+            <h3>Premium Micro Polish</h3>
+            <p>Anti-tarnish, high-shine micro polishing that keeps every piece looking luxurious.</p>
+          </article>
+          <article class="benefit-card reveal" data-d="2">
+            <div class="benefit-icon" aria-hidden="true">💎</div>
+            <h3>Latest Designs</h3>
+            <p>Fresh, trend-led collections added regularly so your shelves always feel new.</p>
+          </article>
+          <article class="benefit-card reveal" data-d="3">
+            <div class="benefit-icon" aria-hidden="true">🚚</div>
+            <h3>Fast Dispatch</h3>
+            <p>Quick order processing and reliable pan-India shipping, ready when you are.</p>
+          </article>
+          <article class="benefit-card reveal" data-d="4">
+            <div class="benefit-icon" aria-hidden="true">📦</div>
+            <h3>Quality Checked Packing</h3>
+            <p>Every box is inspected and securely packed so your stock arrives perfect.</p>
+          </article>
         </div>
       </div>
-    </article>`;
-  }).join('');
-}
-function badgeText(b){ return b==='New'?'New':b==='Best'?'Best Seller':b==='Low'?'Value':b==='Premium'?'Premium':b; }
-function esc(s){ return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    </section>
 
-/* ============================================================
-   SEARCH / NAV
-   ============================================================ */
-let searchTimer;
-function onSearch(v){ clearTimeout(searchTimer); searchTimer=setTimeout(()=>{ searchTerm=v.trim(); renderGrid(); },180); }
-function focusSearch(){ const i=document.getElementById('searchInput'); window.scrollTo({top:0,behavior:'smooth'}); setTimeout(()=>i.focus(),250); }
-function scrollToCats(){ document.querySelector('.chips-label').scrollIntoView({behavior:'smooth',block:'start'}); }
-function goHome(){ closeAll(); activeCat='All'; activeQuick='all'; searchTerm=''; document.getElementById('searchInput').value=''; renderChips(); renderGrid(); window.scrollTo({top:0,behavior:'smooth'}); }
-function openWishlist(){ activeQuick='all'; activeCat='All'; searchTerm=''; renderChips();
-  const g=document.getElementById('grid'); const list=PRODUCTS.filter(p=>wish.includes(p.id)&&p.active);
-  if(!list.length){ toast('No saved items yet'); return; }
-  PRODUCTS_BACKUP_FILTER=list; renderWishGrid(list); window.scrollTo({top:document.querySelector('.grid').offsetTop-60,behavior:'smooth'});
-}
-let PRODUCTS_BACKUP_FILTER=null;
-function renderWishGrid(list){ /* lightweight reuse: temporarily show only wished */ const old=filtered; }
-
-/* ============================================================
-   WISHLIST
-   ============================================================ */
-function toggleWish(id){
-  const i=wish.indexOf(id);
-  if(i>=0){ wish.splice(i,1); toast('Removed from saved'); } else { wish.push(id); toast('Saved'); }
-  save('as_wish',wish); refreshBadges(); renderGrid();
-  if(current&&current.id===id) renderDetail();
-}
-
-/* ============================================================
-   CART
-   ============================================================ */
-function quickAdd(id){ const p=PRODUCTS.find(x=>x.id===id); if(!p)return; addToCart(p, p.minBoxes||1); toast(`Added · ${p.minBoxes||1} box`); }
-function addToCart(p, boxes){
-  const ex=cart.find(c=>c.id===p.id);
-  if(ex){ ex.boxes+=boxes; }
-  else cart.push({ id:p.id, name:p.name, code:p.code, image:img1(p), rate:p.rate, piecesPerBox:p.piecesPerBox, minBoxes:p.minBoxes, boxes });
-  save('as_cart',cart); refreshBadges();
-}
-function setBoxes(id, boxes){ const c=cart.find(x=>x.id===id); if(!c)return; c.boxes=Math.max(c.minBoxes||1, boxes); save('as_cart',cart); refreshBadges(); renderCart(); }
-function removeFromCart(id){ cart=cart.filter(c=>c.id!==id); save('as_cart',cart); refreshBadges(); renderCart(); }
-function clearCart(){ if(!cart.length)return; if(confirm('Clear all items from your order?')){ cart=[]; save('as_cart',cart); refreshBadges(); renderCart(); } }
-function cartPcs(){ return cart.reduce((s,c)=>s+c.boxes*c.piecesPerBox,0); }
-function cartBoxes(){ return cart.reduce((s,c)=>s+c.boxes,0); }
-function cartTotal(){ return cart.reduce((s,c)=>s+c.boxes*c.piecesPerBox*c.rate,0); }
-
-function refreshBadges(){
-  const n=cartBoxes();
-  ['cartCount','cartCountNav'].forEach(id=>{ const e=document.getElementById(id); e.textContent=n; e.style.display=n?'block':'none'; });
-  const w=document.getElementById('wishCount'); w.textContent=wish.length; w.style.display=wish.length?'block':'none';
-}
-function renderCart(){
-  const body=document.getElementById('cartBody'), foot=document.getElementById('cartFoot');
-  if(!cart.length){
-    body.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/></svg>
-      <div style="font-size:15px;color:var(--cream)">Your order is empty</div>
-      <div style="font-size:12px;margin-top:4px">Add items in boxes to start your WhatsApp order.</div></div>`;
-    foot.innerHTML=''; return;
-  }
-  body.innerHTML=cart.map(c=>{
-    const pcs=c.boxes*c.piecesPerBox, amt=pcs*c.rate;
-    return `<div class="cline">
-      <div class="cline-img"><img src="${c.image}" alt=""></div>
-      <div class="cline-info">
-        <div class="n">${esc(c.name)}</div>
-        <div class="c">${esc(c.code)}</div>
-        <div class="m">1 Box = ${c.piecesPerBox} pcs · ${pcs} pcs total</div>
-        ${CONFIG.SHOW_PRICE?`<div class="p">${CONFIG.CURRENCY}${amt.toLocaleString('en-IN')} <span style="font-size:10px;color:var(--cream-dim);font-weight:500">(${CONFIG.CURRENCY}${c.rate}/pc)</span></div>`:''}
-      </div>
-      <div class="cline-right">
-        <div class="stepper">
-          <button onclick="setBoxes('${c.id}',${c.boxes-1})" aria-label="Less">−</button>
-          <span class="val">${c.boxes}<small>${c.boxes===1?'Box':'Boxes'}</small></span>
-          <button onclick="setBoxes('${c.id}',${c.boxes+1})" aria-label="More">＋</button>
-        </div>
-        <button class="cline-remove" onclick="removeFromCart('${c.id}')">Remove</button>
-      </div>
-    </div>`;
-  }).join('');
-  foot.innerHTML=`
-    <div class="totrow"><span>Total boxes</span><span>${cartBoxes()} boxes</span></div>
-    <div class="totrow"><span>Total pieces</span><span>${cartPcs()} pcs</span></div>
-    ${CONFIG.SHOW_PRICE?`<div class="totrow big"><span>Estimated total</span><b>${CONFIG.CURRENCY}${cartTotal().toLocaleString('en-IN')}</b></div>`:''}
-    <button class="btn-block wa" style="margin-top:10px" onclick="orderWhatsApp()">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2m4.6 11.6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2 0-.2 0-.3-.1-.4l-.7-1.8c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4 5.3 5.3 0 0 0 3.2.7 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3"/></svg>
-      Send Order on WhatsApp
-    </button>
-    <button class="linklike" onclick="clearCart()">Clear order</button>`;
-}
-
-/* ============================================================
-   WHATSAPP MESSAGE BUILDER
-   ============================================================ */
-function productUrl(p){ return SITE_URL + '?product=' + encodeURIComponent(p.code||p.id); }
-function orderWhatsApp(){
-  if(!cart.length){ toast('Your order is empty'); return; }
-  let m = 'Hello Aabhushan Sales, I want to order:\n\n';
-  cart.forEach((c,i)=>{
-    const p=PRODUCTS.find(x=>x.id===c.id)||c;
-    const pcs=c.boxes*c.piecesPerBox;
-    m += `${i+1}) Item: ${c.name}\n`;
-    m += `Code: ${c.code}\n`;
-    m += `Qty: ${c.boxes} ${c.boxes===1?'Box':'Boxes'}\n`;
-    m += `Box Packing: 1 Box = ${c.piecesPerBox} pcs\n`;
-    m += `Total Pcs: ${pcs} pcs\n`;
-    if(CONFIG.SHOW_PRICE){ m += `Rate: ${CONFIG.CURRENCY}${c.rate}/pc\n`; m += `Amount: ${CONFIG.CURRENCY}${(pcs*c.rate).toLocaleString('en-IN')}\n`; }
-    if(c.image && !c.image.startsWith('data:')) m += `Image: ${c.image}\n`;
-    m += `Product Link: ${productUrl(p)}\n\n`;
-  });
-  m += `———\n`;
-  m += `Total Boxes: ${cartBoxes()}\n`;
-  m += `Total Pieces: ${cartPcs()} pcs\n`;
-  if(CONFIG.SHOW_PRICE) m += `Estimated Total: ${CONFIG.CURRENCY}${cartTotal().toLocaleString('en-IN')}\n`;
-  m += `\nCustomer Name: \nMobile: \nCity: \nRemark: `;
-  window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(m)}`,'_blank');
-}
-function shareProduct(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p)return;
-  let m = `*Aabhushan Sales*\n\n${p.name}\nCode: ${p.code}\nBox Packing: 1 Box = ${p.piecesPerBox} pcs (min ${p.minBoxes})\n`;
-  if(CONFIG.SHOW_PRICE) m += `Rate: ${CONFIG.CURRENCY}${p.rate}/pc\n`;
-  const im=img1(p); if(im && !im.startsWith('data:')) m += `Image: ${im}\n`;
-  m += `Product Link: ${productUrl(p)}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank');
-}
-function shareCurrent(){ if(current) shareProduct(current.id); }
-
-/* ============================================================
-   PRODUCT DETAIL + GALLERY
-   ============================================================ */
-function openDetail(id){
-  current=PRODUCTS.find(p=>p.id===id); if(!current)return;
-  currentBoxes=current.minBoxes||1;
-  renderDetail();
-  openSheet('detailSheet');
-  history.replaceState(null,'', productUrl(current));
-}
-function renderDetail(){
-  const p=current; const wished=wish.includes(p.id);
-  const imgs = p.images.length? p.images : [img1(p)];
-  document.getElementById('detailScroll').innerHTML = `
-    <div class="gallery-wrap">
-      <div class="gallery" id="gallery" onscroll="onGalleryScroll()">
-        ${imgs.map((src,i)=>`<div class="gimg" onclick="openZoom(${i})"><img src="${src}" alt="${esc(p.name)} ${i+1}"></div>`).join('')}
-      </div>
-      <div class="zoom-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-3-3M11 8v6M8 11h6"/></svg>Tap to zoom</div>
-    </div>
-    ${imgs.length>1?`<div class="gdots" id="gdots">${imgs.map((_,i)=>`<span class="gdot ${i===0?'on':''}"></span>`).join('')}</div>`:''}
-    ${imgs.length>1?`<div class="thumbs" id="thumbs">${imgs.map((src,i)=>`<button class="thumb ${i===0?'on':''}" onclick="scrollGallery(${i})"><img src="${src}" alt=""></button>`).join('')}</div>`:''}
-    <div class="detail-pad">
-      <h2>${esc(p.name)}</h2>
-      <div class="detail-meta"><span>Code: ${esc(p.code)}</span><span>${esc(p.category)}</span></div>
-      ${CONFIG.SHOW_PRICE?`<div class="detail-price">${CONFIG.CURRENCY}${p.rate}<small> / piece</small></div>`:''}
-      <div class="spec">
-        <div class="s"><div class="k">Box Packing</div><div class="v">${p.piecesPerBox} pcs / box</div></div>
-        <div class="s"><div class="k">Minimum Order</div><div class="v">${p.minBoxes} box${p.minBoxes>1?'es':''}</div></div>
-      </div>
-      <div class="boxpick">
-        <div class="lbl">Select quantity<b id="boxTotalLine">1 Box = ${p.piecesPerBox} pcs</b></div>
-        <div class="stepper">
-          <button onclick="changeBoxes(-1)" aria-label="Less">−</button>
-          <span class="val" id="boxVal">${currentBoxes}<small>${currentBoxes===1?'Box':'Boxes'}</small></span>
-          <button onclick="changeBoxes(1)" aria-label="More">＋</button>
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-visual reveal">
+            <svg class="about-gem" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="gemGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#FFE9A8"/>
+                  <stop offset="60%" stop-color="#C9A84C"/>
+                  <stop offset="100%" stop-color="#7B5E1A"/>
+                </radialGradient>
+              </defs>
+              <polygon points="100,10 185,55 185,145 100,190 15,145 15,55" fill="url(#gemGrad)" opacity="0.95"/>
+              <polygon points="100,35 160,65 160,135 100,165 40,135 40,65" fill="none" stroke="#FFE9A8" stroke-width="1"/>
+              <line x1="100" y1="10" x2="100" y2="35" stroke="#FFE9A8" stroke-width="1.5"/>
+              <line x1="185" y1="55" x2="160" y2="65" stroke="#FFE9A8" stroke-width="1.5"/>
+              <line x1="185" y1="145" x2="160" y2="135" stroke="#FFE9A8" stroke-width="1.5"/>
+              <line x1="100" y1="190" x2="100" y2="165" stroke="#FFE9A8" stroke-width="1.5"/>
+              <line x1="15" y1="145" x2="40" y2="135" stroke="#FFE9A8" stroke-width="1.5"/>
+              <line x1="15" y1="55" x2="40" y2="65" stroke="#FFE9A8" stroke-width="1.5"/>
+              <circle cx="100" cy="100" r="8" fill="#FFE9A8"/>
+            </svg>
+            <div class="about-badges">
+              <span>Est. 2000</span>
+              <span>Surat, India</span>
+            </div>
+          </div>
+          <div class="about-content">
+            <span class="eyebrow reveal">About Us</span>
+            <h2 class="section-title reveal" data-d="1">A Trusted Name in <span class="gold">Imitation Jewellery</span></h2>
+            <p class="reveal" data-d="2">
+              At <strong>Aabhushan Sales</strong>, we have been shaping the world of micro imitation jewellery for over two decades. Based in Surat — the jewellery capital of India — our workshop blends traditional artistry with modern precision so every piece looks luxurious without the luxury price.
+            </p>
+            <p class="reveal" data-d="2">
+              From raw-material selection to the final micro polish, each design passes rigorous quality checks. We supply retailers, boutiques, wholesalers, and exporters across India and beyond — jewellery they can resell with confidence.
+            </p>
+            <div class="about-features">
+              <div class="about-feature reveal">
+                <span class="ico" aria-hidden="true">✦</span>
+                <div><h4>Premium Quality</h4><p>Anti-tarnish, skin-friendly materials and finishes.</p></div>
+              </div>
+              <div class="about-feature reveal" data-d="1">
+                <span class="ico" aria-hidden="true">✦</span>
+                <div><h4>Bulk &amp; Box Orders</h4><p>Order by the box — small trial lots to large stock runs.</p></div>
+              </div>
+              <div class="about-feature reveal" data-d="2">
+                <span class="ico" aria-hidden="true">✦</span>
+                <div><h4>Fast Delivery</h4><p>Pan-India dispatch with secure, quality-checked packing.</p></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <button class="btn btn-outline" style="width:100%;min-height:44px" onclick="toggleWish('${p.id}')">
-        ${wished?'♥ Saved':'♡ Save to wishlist'}
-      </button>
-      <div class="note" style="margin-top:12px">Order is placed in <b>boxes</b>. Pieces are calculated automatically — no need to enter piece counts.</div>
-    </div>`;
-  updateBoxLine();
-  document.getElementById('detailFoot').innerHTML = `
-    <button class="btn btn-ghost" style="flex:1;min-height:48px" onclick="addCurrent()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/></svg> Add to Cart
-    </button>
-    <button class="btn btn-gold" style="flex:1.3;min-height:48px;background:#1faa54;color:#fff" onclick="orderCurrentNow()">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="17"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2"/></svg> Order Now
-    </button>`;
-}
-function changeBoxes(d){ currentBoxes=Math.max(current.minBoxes||1, currentBoxes+d); updateBoxLine(); }
-function updateBoxLine(){
-  const p=current, pcs=currentBoxes*p.piecesPerBox;
-  document.getElementById('boxVal').innerHTML=`${currentBoxes}<small>${currentBoxes===1?'Box':'Boxes'}</small>`;
-  document.getElementById('boxTotalLine').textContent=`${currentBoxes} Box${currentBoxes>1?'es':''} = ${pcs} pcs`;
-}
-function addCurrent(){ addToCart(current, currentBoxes); toast(`Added · ${currentBoxes} box${currentBoxes>1?'es':''}`); refreshBadges(); }
-function orderCurrentNow(){ addCurrent(); closeAll(); setTimeout(()=>{ openCart(); },150); }
+    </section>
 
-/* gallery scroll sync */
-function onGalleryScroll(){
-  const g=document.getElementById('gallery'); if(!g)return;
-  const i=Math.round(g.scrollLeft/g.clientWidth);
-  document.querySelectorAll('#gdots .gdot').forEach((d,k)=>d.classList.toggle('on',k===i));
-  document.querySelectorAll('#thumbs .thumb').forEach((t,k)=>t.classList.toggle('on',k===i));
-}
-function scrollGallery(i){ const g=document.getElementById('gallery'); if(g) g.scrollTo({left:i*g.clientWidth,behavior:'smooth'}); }
-
-/* ============================================================
-   FULLSCREEN ZOOM (double-tap + pinch + pan)
-   ============================================================ */
-let zoomState={scale:1,x:0,y:0,startX:0,startY:0,dist:0,lastTap:0};
-function openZoom(i){
-  const imgs=current.images.length?current.images:[img1(current)];
-  document.getElementById('zoomImg').src=imgs[i]||imgs[0];
-  document.getElementById('zoomerLabel').textContent=`${current.name}`;
-  resetZoom();
-  document.getElementById('zoomer').classList.add('open');
-}
-function closeZoom(){ document.getElementById('zoomer').classList.remove('open'); }
-function resetZoom(){ zoomState.scale=1; zoomState.x=0; zoomState.y=0; applyZoom(); }
-function applyZoom(){ document.getElementById('zoomImg').style.transform=`translate(${zoomState.x}px,${zoomState.y}px) scale(${zoomState.scale})`; }
-(function initZoomGestures(){
-  const stage=()=>document.getElementById('zoomStage');
-  document.addEventListener('DOMContentLoaded',()=>{
-    const st=stage();
-    st.addEventListener('touchstart',e=>{
-      if(e.touches.length===2){ zoomState.dist=dist(e.touches); }
-      else if(e.touches.length===1){
-        const now=Date.now();
-        if(now-zoomState.lastTap<300){ zoomState.scale=zoomState.scale>1?1:2.4; if(zoomState.scale===1){zoomState.x=0;zoomState.y=0;} applyZoom(); }
-        zoomState.lastTap=now;
-        zoomState.startX=e.touches[0].clientX-zoomState.x; zoomState.startY=e.touches[0].clientY-zoomState.y;
-      }
-    },{passive:true});
-    st.addEventListener('touchmove',e=>{
-      if(e.touches.length===2){
-        const d=dist(e.touches); zoomState.scale=Math.min(4,Math.max(1, zoomState.scale*(d/zoomState.dist))); zoomState.dist=d; applyZoom();
-      } else if(e.touches.length===1 && zoomState.scale>1){
-        zoomState.x=e.touches[0].clientX-zoomState.startX; zoomState.y=e.touches[0].clientY-zoomState.startY; applyZoom();
-      }
-    },{passive:true});
-    // desktop click-to-zoom
-    st.addEventListener('click',()=>{ if(matchMedia('(pointer:fine)').matches){ zoomState.scale=zoomState.scale>1?1:2; zoomState.x=0;zoomState.y=0; applyZoom(); }});
-  });
-  function dist(t){ const dx=t[0].clientX-t[1].clientX, dy=t[0].clientY-t[1].clientY; return Math.hypot(dx,dy); }
-})();
-
-/* ============================================================
-   DRAWER / OVERLAY CONTROL
-   ============================================================ */
-function openSheet(id){ document.getElementById('overlay').classList.add('open'); document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
-function openCart(){ renderCart(); openSheet('cartDrawer'); }
-function closeAll(){
-  document.getElementById('overlay').classList.remove('open');
-  document.querySelectorAll('.drawer.open').forEach(d=>d.classList.remove('open'));
-  document.body.style.overflow='';
-}
-
-/* ============================================================
-   DEEP LINK  (?product=CODE opens that product)
-   ============================================================ */
-function handleDeepLink(){
-  const code=new URLSearchParams(location.search).get('product');
-  if(!code)return;
-  const p=PRODUCTS.find(x=>x.code===code||x.id===code);
-  if(p) setTimeout(()=>openDetail(p.id),300);
-}
-
-/* ============================================================
-   ADMIN PANEL
-   ============================================================ */
-let adminAuthed=false, editingId=null, draftImages=[];
-function openAdmin(){
-  if(!adminAuthed){
-    const pin=prompt('Owner passcode:');
-    if(pin!==CONFIG.ADMIN_PASSCODE){ if(pin!==null) toast('Wrong passcode'); return; }
-    adminAuthed=true;
-  }
-  adminTab('add'); openSheet('adminSheet');
-}
-function adminTab(t){
-  document.getElementById('tabAdd').classList.toggle('active',t==='add');
-  document.getElementById('tabList').classList.toggle('active',t==='list');
-  if(t==='add') renderAdminForm(); else renderAdminList();
-}
-function renderAdminForm(){
-  const editing = editingId? PRODUCTS.find(p=>p.id===editingId):null;
-  if(editing && !draftImages.length) draftImages=[...editing.images];
-  document.getElementById('adminBody').innerHTML=`
-    <div class="field"><label>Product name</label><input id="f_name" value="${editing?esc(editing.name):''}" placeholder="e.g. Ruby CZ Necklace Set"></div>
-    <div class="field"><label>Product code</label><input id="f_code" value="${editing?esc(editing.code):''}" placeholder="AS-NK-118"></div>
-    <div class="field"><label>Category</label>
-      <select id="f_cat">${CATEGORIES.filter(c=>c!=='All').map(c=>`<option ${editing&&editing.category===c?'selected':''}>${c}</option>`).join('')}</select>
-    </div>
-    <div class="field"><label>Rate (per piece)</label><input id="f_rate" type="number" inputmode="numeric" value="${editing?editing.rate:''}" placeholder="0"></div>
-    <div class="field"><div class="two">
-      <div><label>Pieces / box</label><input id="f_ppb" type="number" inputmode="numeric" value="${editing?editing.piecesPerBox:20}"></div>
-      <div><label>Min boxes</label><input id="f_min" type="number" inputmode="numeric" value="${editing?editing.minBoxes:1}"></div>
-    </div></div>
-    <div class="field"><label>Badge (optional)</label>
-      <select id="f_badge">${['','New','Best','Low','Premium'].map(b=>`<option value="${b}" ${editing&&editing.badge===b?'selected':''}>${b||'None'}</option>`).join('')}</select>
-    </div>
-    <div class="field"><label>Product images (first = thumbnail)</label>
-      <input id="f_imgs" type="file" accept="image/*" multiple onchange="onAdminImages(this.files)">
-      <div class="imgrow" id="draftImgs"></div>
-    </div>
-    <div class="field">
-      <label>Status</label>
-      <select id="f_active"><option value="true" ${!editing||editing.active?'selected':''}>Active (visible)</option><option value="false" ${editing&&!editing.active?'selected':''}>Inactive (hidden)</option></select>
-    </div>
-    <button class="btn-block gold" onclick="saveProduct()">${editing?'Update product':'Add product'}</button>
-    ${editing?`<button class="linklike" onclick="cancelEdit()">Cancel edit</button>`:''}
-    ${CONFIG.SUPABASE_URL?'':`<div class="note" style="margin-top:14px"><b>Local mode:</b> products & images are saved on this device. For public image links inside WhatsApp orders and multi-device sync, add your Supabase URL + key in CONFIG.</div>`}
-  `;
-  renderDraftImgs();
-}
-function onAdminImages(files){
-  const arr=[...files];
-  Promise.all(arr.map(f=>compressImage(f))).then(list=>{ draftImages=draftImages.concat(list); renderDraftImgs(); });
-}
-function renderDraftImgs(){
-  const el=document.getElementById('draftImgs'); if(!el)return;
-  el.innerHTML=draftImages.map((src,i)=>`<div class="imgthumb">
-    <img src="${src}" alt="">
-    ${i===0?'<div class="main-flag">MAIN</div>':''}
-    <div class="mv">${i>0?`<button onclick="moveImg(${i},-1)">◀</button>`:''}${i<draftImages.length-1?`<button onclick="moveImg(${i},1)">▶</button>`:''}</div>
-    <button class="x" onclick="delImg(${i})">×</button>
-  </div>`).join('');
-}
-function moveImg(i,d){ const j=i+d; if(j<0||j>=draftImages.length)return; [draftImages[i],draftImages[j]]=[draftImages[j],draftImages[i]]; renderDraftImgs(); }
-function delImg(i){ draftImages.splice(i,1); renderDraftImgs(); }
-function compressImage(file, maxKB=280, maxDim=1200){
-  return new Promise(res=>{
-    const img=new Image(), r=new FileReader();
-    r.onload=e=>img.src=e.target.result;
-    img.onload=()=>{
-      let {width:w,height:h}=img;
-      if(w>maxDim||h>maxDim){ const k=Math.min(maxDim/w,maxDim/h); w=Math.round(w*k); h=Math.round(h*k); }
-      const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
-      cv.getContext('2d').drawImage(img,0,0,w,h);
-      let q=0.85, out=cv.toDataURL('image/jpeg',q);
-      while(out.length/1024>maxKB && q>0.4){ q-=0.1; out=cv.toDataURL('image/jpeg',q); }
-      res(out);
-    };
-    r.readAsDataURL(file);
-  });
-}
-async function saveProduct(){
-  const g=id=>document.getElementById(id).value;
-  const prod={
-    id: editingId || ('p'+Date.now().toString(36)),
-    name:g('f_name').trim(), code:g('f_code').trim(), category:g('f_cat'),
-    rate:Number(g('f_rate'))||0, piecesPerBox:Number(g('f_ppb'))||20, minBoxes:Number(g('f_min'))||1,
-    badge:g('f_badge'), active:g('f_active')==='true', images:[...draftImages],
-  };
-  if(!prod.name||!prod.code){ toast('Name and code are required'); return; }
-
-  if(CONFIG.SUPABASE_URL && CONFIG.SUPABASE_KEY){
-    try{
-      await ensureSupabase();
-      // NOTE: for public WhatsApp image links, upload base64 images to Supabase Storage here and store the public URLs.
-      const row={ id:prod.id, name:prod.name, code:prod.code, category:prod.category, rate:prod.rate,
-        pieces_per_box:prod.piecesPerBox, min_boxes:prod.minBoxes, badge:prod.badge, active:prod.active, images:prod.images };
-      const { error } = await supa.from('products').upsert(row);
-      if(error) throw error;
-    }catch(e){ console.warn(e); toast('Cloud save failed — saved locally'); persistLocal(prod); }
-  } else { persistLocal(prod); }
-
-  const i=PRODUCTS.findIndex(p=>p.id===prod.id);
-  if(i>=0) PRODUCTS[i]=prod; else PRODUCTS.unshift(prod);
-  editingId=null; draftImages=[];
-  toast('Saved'); renderGrid(); adminTab('list');
-}
-function persistLocal(prod){
-  let lp=load('as_products',[]); const i=lp.findIndex(p=>p.id===prod.id);
-  if(i>=0) lp[i]=prod; else lp.unshift(prod); save('as_products',lp);
-}
-function renderAdminList(){
-  const q=(document.getElementById('adminSearch')||{}).value||'';
-  const list=PRODUCTS.filter(p=>!q || p.name.toLowerCase().includes(q.toLowerCase())||p.code.toLowerCase().includes(q.toLowerCase()));
-  document.getElementById('adminBody').innerHTML=`
-    <div class="field"><input id="adminSearch" placeholder="Search by name or code…" value="${esc(q)}" oninput="renderAdminList()"></div>
-    ${list.length?list.map(p=>`<div class="admin-list-item">
-      <img src="${img1(p)}" alt="">
-      <div style="min-width:0;flex:1">
-        <div class="n">${esc(p.name)}</div>
-        <div class="c">${esc(p.code)} · ${esc(p.category)} · 1 Box=${p.piecesPerBox}pc</div>
-        <span class="pill-status ${p.active?'on':'off'}">${p.active?'ACTIVE':'HIDDEN'}</span>
+    <!-- ===================== PROCESS ===================== -->
+    <section id="process" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow reveal">How Ordering Works</span>
+          <h2 class="section-title reveal" data-d="1">Simple, <span class="gold">Box-Based</span> Ordering</h2>
+        </div>
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <div class="num">01</div>
+            <div class="ico" aria-hidden="true">👀</div>
+            <h3>Browse</h3>
+            <p>Explore our collection and tap any photo to view it up close.</p>
+          </div>
+          <div class="process-step reveal" data-d="1">
+            <div class="num">02</div>
+            <div class="ico" aria-hidden="true">📦</div>
+            <h3>Pick Boxes</h3>
+            <p>Choose 1, 2, or 3 boxes — no confusing piece counts.</p>
+          </div>
+          <div class="process-step reveal" data-d="2">
+            <div class="num">03</div>
+            <div class="ico" aria-hidden="true">💬</div>
+            <h3>Send on WhatsApp</h3>
+            <p>Your order details auto-fill into a WhatsApp message.</p>
+          </div>
+          <div class="process-step reveal" data-d="3">
+            <div class="num">04</div>
+            <div class="ico" aria-hidden="true">🚚</div>
+            <h3>We Dispatch</h3>
+            <p>We confirm, pack, and ship your order quickly and safely.</p>
+          </div>
+        </div>
       </div>
-      <div class="mini-actions">
-        <button onclick="editProduct('${p.id}')" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
-        <button onclick="toggleActive('${p.id}')" aria-label="Toggle">${p.active?'🙈':'👁'}</button>
-        <button onclick="deleteProduct('${p.id}')" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section id="testimonials" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow reveal">Client Love</span>
+          <h2 class="section-title reveal" data-d="1">Trusted by Resellers</h2>
+        </div>
+        <div class="testi-viewport">
+          <div class="testi-track" id="testiTrack">
+            <div class="testi-card">
+              <div class="testi-inner">
+                <div class="testi-stars" aria-hidden="true">★★★★★</div>
+                <p>"Aabhushan Sales has been our go-to supplier for 8 years. The quality of their micro jewellery is unmatched in this price range. Highly recommended!"</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" aria-hidden="true">R</div>
+                  <div class="who"><strong>Ravi Shah</strong><span>Jewellery Retailer, Mumbai</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-card">
+              <div class="testi-inner">
+                <div class="testi-stars" aria-hidden="true">★★★★★</div>
+                <p>"The bridal sets from Aabhushan are absolutely stunning. Our customers always come back for more. Fast delivery and great packaging too."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" aria-hidden="true">P</div>
+                  <div class="who"><strong>Priya Mehta</strong><span>Boutique Owner, Jaipur</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="testi-card">
+              <div class="testi-inner">
+                <div class="testi-stars" aria-hidden="true">★★★★★</div>
+                <p>"We import from multiple Indian suppliers, but Aabhushan stands out for consistency and reliability. Our Dubai customers love their pieces."</p>
+                <div class="testi-author">
+                  <div class="testi-avatar" aria-hidden="true">A</div>
+                  <div class="who"><strong>Ahmed Al-Farsi</strong><span>Importer, Dubai, UAE</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-dots" id="testiDots" role="tablist" aria-label="Testimonials"></div>
       </div>
-    </div>`).join(''):'<div class="empty"><div style="color:var(--cream)">No products yet</div></div>'}
-  `;
-}
-function editProduct(id){ editingId=id; draftImages=[]; adminTab('add'); }
-function cancelEdit(){ editingId=null; draftImages=[]; adminTab('add'); }
-function toggleActive(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p)return; p.active=!p.active;
-  persistLocal(p); if(supa){ supa.from('products').update({active:p.active}).eq('id',id); }
-  renderAdminList(); renderGrid();
-}
-function deleteProduct(id){
-  if(!confirm('Delete this product?'))return;
-  PRODUCTS=PRODUCTS.filter(p=>p.id!==id);
-  let lp=load('as_products',[]).filter(p=>p.id!==id); save('as_products',lp);
-  if(supa){ supa.from('products').delete().eq('id',id); }
-  renderAdminList(); renderGrid();
-}
+    </section>
 
-/* ============================================================
-   TOAST
-   ============================================================ */
-let toastTimer;
-function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1900); }
+    <!-- ===================== WHATSAPP CTA BAND ===================== -->
+    <section class="wa-band section">
+      <div class="container">
+        <span class="eyebrow reveal" style="color:var(--gold-300)">Ready to Order?</span>
+        <h2 class="section-title reveal" data-d="1">Send Your Order on WhatsApp</h2>
+        <p class="reveal" data-d="2">Tell us the designs and how many boxes you need. Our team replies fast with availability and pricing.</p>
+        <a href="#" class="btn btn-wa btn-lg reveal" data-d="3" data-wa="general">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Order on WhatsApp
+        </a>
+      </div>
+    </section>
 
-init();
-</script>
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <span class="eyebrow reveal">Get in Touch</span>
+            <h2 class="section-title reveal" data-d="1">Let's <span class="gold">Connect</span></h2>
+            <p class="reveal" data-d="2">Placing a bulk order or have a custom requirement? Reach out and our team will get back to you quickly.</p>
+            <div class="contact-list">
+              <div class="contact-item reveal">
+                <div class="ci" aria-hidden="true">📍</div>
+                <div><strong>Address</strong><p>Surat, Gujarat, India</p></div>
+              </div>
+              <div class="contact-item reveal" data-d="1">
+                <div class="ci" aria-hidden="true">💬</div>
+                <div><strong>WhatsApp</strong><p><a href="#" data-wa="general">+91 79905 41616</a></p></div>
+              </div>
+              <div class="contact-item reveal" data-d="2">
+                <div class="ci" aria-hidden="true">✉️</div>
+                <div><strong>Email</strong><p><a href="mailto:info@aabhushansales.com">info@aabhushansales.com</a></p></div>
+              </div>
+              <div class="contact-item reveal" data-d="3">
+                <div class="ci" aria-hidden="true">🕐</div>
+                <div><strong>Business Hours</strong><p>Mon – Sat: 9:00 AM – 7:00 PM IST</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form reveal" data-d="1">
+            <form id="enquiryForm">
+              <div class="field">
+                <label for="cf-name">Full Name</label>
+                <input id="cf-name" name="name" type="text" placeholder="Your full name" required />
+              </div>
+              <div class="field">
+                <label for="cf-phone">Phone / WhatsApp</label>
+                <input id="cf-phone" name="phone" type="tel" placeholder="Your contact number" />
+              </div>
+              <div class="field">
+                <label for="cf-cat">Product Category</label>
+                <select id="cf-cat" name="category">
+                  <option value="">Select a category</option>
+                  <option>Necklaces &amp; Sets</option>
+                  <option>Earrings</option>
+                  <option>Bangles &amp; Bracelets</option>
+                  <option>Rings</option>
+                  <option>Maang Tikka</option>
+                  <option>Anklets &amp; Haath Phool</option>
+                  <option>Custom / Mixed Order</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cf-msg">Your Requirement</label>
+                <textarea id="cf-msg" name="message" placeholder="Tell us the designs and how many boxes you need..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-wa btn-block btn-lg">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                Send Enquiry on WhatsApp
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand">
+            <span class="brand-gem" aria-hidden="true">◆</span>
+            <span class="brand-name">Aabhushan&nbsp;<em>Sales</em></span>
+          </div>
+          <p>Premium micro / imitation jewellery wholesale from Surat, India. Serving retailers, boutiques, wholesalers, and exporters since 2000.</p>
+          <div class="footer-social">
+            <a href="#" data-wa="general" aria-label="WhatsApp">wa</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="Facebook">f</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Collection</h4>
+          <ul>
+            <li><a href="#collections">Necklaces &amp; Sets</a></li>
+            <li><a href="#collections">Earrings</a></li>
+            <li><a href="#collections">Bangles &amp; Bracelets</a></li>
+            <li><a href="#collections">Rings</a></li>
+            <li><a href="#collections">Maang Tikka</a></li>
+            <li><a href="#collections">Anklets &amp; Haath Phool</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#benefits">Why Choose Us</a></li>
+            <li><a href="#process">How to Order</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul class="footer-contact">
+            <li><span aria-hidden="true">📍</span> Surat, Gujarat, India</li>
+            <li><span aria-hidden="true">💬</span> <a href="#" data-wa="general">+91 79905 41616</a></li>
+            <li><span aria-hidden="true">✉️</span> <a href="mailto:info@aabhushansales.com">info@aabhushansales.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;width:100%;">
+        <span>&copy; <span id="year">2025</span> Aabhushan Sales. All rights reserved.</span>
+        <span>Crafted with ◆ in India</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== FLOATING WHATSAPP ===================== -->
+  <a class="wa-float" data-wa="general" href="#" aria-label="Order on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  </a>
+
+  <!-- ===================== MOBILE STICKY BAR ===================== -->
+  <div class="mobile-bar">
+    <a href="#collections" class="btn btn-outline">View Collection</a>
+    <a href="#" class="btn btn-wa" data-wa="general">Order on WhatsApp</a>
+  </div>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Product image preview">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">✕</button>
+      <div class="lightbox-stage" id="lightboxStage"></div>
+      <div class="lightbox-title" id="lightboxTitle"></div>
+      <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+      <div class="lightbox-hint">Tap image to zoom · Tap outside to close</div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
