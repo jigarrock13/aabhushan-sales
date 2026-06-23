@@ -926,6 +926,39 @@ const SUPABASE_URL = "https://hkwmeeeajkuxycgovevc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_oA7vBAjke-TU7ipfUyW8oQ_7vIHshPf";
 const PHOTO_BUCKET = "product-photos";
 
+function createReadOnlyClient(){
+  function request(table, params){
+    var qs = Object.keys(params).map(function(k){
+      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+    }).join("&");
+    return fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + qs, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY }
+    }).then(function(r){
+      if (!r.ok) return r.text().then(function(t){ throw new Error(t || ("HTTP " + r.status)); });
+      return r.json();
+    });
+  }
+  return {
+    readOnly:true,
+    from:function(table){
+      var params = { select:"*" };
+      var api = {
+        select:function(cols){ params.select = cols || "*"; return api; },
+        order:function(col,opt){ params.order = col + "." + ((opt && opt.ascending) ? "asc" : "desc"); return api; },
+        eq:function(col,val){ params[col] = "eq." + val; return api; },
+        then:function(resolve,reject){
+          return request(table, params).then(function(data){ resolve({ data:data, error:null }); }, function(error){ resolve({ data:null, error:error }); });
+        },
+        maybeSingle:function(){
+          params.limit = 1;
+          return request(table, params).then(function(data){ return { data:(data && data[0]) || null, error:null }; }, function(error){ return { data:null, error:error }; });
+        }
+      };
+      return api;
+    }
+  };
+}
+
 const CONTACTS = [
   { name: "Kalpesh Thakkar", num: "918320785496" },
   { name: "Jigar Thakkar",  num: "917990541616" }
@@ -975,11 +1008,17 @@ const TAXO = {
 async function init(){
   $("#yr").textContent = new Date().getFullYear();
   skeletons();
-  try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
-  catch(e){ $("#boot").textContent = "Could not start. Please refresh."; return; }
+  try {
+    sb = (window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : createReadOnlyClient();
+  }
+  catch(e){ sb = createReadOnlyClient(); }
   bind();
   await loadAll();
-  const { data:{ session } } = await sb.auth.getSession();
+  const { data:{ session } } = sb.auth && sb.auth.getSession
+    ? await sb.auth.getSession()
+    : { data:{ session:null } };
   owner = !!session;
   if (owner) ownerOn(); else render();
   buildCategoryCards(); buildScrollers(); buildFootCats(); badges();
