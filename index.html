@@ -1,121 +1,241 @@
-You are a senior frontend engineer. Re-engineer my website aabhushansales.com to be perfectly mobile-first and responsive for iPhone and Android.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aabhushan Sales - Premium Micro Jewellery Wholesale</title>
+  <meta name="description" content="Aabhushan Sales is a Rajkot-based wholesale imitation jewellery brand. Browse premium micro jewellery and order on WhatsApp.">
+  <meta name="theme-color" content="#2a040c">
+  <link rel="canonical" href="https://aabhushansales.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#catalogue">Skip to catalogue</a>
 
-Current problem from phone screenshots:
-1. In portrait mode, the homepage looks almost blank/dark maroon. Only bottom navigation icons are visible in the middle area.
-2. In landscape mode, the website is visible, but the layout is not properly optimized.
-3. The hero section is too dependent on large desktop height/width and does not adapt to mobile portrait.
-4. Header, menu, search, saved, order and category navigation need to work smoothly on mobile.
-5. Website should not force users to rotate their phone.
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="Aabhushan Sales home">
+        <img class="brand-mark" src="https://aabhushansales.com/logo.jpg" alt="" width="40" height="40">
+        <span class="brand-copy">
+          <span class="brand-name">Aabhushan Sales</span>
+          <span class="brand-sub">Rajkot wholesale</span>
+        </span>
+      </a>
 
-Business:
-Aabhushan Sales is a Rajkot-based wholesale imitation jewellery brand. Website should feel premium, luxury, maroon/gold, mobile-first, fast, and WhatsApp-order focused.
+      <nav class="desktop-links" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#catalogue">Search</a>
+        <a href="#saved">Saved</a>
+        <a href="#order">Order</a>
+      </nav>
 
-Main goal:
-Make the entire website look premium and fully usable on mobile portrait first, then tablet and desktop.
+      <div class="header-actions">
+        <button class="icon-button" type="button" data-action="search" aria-label="Search designs">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        </button>
+        <button class="icon-button" type="button" data-action="saved" aria-label="Saved designs">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-4.5L5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z"></path></svg>
+          <span class="badge" id="savedBadge" hidden>0</span>
+        </button>
+        <button class="icon-button" type="button" data-action="order" aria-label="Order bag">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1.4 13.4a1 1 0 0 1-1 1.1H5.6a1 1 0 0 1-1-1.1L6 7Z"></path><path d="M9 10V6a3 3 0 0 1 6 0v4"></path></svg>
+          <span class="badge" id="orderBadge" hidden>0</span>
+        </button>
+        <button class="icon-button menu-toggle" type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-Design requirements:
-- Use luxury deep maroon, black-maroon gradient, gold highlights and white typography.
-- Keep brand name “Aabhushan Sales”.
-- Keep premium jewellery look.
-- Use elegant serif heading font for hero titles and clean sans-serif for product/category text.
-- Homepage should immediately show brand, headline, CTA buttons and product/category preview in portrait mobile.
-- Avoid huge empty hero height.
-- Avoid content being hidden below fold.
-- Make all text readable on 390px mobile width.
-- Do not use tiny text like desktop version.
+  <div class="menu-scrim" id="menuScrim" hidden></div>
+  <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile menu" hidden>
+    <div class="mobile-menu-head">
+      <strong>Aabhushan Sales</strong>
+      <button class="icon-button" type="button" data-action="close-menu" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+    </div>
+    <a href="#home">Home</a>
+    <a href="#categories">Categories</a>
+    <a href="#catalogue">Search catalogue</a>
+    <a href="#saved">Saved designs</a>
+    <a href="#order">Order bag</a>
+    <a href="https://wa.me/917990541616?text=Hello%20Aabhushan%20Sales%2C%20I%20have%20a%20wholesale%20enquiry." target="_blank" rel="noopener">WhatsApp enquiry</a>
+    <p>Shop No. 03/04/05, Beside Kuber Hotel, Sant Kabir Road, Rajkot - 360003</p>
+  </aside>
 
-Responsive fixes:
-- Use mobile-first CSS.
-- Fix viewport height issue: avoid using only 100vh for hero on mobile. Use min-height:auto or dynamic viewport units like 100dvh carefully.
-- Ensure hero content appears within first screen on iPhone portrait.
-- Header should be sticky at top.
-- Bottom navigation should be fixed at bottom only on mobile, with safe-area padding for iPhone.
-- Add padding-bottom to page content so bottom nav does not cover content.
-- Landscape mode should also work but portrait is priority.
-- All sections must use max-width and responsive padding.
-- Use CSS clamp() for headings.
-- Use media queries for 480px, 768px, 1024px.
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">AABHUSHAN SALES <span>&bull;</span> EST. RAJKOT</p>
+          <h1>Premium Micro Jewellery</h1>
+          <p class="hero-subtitle">Wholesale imitation jewellery collections for retailers and resellers across India.</p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="#catalogue">Explore Collection</a>
+            <a class="button button-line" href="https://wa.me/917990541616?text=Hello%20Aabhushan%20Sales%2C%20I%20want%20to%20order%20premium%20micro%20jewellery." target="_blank" rel="noopener">Order on WhatsApp</a>
+          </div>
+          <div class="hero-categories" aria-label="Popular categories">
+            <button type="button" data-category-short="Rings">Rings</button>
+            <button type="button" data-category-short="Necklaces">Necklaces</button>
+            <button type="button" data-category-short="Earrings">Earrings</button>
+          </div>
+        </div>
 
-Mobile layout:
-Top header:
-- Small logo on left
-- Search icon, saved icon, order/bag icon and hamburger menu on right
-- Height around 56px to 64px
-- Sticky top with glass blur/dark maroon background
+        <div class="hero-media" aria-label="Premium jewellery preview">
+          <article class="hero-product hero-product-large">
+            <img src="https://hkwmeeeajkuxycgovevc.supabase.co/storage/v1/object/public/product-photos/p_1781184727367_q3ok9.jpg" alt="Gold micro jewellery ring" width="520" height="520" fetchpriority="high">
+            <span>New wholesale designs</span>
+          </article>
+          <article class="hero-product hero-product-small">
+            <img src="https://hkwmeeeajkuxycgovevc.supabase.co/storage/v1/object/public/product-photos/p_1781184011413_tje6t.jpg" alt="Premium imitation jewellery" width="280" height="280" loading="lazy">
+            <span>Rajkot dispatch</span>
+          </article>
+        </div>
+      </div>
+    </section>
 
-Hero section:
-- Visible in portrait without rotation
-- Brand eyebrow text: “AABHUSHAN SALES • EST. RAJKOT”
-- Main heading: “Premium Micro Jewellery”
-- Subheading: “Wholesale imitation jewellery collections for retailers and resellers across India.”
-- CTA buttons:
-  1. “Explore Collection”
-  2. “Order on WhatsApp”
-- Add premium jewellery background/gradient but not too dark
-- Content should align left on mobile with proper padding
-- Hero height on mobile around 520px max, not blank full screen
-- Ensure no z-index/opacity issue hides hero text
+    <section class="section section-tight" id="categories">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Shop by Category</p>
+          <h2>Collections for your counter</h2>
+          <p>Tap a category to filter the catalogue instantly.</p>
+        </div>
+        <div class="category-grid" id="categoryGrid" aria-live="polite"></div>
+      </div>
+    </section>
 
-Bottom mobile navigation:
-- Home
-- Categories
-- Search
-- Saved
-- Order
-- Fixed bottom
-- Icons above label
-- Active tab gold color
-- Background deep maroon/black with border top
-- iPhone safe area support:
-  padding-bottom: env(safe-area-inset-bottom)
+    <section class="section catalogue-section" id="catalogue">
+      <div class="container">
+        <div class="section-head center">
+          <p class="eyebrow">Wholesale Catalogue</p>
+          <h2>Ready-to-order designs</h2>
+          <p>Search by name or code, choose quantity and box option, then send the order on WhatsApp.</p>
+        </div>
 
-Product/category sections:
-- Add category cards below hero:
-  Earrings, Rings, Pendant Sets, Necklaces, Bracelets, Mang Tikkas
-- Use 2-column grid on mobile
-- Product cards should show image, product code, price/box option, save button and WhatsApp order button
-- Product images should load lazy and maintain aspect ratio
-- Product details should not overflow
+        <div class="catalogue-tools">
+          <label class="search-box" for="searchInput">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input id="searchInput" type="search" placeholder="Search name or design code" autocomplete="off">
+          </label>
+          <select id="sortSelect" aria-label="Sort products">
+            <option value="new">Newest first</option>
+            <option value="priceLow">Price: low to high</option>
+            <option value="priceHigh">Price: high to low</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
 
-WhatsApp ordering:
-- Every product should have “Order on WhatsApp”
-- WhatsApp message should include product name/code, quantity/box selection and page link
-- Add floating WhatsApp button above bottom nav on mobile
+        <div class="chip-row" id="categoryChips" role="tablist" aria-label="Catalogue categories"></div>
+        <div class="catalogue-meta">
+          <span id="productCount">Loading designs...</span>
+          <button class="text-button" id="clearFilters" type="button" hidden>Clear filters</button>
+        </div>
 
-Performance:
-- Optimize images
-- Use lazy loading
-- Avoid heavy animations on mobile
-- Add smooth but lightweight animations
-- No horizontal scroll
-- Lighthouse mobile score should be high
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <p class="status-line" id="catalogueStatus" role="status">Opening the catalogue...</p>
+      </div>
+    </section>
 
-Please audit the current code and fix:
-- CSS responsive layout issues
-- Header and bottom nav z-index problems
-- Hero height and visibility issue in portrait
-- Any overflow-x problems
-- Any elements positioned absolute that are hiding content
-- Any desktop-only layout causing blank screen on mobile
-- Safari iPhone viewport bugs
+    <section class="section muted-band" id="saved">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Saved</p>
+          <h2>Your shortlisted designs</h2>
+          <p>Saved products stay on this device for quick repeat ordering.</p>
+        </div>
+        <div class="product-grid compact-grid" id="savedGrid"></div>
+      </div>
+    </section>
 
-Implementation requirements:
-- Keep existing brand identity but improve mobile UX.
-- Do not remove core pages: Home, Categories, Search, Saved, Order.
-- Make code clean, production-ready and easy to maintain.
-- Add comments where major responsive fixes are done.
-- After changes, test with:
-  - iPhone 13/14/15 portrait width 390px
-  - iPhone Pro Max width 430px
-  - Android 360px width
-  - Landscape mobile
-  - Desktop 1440px
+    <section class="section" id="order">
+      <div class="container order-layout">
+        <div>
+          <div class="section-head">
+            <p class="eyebrow">Order</p>
+            <h2>Build your WhatsApp order</h2>
+            <p>Add products from the catalogue, adjust quantities here and send the full list in one tap.</p>
+          </div>
+          <div class="order-list" id="orderList"></div>
+        </div>
 
-Acceptance criteria:
-1. Website opens properly in mobile portrait without rotating.
-2. Hero title, subtitle and buttons are visible immediately.
-3. Bottom navigation stays fixed but does not cover content.
-4. No horizontal scrolling.
-5. All icons/buttons are clickable.
-6. Product/category grid looks premium on phone.
-7. Website feels like a luxury jewellery wholesale brand.
+        <aside class="order-panel" aria-label="Order details">
+          <h3>Buyer details</h3>
+          <label>
+            Shop or name
+            <input id="buyerName" type="text" autocomplete="organization" placeholder="Your shop name">
+          </label>
+          <label>
+            Mobile number
+            <input id="buyerPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91">
+          </label>
+          <label>
+            Note
+            <textarea id="buyerNote" rows="3" placeholder="Size, box preference or dispatch note"></textarea>
+          </label>
+          <div class="order-total" id="orderTotal">No designs added yet.</div>
+          <button class="button button-gold full-width" id="sendOrder" type="button">Send Order on WhatsApp</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section story-band" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <p class="eyebrow">Why Retailers Choose Us</p>
+          <h2>A Rajkot wholesale jewellery partner</h2>
+          <p>Aabhushan Sales supplies premium micro imitation jewellery with manufacturer-direct pricing, fresh designs and WhatsApp-first order support.</p>
+        </div>
+        <div class="contact-card">
+          <strong>Showroom</strong>
+          <span>Shop No. 03/04/05, Beside Kuber Hotel, Sant Kabir Road, Rajkot - 360003</span>
+          <a href="https://wa.me/917990541616?text=Hello%20Aabhushan%20Sales%2C%20I%20have%20a%20wholesale%20enquiry." target="_blank" rel="noopener">Message on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="whatsapp-float" id="whatsappFloat" href="https://wa.me/917990541616?text=Hello%20Aabhushan%20Sales%2C%20I%20have%20a%20wholesale%20enquiry." target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.3.4c-.1.2-.2.3-.1.5.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 .9c.3.2.5.2.5.4.1.1.1.6-.3 1.2Z"></path></svg>
+  </a>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="#home" class="bottom-link is-active" data-nav="home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"></path></svg>
+      <span>Home</span>
+    </a>
+    <a href="#categories" class="bottom-link" data-nav="categories">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+      <span>Categories</span>
+    </a>
+    <button class="bottom-link" type="button" data-action="search" data-nav="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <span>Search</span>
+    </button>
+    <button class="bottom-link" type="button" data-action="saved" data-nav="saved">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-4.5L5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z"></path></svg>
+      <span>Saved</span>
+    </button>
+    <button class="bottom-link" type="button" data-action="order" data-nav="order">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1.4 13.4a1 1 0 0 1-1 1.1H5.6a1 1 0 0 1-1-1.1L6 7Z"></path><path d="M9 10V6a3 3 0 0 1 6 0v4"></path></svg>
+      <span>Order</span>
+    </button>
+  </nav>
+
+  <template id="emptyTemplate">
+    <div class="empty-state">
+      <span>AS</span>
+      <h3>No designs found</h3>
+      <p>Try a different search or category.</p>
+    </div>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
