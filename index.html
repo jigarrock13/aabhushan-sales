@@ -293,11 +293,15 @@ html.anim .rv.in,html.js-ready .rv.in{opacity:1;transform:none}
 .pr{display:flex;align-items:baseline;gap:5px;margin-top:4px;padding-top:4px}
 .pr b{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;color:var(--wine)}
 .pr small{font-size:10px;color:var(--muted);font-weight:700}
+.pboxline{display:block;width:100%;font-size:10px;line-height:1.35;color:var(--muted);font-weight:700;margin-top:2px}
+.pboxline strong{color:var(--wine-soft)}
 .cardact{display:flex;gap:7px;margin-top:9px;align-items:stretch}
 .qmini{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:10px;background:#fff;flex:none}
 .qmini button{width:27px;height:34px;font-size:15px;color:var(--wine);font-weight:800}
 .qmini input{width:34px;text-align:center;border:none;outline:none;font-weight:800;font-size:12.5px;
   -moz-appearance:textfield;background:none}
+.qmini .qunit{font-size:10px;font-weight:800;color:var(--wine);padding-right:7px;white-space:nowrap}
+.qmini input + .qunit{margin-left:-2px}
 .qmini input::-webkit-outer-spin-button,.qmini input::-webkit-inner-spin-button{-webkit-appearance:none}
 .act{flex:1;background:var(--wine);color:var(--champagne);font-weight:800;font-size:12px;
   letter-spacing:.04em;border-radius:10px;padding:9px 6px;transition:transform .2s,background .25s}
@@ -319,6 +323,13 @@ html.anim .rv.in,html.js-ready .rv.in{opacity:1;transform:none}
 /* owner controls */
 .ownerctl{display:flex;align-items:center;gap:8px;margin-top:9px}
 .editl{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.04em;margin-left:auto}
+.packwarn{font-size:10px;line-height:1.35;color:#9b4c20;font-weight:800;margin-top:4px}
+.dmeta .totalbox{color:var(--wine)}
+.cartmeta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 10px;margin-top:6px;font-size:11px;color:var(--muted)}
+.cartmeta b{display:block;color:var(--ink);font-size:11.5px}
+.cartmeta .wide{grid-column:1/-1}
+.cart-total-pieces{font-size:11px;color:var(--muted);font-weight:700}
+@media(max-width:520px){.cartmeta{grid-template-columns:1fr}.cartmeta .wide{grid-column:auto}.pboxline{font-size:9.5px}}
 
 /* why strip */
 #why{background:linear-gradient(180deg,var(--wine-deep),var(--wine));color:var(--champagne);margin-top:46px}
@@ -718,7 +729,7 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
     <h2 class="sec-title">Three simple steps</h2>
   </div>
   <div class="steps">
-    <div class="step rv"><h4>Browse</h4><p>Search the catalogue, open any design and check rate, box type, MOQ and stock.</p></div>
+    <div class="step rv"><h4>Browse</h4><p>Search the catalogue, open any design and check rate, box type, minimum order and stock.</p></div>
     <div class="step rv"><h4>Add quantity</h4><p>Set the quantity you need and add designs to your order bag. It saves automatically.</p></div>
     <div class="step rv"><h4>Send on WhatsApp</h4><p>Fill in your shop details once and the complete structured order opens in WhatsApp.</p></div>
   </div>
@@ -883,15 +894,17 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
     <div class="fld"><label>Name</label><input id="f_name" placeholder="e.g. Rose Gold CZ Tops"></div>
     <div class="row2">
       <div class="fld"><label>Design code</label><input id="f_code" placeholder="e.g. AS-1042"></div>
-      <div class="fld"><label>Rate (₹)</label><input id="f_price" type="number" inputmode="decimal"></div>
+      <div class="fld"><label>Price Per Piece (₹)</label><input id="f_price" type="number" inputmode="decimal"></div>
     </div>
     <div class="row2">
-      <div class="fld"><label>Rate unit</label><select id="f_unit">
-        <option value="per piece">per piece</option><option value="per pair">per pair</option>
-        <option value="per dozen">per dozen</option><option value="per box">per box</option>
-        <option value="per set">per set</option><option value="per gross">per gross</option>
+      <div class="fld"><label>Pieces Per Box</label><input id="f_pieces_box" type="number" inputmode="numeric" min="1" step="1" placeholder="e.g. 20"></div>
+      <div class="fld"><label>Minimum Order (boxes)</label><input id="f_min_boxes" type="number" inputmode="numeric" min="1" step="1" placeholder="1"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Stock (pieces)</label><input id="f_stock" type="number" inputmode="numeric" placeholder="0"></div>
+      <div class="fld"><label>Stock Status</label><select id="f_stock_status">
+        <option value="in_stock">In stock</option><option value="low_stock">Low stock</option><option value="out_of_stock">Out of stock</option>
       </select></div>
-      <div class="fld"><label>MOQ</label><input id="f_moq" type="number" inputmode="numeric" placeholder="1"></div>
     </div>
     <div class="fld"><label>Type</label><select id="f_cat"></select></div>
     <div class="fld hide" id="subWrap"><label>Sub-type</label><select id="f_subcat"></select></div>
@@ -900,7 +913,7 @@ footer h5{font-size:10.5px;font-weight:800;letter-spacing:.26em;text-transform:u
       <option value="Mix designs">Mix designs (assorted in one box)</option>
       <option value="Single design">Single design (one design per box)</option>
     </select></div>
-    <div class="fld"><label>Stock</label><input id="f_stock" type="number" inputmode="numeric" placeholder="0"></div>
+    <div class="note">Every customer order is placed in boxes. Price Per Piece, Pieces Per Box, and Minimum Order (boxes) are required before customers can order.</div>
     <div class="togglerow">
       <label><input type="checkbox" id="f_best"> Best seller</label>
     </div>
@@ -996,14 +1009,72 @@ let activeCat = "All", activeSub = "All", activeBox = "All", activeStock = "All"
 let priceMin = "", priceMax = "", sortBy = "new";
 let editingId = null, pendingFiles = [], formImages = [];
 let hasNewCols = true; // price_unit / best_seller columns — auto-detected
+let hasPackingCol = true;
 
 const cur = () => settings.currency || "₹";
 const money = n => cur() + Number(n || 0).toLocaleString("en-IN");
+const normalizePiecesPerBox = value => { const n = Math.floor(+value || 0); return n > 0 ? n : 0; };
+const normalizeMinimumOrderBoxes = value => Math.max(1, Math.floor(+value || 1));
+const normalizeStockStatus = (value, stock) => {
+  const v = String(value || "").toLowerCase().replace(/[- ]/g,"_");
+  if (v === "out_of_stock" || v === "out") return "out_of_stock";
+  if (v === "low_stock" || v === "low") return "low_stock";
+  return +stock > 0 ? "in_stock" : "out_of_stock";
+};
+const hasValidPricing = p => !!p && +p.pricePerPiece > 0 && +p.piecesPerBox > 0;
+const minBoxesFor = p => normalizeMinimumOrderBoxes(p && p.minimumOrderBoxes);
+const boxLabel = boxes => { const n = Math.max(1, Math.floor(+boxes || 1)); return n + " " + (n === 1 ? "Box" : "Boxes"); };
+const pieceLabel = pieces => { const n = Math.max(0, Math.floor(+pieces || 0)); return n + " " + (n === 1 ? "Piece" : "Pieces"); };
+const boxPrice = p => hasValidPricing(p) ? (+p.pricePerPiece * +p.piecesPerBox) : 0;
+const maxBoxesFor = p => {
+  if (!hasValidPricing(p) || normalizeStockStatus(p.stockStatus,p.stock) === "out_of_stock") return 0;
+  const pieces = +p.piecesPerBox;
+  const stock = Math.max(0, Math.floor(+(p && p.stock) || 0));
+  return stock > 0 ? Math.floor(stock / pieces) : 0;
+};
+const clampBoxes = (p, boxes) => {
+  const n = Math.max(minBoxesFor(p), Math.floor(+boxes || minBoxesFor(p)));
+  const max = maxBoxesFor(p);
+  return max > 0 ? Math.min(n, max) : n;
+};
+const lineFor = (p, boxes) => {
+  const selectedBoxes = clampBoxes(p, boxes);
+  const piecesPerBox = normalizePiecesPerBox(p && p.piecesPerBox);
+  const pricePerPiece = +(p && p.pricePerPiece) || 0;
+  const pricePerBox = hasValidPricing(p) ? pricePerPiece * piecesPerBox : 0;
+  const totalPieces = hasValidPricing(p) ? selectedBoxes * piecesPerBox : 0;
+  const totalPrice = selectedBoxes * pricePerBox;
+  return { qty:selectedBoxes, selectedBoxes, pricePerPiece, piecesPerBox, totalPieces, pricePerBox, totalPrice, totalAmount:totalPrice };
+};
+const makeCartItem = (p, boxes) => {
+  const l = lineFor(p, boxes);
+  return { productId:p.id, productCode:p.code || "", productName:p.name || "", pricePerPiece:l.pricePerPiece, piecesPerBox:l.piecesPerBox, selectedBoxes:l.selectedBoxes, totalPieces:l.totalPieces, pricePerBox:l.pricePerBox, totalPrice:l.totalPrice, productImage:p.img || "" };
+};
+function quantityMarkup(p, boxes, prefix){
+  const qty = clampBoxes(p, boxes), min = minBoxesFor(p), max = maxBoxesFor(p), id = prefix || "q", disabled = !hasValidPricing(p) || max < min;
+  return `<div class="qmini" data-quantity="${esc(p.id)}"><button data-d aria-label="Reduce boxes"${disabled ? " disabled" : ""}>−</button><input id="${id}" type="number" value="${qty}" min="${min}"${max > 0 ? ` max="${max}"` : ""} aria-label="Number of boxes"${disabled ? " disabled" : ""}><span class="qunit" data-qunit>${qty === 1 ? "Box" : "Boxes"}</span><button data-i aria-label="Increase boxes"${disabled ? " disabled" : ""}>+</button></div>`;
+}
+function syncQuantityLabel(root, value){
+  const n = Math.max(1, Math.floor(+value || 1)), unit = root && root.querySelector("[data-qunit]");
+  if (unit) unit.textContent = n === 1 ? "Box" : "Boxes";
+}
+function stockStatusLabel(p){
+  if (!(+p.pricePerPiece > 0)) return "Price required";
+  if (!(+p.piecesPerBox > 0)) return "Packing required";
+  const status = normalizeStockStatus(p && p.stockStatus,p && p.stock);
+  if (status === "out_of_stock") return "Sold out";
+  if (status === "low_stock") return "Low stock";
+  return maxBoxesFor(p) < minBoxesFor(p) ? "Insufficient for minimum order" : "In stock";
+}
 
-let cart = {}, saved = [];
-try { cart = JSON.parse(localStorage.getItem("as_cart") || "{}") || {}; } catch(e) { cart = {}; }
+let cart = {}, legacyCart = null, cartNeedsMigration = false, cartMode = "records", saved = [];
+try {
+  const storedBoxes = localStorage.getItem("as_cart_boxes_v1");
+  if (storedBoxes) { cart = JSON.parse(storedBoxes) || {}; cartNeedsMigration = true; cartMode = "boxes"; }
+  else { legacyCart = JSON.parse(localStorage.getItem("as_cart") || "{}") || {}; cartNeedsMigration = Object.keys(legacyCart).length > 0; cartMode = "legacy_pieces"; }
+} catch(e) { cart = {}; legacyCart = null; }
 try { saved = JSON.parse(localStorage.getItem("as_saved") || "[]") || []; } catch(e) { saved = []; }
-const persistCart  = () => { try { localStorage.setItem("as_cart", JSON.stringify(cart)); } catch(e){} };
+const persistCart  = () => { try { localStorage.setItem("as_cart_boxes_v1", JSON.stringify(cart)); } catch(e){} };
 const persistSaved = () => { try { localStorage.setItem("as_saved", JSON.stringify(saved)); } catch(e){} };
 
 let tT, searchTimer;
@@ -1052,19 +1123,43 @@ async function loadAll(){
       let imgs = [];
       try { imgs = r.images ? JSON.parse(r.images) : []; } catch(e){ imgs = []; }
       if (!imgs.length && r.image_url) imgs = [r.image_url];
+      const rawPricePerPiece = r.price_per_piece != null ? r.price_per_piece : r.price;
+      const rawPiecesPerBox = r.pieces_per_box;
+      const rawMinimumOrderBoxes = r.minimum_order_boxes != null ? r.minimum_order_boxes : 1;
+      const stock = +r.stock || 0;
       return {
         id: r.id, name: r.name, code: r.code || "", cat: r.category || "", subcat: r.subcategory || "",
-        price: +r.price || 0, unit: r.price_unit || "per piece", moq: Math.max(1, +r.moq || 1),
-        stock: +r.stock || 0, img: imgs[0] || r.image_url || "", imgs,
+        pricePerPiece: +rawPricePerPiece || 0, price: +rawPricePerPiece || 0, unit: "per piece",
+        piecesPerBox: normalizePiecesPerBox(rawPiecesPerBox), minimumOrderBoxes: normalizeMinimumOrderBoxes(rawMinimumOrderBoxes),
+        packingMissing: rawPiecesPerBox == null || +rawPiecesPerBox < 1,
+        stock, stockStatus: normalizeStockStatus(r.stock_status, stock), img: imgs[0] || r.image_url || "", imgs,
         box: r.box_type || "", best: !!r.best_seller, created: r.created_at || "",
         _new: r.created_at ? (Date.now() - new Date(r.created_at).getTime() < 2592000000) : false
       };
     });
-    if (ps.data && ps.data.length && !("price_unit" in ps.data[0])) hasNewCols = false;
+    if (ps.data && ps.data.length){
+      if (!("price_unit" in ps.data[0])) hasNewCols = false;
+      if (!("pieces_per_box" in ps.data[0])) hasPackingCol = false;
+    }
+    if (cartNeedsMigration){
+      const rawCart = cartMode === "legacy_pieces" ? legacyCart : cart, migrated = {};
+      Object.entries(rawCart || {}).forEach(([id, raw]) => {
+        const p = products.find(x => x.id === id); if (!p || !hasValidPricing(p)) return;
+        const oldBoxes = raw && typeof raw === "object" ? raw.selectedBoxes : raw;
+        const boxes = cartMode === "legacy_pieces" ? Math.ceil(Math.max(1, +oldBoxes || 1) / p.piecesPerBox) : Math.max(1, +oldBoxes || 1);
+        const max = maxBoxesFor(p); if (max >= minBoxesFor(p)) migrated[id] = makeCartItem(p, Math.min(Math.max(minBoxesFor(p), boxes), max));
+      });
+      cart = migrated; cartNeedsMigration = false; cartMode = "records"; persistCart();
+    }
     // prune stale cart/saved entries
     const ids = new Set(products.map(p => p.id));
     let dirty = false;
-    Object.keys(cart).forEach(id => { if (!ids.has(id)) { delete cart[id]; dirty = true; } });
+    Object.keys(cart).forEach(id => {
+      if (!ids.has(id)) { delete cart[id]; dirty = true; return; }
+      const p = products.find(x => x.id === id), raw = cart[id], boxes = raw && typeof raw === "object" ? raw.selectedBoxes : raw, max = maxBoxesFor(p);
+      if (!p || !hasValidPricing(p) || max < minBoxesFor(p)) { delete cart[id]; dirty = true; }
+      else { const next = Math.min(Math.max(minBoxesFor(p), Math.floor(+boxes || minBoxesFor(p))), max); if (!raw || raw.selectedBoxes !== next || raw.pricePerBox !== boxPrice(p)) dirty = true; cart[id] = makeCartItem(p, next); }
+    });
     saved = saved.filter(id => ids.has(id));
     if (dirty) persistCart(); persistSaved();
     const ss = await sb.from("settings").select("*").eq("id",1).maybeSingle();
@@ -1186,7 +1281,8 @@ function render(){
 }
 
 function card(p, mini){
-  const out = p.stock <= 0;
+  const priceMissing = !(+p.pricePerPiece > 0), packingMissing = !(+p.piecesPerBox > 0), pricingMissing = priceMissing || packingMissing;
+  const out = normalizeStockStatus(p.stockStatus,p.stock) === "out_of_stock" || (!pricingMissing && maxBoxesFor(p) < minBoxesFor(p));
   const el = document.createElement("div");
   el.className = "card rv in";
   const im2 = (p.imgs && p.imgs[1]) ? `<img loading="lazy" src="${esc(p.imgs[1])}" alt="" aria-hidden="true">` : "";
@@ -1194,7 +1290,7 @@ function card(p, mini){
     `<div class="th" role="button" tabindex="0" aria-label="View ${esc(p.name)}">
       ${im2}${p.img ? `<img class="im1" loading="lazy" src="${esc(p.img)}" alt="${esc(p.name)}">` : ""}
       ${p._new ? '<span class="bdg b-new">New</span>' : ""}${p.best ? '<span class="bdg b-best">★ Best Seller</span>' : ""}
-      ${out ? '<span class="bdg b-out">Out of stock</span>' : (p.stock <= (+settings.low_stock || 0) ? '<span class="bdg b-low">Low stock</span>' : "")}
+      ${out ? '<span class="bdg b-out">Out of stock</span>' : (p.stockStatus === "low_stock" ? '<span class="bdg b-low">Low stock</span>' : "")}
       ${(p.imgs && p.imgs.length > 1) ? `<span class="pcount">${p.imgs.length} photos</span>` : ""}
       <button class="savebtn${saved.indexOf(p.id) >= 0 ? " on" : ""}" aria-label="Save design">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="${saved.indexOf(p.id) >= 0 ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.6c0 5 8.8 10.4 8.8 10.4s8.8-5.4 8.8-10.4Z"/></svg>
@@ -1204,9 +1300,9 @@ function card(p, mini){
       ${p.code ? `<div class="cd">${esc(p.code)}</div>` : ""}
       <div class="nm">${esc(p.name)}</div>
       ${p.cat ? `<div class="catline">${esc(p.cat)}${p.subcat ? " · " + esc(p.subcat) : ""}</div>` : ""}
-      <div class="tagrow">${p.box ? `<span class="tag">${p.box === "Mix designs" ? "Mix box" : p.box === "Single design" ? "Single box" : esc(p.box)}</span>` : ""}<span class="tag t2">MOQ ${p.moq}</span></div>
-      <div class="stockline${out ? " out" : ""}">${out ? "Sold out" : "In stock"}</div>
-      <div class="pr"><b>${money(p.price)}</b><small>${esc(p.unit)}</small></div>
+      <div class="tagrow">${p.box ? `<span class="tag">${p.box === "Mix designs" ? "Mix box" : p.box === "Single design" ? "Single box" : esc(p.box)}</span>` : ""}<span class="tag t2">Minimum Order: ${boxLabel(minBoxesFor(p))}</span></div>
+      <div class="stockline${out ? " out" : ""}">${esc(stockStatusLabel(p))}</div>
+      <div class="pr"><b>${priceMissing ? "Price pending" : money(p.pricePerPiece)}</b><small>${priceMissing ? "" : "per piece"}</small><span class="pboxline">${packingMissing ? "Pieces Per Box required · " : "1 Box = " + pieceLabel(p.piecesPerBox) + " · "}<strong>${pricingMissing ? "Box Price pending" : "Box Price: " + money(boxPrice(p))}</strong></span></div>
     </div>`;
   const th = el.querySelector(".th");
   th.onclick = e => { if (e.target.closest(".savebtn")) return; openDetail(p); };
@@ -1224,15 +1320,18 @@ function card(p, mini){
     inp.onchange = () => setStock(p, inp.value);
     c.querySelector(".editl").onclick = () => openForm(p.id);
     bd.appendChild(c);
+    if (p.packingMissing || pricingMissing){ const w = document.createElement("div"); w.className = "packwarn"; w.textContent = "⚠ Enter Price Per Piece and Pieces Per Box"; bd.appendChild(w); }
   } else {
     const row = document.createElement("div");
     row.className = "cardact";
-    row.innerHTML = `<div class="qmini"><button data-d aria-label="Less">−</button><input type="number" value="${p.moq}" min="${p.moq}" aria-label="Quantity"><button data-i aria-label="More">+</button></div>
-      <button class="act"${out ? " disabled" : ""}>${out ? "Out of stock" : "Add to Order"}</button>`;
+    row.innerHTML = `${quantityMarkup(p, minBoxesFor(p), "q_" + String(p.id).replace(/[^a-zA-Z0-9_-]/g,""))}
+      <button class="act"${out || pricingMissing ? " disabled" : ""}>${pricingMissing ? "Packing required" : (out ? "Out of stock" : "Add to Order")}</button>`;
     const inp = row.querySelector("input");
-    row.querySelector("[data-d]").onclick = () => inp.value = Math.max(p.moq,(+inp.value||p.moq)-1);
-    row.querySelector("[data-i]").onclick = () => inp.value = (+inp.value||p.moq)+1;
-    row.querySelector(".act").onclick = () => addToCart(p, +inp.value || p.moq);
+    const qbox = row.querySelector("[data-quantity]");
+    row.querySelector("[data-d]").onclick = () => { inp.value = clampBoxes(p,(+inp.value||minBoxesFor(p))-1); syncQuantityLabel(qbox,inp.value); };
+    row.querySelector("[data-i]").onclick = () => { const next = (+inp.value||minBoxesFor(p))+1, max = maxBoxesFor(p); inp.value = max > 0 ? Math.min(next,max) : next; syncQuantityLabel(qbox,inp.value); };
+    inp.onchange = () => { inp.value = clampBoxes(p,inp.value); syncQuantityLabel(qbox,inp.value); };
+    row.querySelector(".act").onclick = () => addToCart(p, +inp.value || minBoxesFor(p));
     bd.appendChild(row);
   }
   return el;
@@ -1252,12 +1351,16 @@ function toggleSave(p, el){
   if (activeCat === "Saved") render();
 }
 function addToCart(p, qty){
-  cart[p.id] = (cart[p.id] || 0) + Math.max(p.moq, qty);
+  if (!hasValidPricing(p)) return toast("Enter Price Per Piece and Pieces Per Box first");
+  const requested = Math.max(minBoxesFor(p), Math.floor(+qty || minBoxesFor(p))), current = cart[p.id] && cart[p.id].selectedBoxes || 0, max = maxBoxesFor(p);
+  if (max < minBoxesFor(p)) return toast("This product is not available for the minimum box order");
+  if (max > 0 && current + requested > max) return toast("Only " + boxLabel(max) + " available");
+  cart[p.id] = makeCartItem(p, current + requested);
   persistCart(); badges(); toast("Added " + p.name);
   ["#fab","#bnOrder"].forEach(s => { const e = $(s); if(e){ e.classList.add("pop"); setTimeout(() => e.classList.remove("pop"), 500); } });
 }
 function badges(){
-  const n = Object.values(cart).reduce((a,b) => a+b, 0);
+  const n = Object.values(cart).reduce((a,b) => a + (b && typeof b === "object" ? +b.selectedBoxes || 0 : +b || 0), 0);
   const items = Object.keys(cart).length;
   $("#fab").classList.toggle("hidefab", items <= 0 || owner);
   $("#fabC").textContent = n;
@@ -1304,7 +1407,8 @@ let dCurrent = null;
 function openDetail(p){
   dCurrent = p;
   const imgs = (p.imgs && p.imgs.length) ? p.imgs : (p.img ? [p.img] : []);
-  const out = p.stock <= 0;
+  const priceMissing = !(+p.pricePerPiece > 0), packingMissing = !(+p.piecesPerBox > 0), pricingMissing = priceMissing || packingMissing;
+  const out = normalizeStockStatus(p.stockStatus,p.stock) === "out_of_stock" || (!pricingMissing && maxBoxesFor(p) < minBoxesFor(p));
   $("#dTitle").textContent = p.name || "Design";
   const b = $("#dBody");
   b.innerHTML =
@@ -1313,18 +1417,21 @@ function openDetail(p){
     <div style="margin-top:14px">
       ${p.code ? `<div class="cd">${esc(p.code)}</div>` : ""}
       <h3 style="font-size:24px;color:var(--wine);margin-top:2px">${esc(p.name)}</h3>
-      <div class="pr" style="padding-top:4px"><b style="font-size:24px">${money(p.price)}</b><small>${esc(p.unit)}</small></div>
+      <div class="pr" style="padding-top:4px"><b style="font-size:24px">${priceMissing ? "Price pending" : money(p.pricePerPiece)}</b><small>${priceMissing ? "" : "per piece"}</small><span class="pboxline">${packingMissing ? "Pieces Per Box required · " : "1 Box = " + pieceLabel(p.piecesPerBox) + " · "}<strong>${pricingMissing ? "Box Price pending" : "Box Price: " + money(boxPrice(p))}</strong></span></div>
     </div>
     <div class="dmeta">
       ${p.cat ? `<div><label>Category</label><b>${esc(p.cat)}${p.subcat ? " · " + esc(p.subcat) : ""}</b></div>` : ""}
-      <div><label>Minimum order</label><b>${p.moq} ${esc(p.unit.replace("per ",""))}${p.moq>1?"s":""}</b></div>
+      <div><label>Minimum order</label><b>${boxLabel(minBoxesFor(p))}</b></div>
+      <div><label>Pieces Per Box</label><b>${p.piecesPerBox > 0 ? pieceLabel(p.piecesPerBox) : "Packing required"}</b></div>
+      <div><label>Box Price</label><b class="totalbox">${pricingMissing ? "Packing required" : money(boxPrice(p))}</b></div>
       ${p.box ? `<div><label>Box type</label><b>${esc(p.box)}</b></div>` : ""}
-      <div><label>Availability</label><b style="color:${out ? "var(--red)" : "var(--green)"}">${out ? "Out of stock" : "In stock"}</b></div>
+      <div><label>Availability</label><b style="color:${out || pricingMissing ? "var(--red)" : "var(--green)"}">${esc(stockStatusLabel(p))}</b></div>
     </div>
     <div class="drow">
-      <div class="qmini"><button data-d aria-label="Less">−</button><input id="dQty" type="number" value="${p.moq}" min="${p.moq}" aria-label="Quantity"><button data-i aria-label="More">+</button></div>
-      <button class="act" id="dAdd"${out ? " disabled" : ""}>${out ? "Out of stock" : "Add to Order"}</button>
+      ${quantityMarkup(p, minBoxesFor(p), "dQty")}
+      <button class="act" id="dAdd"${out || pricingMissing ? " disabled" : ""}>${pricingMissing ? "Packing required" : (out ? "Out of stock" : "Add to Order")}</button>
     </div>
+    <div class="pboxline" id="dSummary" style="margin-top:8px;font-size:11px;color:var(--wine)"></div>
     <button class="wa" id="dEnq">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
       Enquire on WhatsApp</button>
@@ -1343,14 +1450,16 @@ function openDetail(p){
   }
   strip.querySelectorAll("img").forEach(im => im.onclick = () => { $("#zoomImg").src = im.src; $("#zoom").classList.add("on"); });
 
-  const qi = $("#dQty");
-  b.querySelector(".drow [data-d]").onclick = () => qi.value = Math.max(p.moq,(+qi.value||p.moq)-1);
-  b.querySelector(".drow [data-i]").onclick = () => qi.value = (+qi.value||p.moq)+1;
-  $("#dAdd").onclick = () => { addToCart(p, +qi.value || p.moq); };
+  const qi = $("#dQty"), qbox = b.querySelector(".drow [data-quantity]"), updateDetailSummary = () => { const l = lineFor(p, qi.value); $("#dSummary").textContent = hasValidPricing(p) ? boxLabel(l.qty) + " · " + pieceLabel(l.totalPieces) + " Total Pieces · " + money(l.totalPrice) + " Total" : "Enter packing quantity to calculate the box total"; };
+  b.querySelector(".drow [data-d]").onclick = () => { qi.value = clampBoxes(p,(+qi.value||minBoxesFor(p))-1); syncQuantityLabel(qbox,qi.value); updateDetailSummary(); };
+  b.querySelector(".drow [data-i]").onclick = () => { const next = (+qi.value||minBoxesFor(p))+1, max = maxBoxesFor(p); qi.value = max > 0 ? Math.min(next,max) : next; syncQuantityLabel(qbox,qi.value); updateDetailSummary(); };
+  qi.onchange = () => { qi.value = clampBoxes(p,qi.value); syncQuantityLabel(qbox,qi.value); updateDetailSummary(); };
+  updateDetailSummary();
+  $("#dAdd").onclick = () => { addToCart(p, +qi.value || minBoxesFor(p)); };
   $("#dEnq").onclick = () => {
     let m = "Hello " + (settings.name || "Aabhushan Sales") + "," + NL + NL + "I would like to enquire about this design:" + NL + NL +
       (p.code ? "Design Code: " + p.code + NL : "") + "Product: " + p.name + NL +
-      "Rate: " + money(p.price) + " " + p.unit + NL + (p.img ? NL + p.img + NL : "") + NL + "Website: aabhushansales.com";
+      "Rate: " + money(p.pricePerPiece) + " per Piece" + NL + "Packing: " + (p.piecesPerBox > 0 ? p.piecesPerBox + " Pieces per Box" : "Packing quantity required") + NL + "Box Price: " + (hasValidPricing(p) ? money(boxPrice(p)) : "Pending") + (p.img ? NL + p.img + NL : "") + NL + "Website: aabhushansales.com";
     openWa(settings.whatsapp || CONTACTS[1].num, m);
   };
   $("#dShare").onclick = async () => {
@@ -1374,13 +1483,72 @@ function openDetail(p){
 
 /* ════════ order bag ════════ */
 function lines(){
-  return Object.entries(cart).map(([id,q]) => {
+  return Object.entries(cart).map(([id,item]) => {
     const p = products.find(x => x.id === id);
-    return p ? { p, qty:q, line:(p.price||0)*q } : null;
+    if (!p) return null;
+    const record = makeCartItem(p, item && typeof item === "object" ? item.selectedBoxes : item);
+    return { p, ...record, qty:record.selectedBoxes, line:record.totalPrice, totalAmount:record.totalPrice };
   }).filter(Boolean);
 }
 let chosenContact = null;
 function getCustomer(){ try { return JSON.parse(localStorage.getItem("as_customer") || "{}") || {}; } catch(e){ return {}; } }
+function renderCartBoxMode(L, b, cust){
+  b.innerHTML = L.map(({p,selectedBoxes,pricePerPiece,piecesPerBox,totalPieces,pricePerBox,totalPrice}) =>
+    `<div class="ci" data-id="${esc(p.id)}">
+      <div class="t">${p.img ? `<img loading="lazy" src="${esc(p.img)}" alt="">` : ""}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:13.5px">${esc(p.name)}</div>
+        <div class="cartmeta">
+          <div>Product Code<b>${p.code ? esc(p.code) : "—"}</b></div>
+          <div>Price Per Piece<b>${money(pricePerPiece)}</b></div>
+          <div>Pieces Per Box<b>${piecesPerBox}</b></div>
+          <div>Number of Boxes<b>${boxLabel(selectedBoxes)}</b></div>
+          <div>Total Pieces<b>${totalPieces}</b></div>
+          <div>Box Price<b>${money(pricePerBox)}</b></div>
+          <div class="wide">Total Amount<b>${money(totalPrice)}</b></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:800;color:var(--wine)">Adjust Boxes</span>${quantityMarkup(p, selectedBoxes, "cQty_" + String(p.id).replace(/[^a-zA-Z0-9_-]/g,""))}
+          <button class="rm">Remove</button>
+        </div>
+      </div>
+    </div>`).join("") +
+    `<div class="tot"><span>Estimated total <small>(${pieceLabel(L.reduce((s,l)=>s+l.totalPieces,0))})</small></span><span id="cTot">${money(L.reduce((s,l)=>s+l.totalAmount,0))}</span></div>
+    <div class="eyebrow" style="margin:20px 0 12px">Your details</div>
+    <div class="row2">
+      <div class="fld"><label>Your name *</label><input id="c_name" value="${esc(cust.name||"")}" autocomplete="name"></div>
+      <div class="fld"><label>Shop / business name *</label><input id="c_biz" value="${esc(cust.biz||"")}" autocomplete="organization"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Mobile *</label><input id="c_mob" inputmode="tel" value="${esc(cust.mob||"")}" autocomplete="tel"></div>
+      <div class="fld"><label>City *</label><input id="c_city" value="${esc(cust.city||"")}"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>State</label><input id="c_state" value="${esc(cust.state||"")}"></div>
+      <div class="fld"><label>GST number (optional)</label><input id="c_gst" value="${esc(cust.gst||"")}"></div>
+    </div>
+    <div class="fld"><label>Note (optional)</label><textarea id="c_note" placeholder="Any colour, finish or delivery preference…"></textarea></div>
+    <div class="fld"><label>Send order to</label><div class="seg" id="segContact">
+      ${CONTACTS.map((c,i) => `<button data-i="${i}"${i===chosenContact?' class="on"':""}>${esc(c.name.split(" ")[0])}</button>`).join("")}
+    </div></div>
+    <button class="wa" id="send">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
+      Send Order on WhatsApp</button>
+    <div class="note">Opens WhatsApp with the complete order — nothing is sent until you press send there.</div>`;
+  b.querySelectorAll(".ci").forEach(row => {
+    const id = row.dataset.id, p = products.find(x => x.id === id), inp = row.querySelector("input[type=number]"), qbox = row.querySelector("[data-quantity]");
+    row.querySelector("[data-d]").onclick = () => { cart[id] = makeCartItem(p,Math.max(minBoxesFor(p),(+inp.value||minBoxesFor(p))-1)); persistCart(); openCart(); badges(); };
+    row.querySelector("[data-i]").onclick = () => { const max = maxBoxesFor(p), next = (+inp.value||minBoxesFor(p))+1; if (max > 0 && next > max) return toast("Only " + boxLabel(max) + " available"); cart[id] = makeCartItem(p,next); persistCart(); openCart(); badges(); };
+    inp.onchange = () => { cart[id] = makeCartItem(p,clampBoxes(p,inp.value)); persistCart(); openCart(); badges(); };
+    row.querySelector(".rm").onclick = () => { delete cart[id]; persistCart(); openCart(); badges(); };
+  });
+  $$("#segContact button").forEach(btn => btn.onclick = () => {
+    chosenContact = +btn.dataset.i;
+    $$("#segContact button").forEach(x => x.classList.toggle("on", x === btn));
+  });
+  $("#send").onclick = sendOrder;
+  openSheet("cartSheet");
+}
 function openCart(){
   const L = lines(), b = $("#cartBody");
   if (!L.length){
@@ -1392,6 +1560,8 @@ function openCart(){
     const idx = CONTACTS.findIndex(c => c.num === (settings.whatsapp || "").replace(/[^0-9]/g,""));
     chosenContact = idx >= 0 ? idx : 1;
   }
+  return renderCartBoxMode(L, b, cust);
+  /* Legacy piece-based cart renderer retained below only as a migration reference.
   b.innerHTML = L.map(({p,qty}) =>
     `<div class="ci" data-id="${esc(p.id)}">
       <div class="t">${p.img ? `<img loading="lazy" src="${esc(p.img)}" alt="">` : ""}</div>
@@ -1440,7 +1610,7 @@ function openCart(){
     $$("#segContact button").forEach(x => x.classList.toggle("on", x === btn));
   });
   $("#send").onclick = sendOrder;
-  openSheet("cartSheet");
+  openSheet("cartSheet"); */
 }
 function sendOrder(){
   const v = id => ($(id).value || "").trim();
@@ -1449,6 +1619,30 @@ function sendOrder(){
   try { localStorage.setItem("as_customer", JSON.stringify(cust)); } catch(e){}
   const L = lines();
   const total = L.reduce((s,l) => s+l.line, 0);
+  const totalPieces = L.reduce((s,l) => s + l.totalPieces, 0);
+  let boxMessage = "Hello " + (settings.name || "Aabhushan Sales") + "," + NL + NL +
+    "I would like to place a wholesale order/enquiry." + NL + NL +
+    "Customer Name: " + cust.name + NL + "Business Name: " + cust.biz + NL +
+    "City: " + cust.city + (cust.state ? ", " + cust.state : "") + NL + "Mobile: " + cust.mob + NL +
+    (cust.gst ? "GST: " + cust.gst + NL : "") + NL;
+  L.forEach(l => {
+    boxMessage += "Product: " + (l.productCode || l.productName) + NL +
+      "Name: " + l.productName + NL +
+      "Quantity: " + boxLabel(l.selectedBoxes) + NL +
+      "Pieces per Box: " + l.piecesPerBox + NL +
+      "Total Pieces: " + l.totalPieces + NL +
+      "Rate: " + money(l.pricePerPiece) + " per piece" + NL +
+      "Box Price: " + money(l.pricePerBox) + NL +
+      "Total: " + money(l.totalPrice) + NL + NL;
+  });
+  boxMessage += "Order Summary: " + boxLabel(L.reduce((s,l) => s + l.selectedBoxes, 0)) + ", " + totalPieces + " Total Pieces" + NL +
+    "Total: " + money(total) + NL;
+  const boxNote = ($("#c_note").value || "").trim();
+  if (boxNote) boxMessage += NL + "Additional Note: " + boxNote + NL;
+  boxMessage += NL + "Please confirm availability and final order amount." + NL + NL + "Website: aabhushansales.com";
+  openWa(CONTACTS[chosenContact].num, boxMessage);
+  return;
+  /* Legacy piece-based message renderer retained below only as a migration reference.
   let m = "Hello " + (settings.name || "Aabhushan Sales") + "," + NL + NL +
     "I would like to place a wholesale order/enquiry." + NL + NL +
     "Customer Name: " + cust.name + NL + "Business Name: " + cust.biz + NL +
@@ -1466,7 +1660,7 @@ function sendOrder(){
   const note = ($("#c_note").value || "").trim();
   if (note) m += NL + "Additional Note: " + note + NL;
   m += NL + "Please confirm availability and final order amount." + NL + NL + "Website: aabhushansales.com";
-  openWa(CONTACTS[chosenContact].num, m);
+  openWa(CONTACTS[chosenContact].num, m); */
 }
 function openWa(num, msg){
   const url = "https://wa.me/" + String(num).replace(/[^0-9]/g,"") + "?text=" + encodeURIComponent(msg);
@@ -1493,8 +1687,8 @@ async function logout(){
   closeAll(); render(); badges(); toast("Logged out");
 }
 async function setStock(p, v){
-  const n = Math.max(0, Math.floor(+v || 0)); p.stock = n;
-  const { error } = await sb.from("products").update({ stock:n }).eq("id", p.id);
+  const n = Math.max(0, Math.floor(+v || 0)); p.stock = n; p.stockStatus = n === 0 ? "out_of_stock" : (p.stockStatus === "low_stock" ? "low_stock" : "in_stock");
+  const { error } = await sb.from("products").update({ stock:n, stock_status:p.stockStatus }).eq("id", p.id);
   if (error) toast(error.message);
 }
 function fillCatSelect(selCat, selSub){
@@ -1519,8 +1713,11 @@ function openForm(id, asDup){
   $("#f_name").value = p ? (asDup ? p.name + " (copy)" : p.name) : "";
   $("#f_code").value = p && !asDup ? p.code : "";
   fillCatSelect(p ? p.cat : "", p ? p.subcat : "");
-  $("#f_price").value = p ? p.price : ""; $("#f_unit").value = p ? p.unit : "per piece";
-  $("#f_moq").value = p ? p.moq : ""; $("#f_stock").value = p ? p.stock : "";
+  $("#f_price").value = p ? p.pricePerPiece : "";
+  $("#f_pieces_box").value = p ? (p.packingMissing ? "" : p.piecesPerBox) : "";
+  $("#f_min_boxes").value = p ? minBoxesFor(p) : 1;
+  $("#f_stock").value = p ? p.stock : "";
+  $("#f_stock_status").value = p ? p.stockStatus : "in_stock";
   $("#f_box").value = p ? (p.box || "") : ""; $("#f_best").checked = p ? p.best : false;
   formImages = (p && p.imgs) ? p.imgs.slice() : [];
   renderPhotos();
@@ -1558,9 +1755,11 @@ function compressImage(file){
   });
 }
 async function saveProduct(){
-  const name = $("#f_name").value.trim(), price = $("#f_price").value;
+  const name = $("#f_name").value.trim(), pricePerPiece = +$("#f_price").value, piecesPerBox = normalizePiecesPerBox($("#f_pieces_box").value), minimumOrderBoxes = normalizeMinimumOrderBoxes($("#f_min_boxes").value), stock = Math.max(0, Math.floor(+$("#f_stock").value || 0)), stockStatusValue = normalizeStockStatus($("#f_stock_status").value, stock);
   if (!name) return toast("Enter a name");
-  if (price === "" || isNaN(+price)) return toast("Enter a valid rate");
+  if (!(pricePerPiece > 0)) return toast("Price Per Piece must be greater than 0");
+  if (!(piecesPerBox > 0)) return toast("Pieces Per Box must be greater than 0");
+  if (!(minimumOrderBoxes > 0)) return toast("Minimum Order must be at least 1 Box");
   const code = $("#f_code").value.trim();
   if (!editingId && code && products.some(p => (p.code||"").toLowerCase() === code.toLowerCase()))
     if (!confirm("A product with code " + code + " already exists. Add anyway?")) return;
@@ -1578,14 +1777,20 @@ async function saveProduct(){
   const row = {
     name, code, category: $("#f_cat").value,
     subcategory: $("#subWrap").classList.contains("hide") ? "" : $("#f_subcat").value,
-    box_type: $("#f_box").value, price: Math.max(0, +price),
-    moq: Math.max(1, +$("#f_moq").value || 1), stock: Math.max(0, Math.floor(+$("#f_stock").value || 0)),
+    box_type: $("#f_box").value, price: pricePerPiece, price_per_piece: pricePerPiece,
+    moq: minimumOrderBoxes, pieces_per_box: piecesPerBox, minimum_order_boxes: minimumOrderBoxes, stock, stock_status: stockStatusValue,
     image_url: images[0] || "", images: JSON.stringify(images)
   };
-  if (hasNewCols){ row.price_unit = $("#f_unit").value; row.best_seller = $("#f_best").checked; }
+  if (hasNewCols){ row.price_unit = "per piece"; row.best_seller = $("#f_best").checked; }
+  if (!hasPackingCol) delete row.pieces_per_box;
   let res = editingId ? await sb.from("products").update(row).eq("id", editingId) : await sb.from("products").insert(row);
-  if (res.error && /price_unit|best_seller|column/i.test(res.error.message)){
+  if (res.error && /price_unit|best_seller|price_per_piece|pieces_per_box|minimum_order_boxes|stock_status|column/i.test(res.error.message)){
+    const msg = res.error.message;
     hasNewCols = false; delete row.price_unit; delete row.best_seller;
+    const packingError = /pieces_per_box/i.test(msg); if (packingError){ hasPackingCol = false; delete row.pieces_per_box; }
+    if (/price_per_piece/i.test(msg)) delete row.price_per_piece;
+    if (/minimum_order_boxes/i.test(msg)) delete row.minimum_order_boxes;
+    if (/stock_status/i.test(msg)) delete row.stock_status;
     res = editingId ? await sb.from("products").update(row).eq("id", editingId) : await sb.from("products").insert(row);
     if (!res.error) toast("Saved — run the small SQL upgrade to enable rate units & best sellers");
   }
