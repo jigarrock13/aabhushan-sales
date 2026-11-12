@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aabhushan Sales · Design catalogue</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f8f5f0;color:#34242b;font:16px system-ui,sans-serif}header{background:#49182a;color:#fff4de;padding:24px max(20px,calc((100% - 760px)/2));border-bottom:3px solid #ba9864}header strong{font:28px Georgia,serif}header small{display:block;letter-spacing:2.6px;font-size:10px;margin-top:5px}main{max-width:800px;margin:auto;padding:26px 20px 55px}nav{display:flex;gap:8px}button{cursor:pointer;background:#541c30;color:white;border:none;border-radius:9px;padding:12px 19px;font:600 15px system-ui}nav button[aria-selected=false]{background:#eae1da;color:#4c3640}h1{font:34px Georgia;margin:25px 0 17px}form,article{background:#fffdf9;border:1px solid #e1d5c9;border-radius:14px;padding:19px}label{display:block;font-size:14px;font-weight:600;margin-bottom:16px}input,select{display:block;width:100%;padding:12px;margin-top:6px;border:1px solid #c9bbb4;border-radius:7px;font:16px system-ui;background:white;color:#34242b}.pair,.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.photo{display:block;background:#f7f0e7;border:1px dashed #af9278;padding:20px;border-radius:9px}.photo img{max-height:175px;max-width:100%;margin-top:10px}.grid article{padding:10px;min-width:0}.grid img{width:100%;aspect-ratio:1;object-fit:contain;background:#f7f3ef;border-radius:8px}.grid h2{font:22px Georgia;margin:10px 0}.grid p{margin:7px 0}.grid button{margin-top:8px}#status{color:#642139}button:disabled{opacity:.65}[hidden]{display:none!important}@media(max-width:460px){main{padding:18px 14px}.pair{gap:10px}.grid{gap:9px}.grid button{padding:9px}.grid article{font-size:14px}}
+.collection-heading{font:28px Georgia;color:#541c30;margin:26px 0 14px;border-bottom:1px solid #dac9bc;padding-bottom:8px}.more{margin:14px 0}.grid h3{font:22px Georgia;margin:10px 0}#search{margin-bottom:14px}</style><header><strong>Aabhushan Sales</strong><small>PREMIUM MICRO JEWELLERY</small></header><main><a href="/" style="color:#541c30">← Aabhushan Sales home</a><section id="browse"><h1>Design catalogue</h1><div class="pair"><label>Collection<select id="collection"><option value="">All collections</option><option>Ladies Rings</option><option>Gents Rings</option><option>Earrings</option><option>Pendant Sets</option><option>Necklaces</option><option>Bangles</option><option>Chains</option><option>Bracelets</option><option>Other</option></select></label><label>Sort within collection<select id="sort"><option value="new">Newest first</option><option value="asc">Price: low to high</option><option value="desc">Price: high to low</option></select></label></div><input id="search" placeholder="Search design code or collection" aria-label="Search catalogue"><label>Maximum rate per piece (₹)<input id="max" type="number" min="0" placeholder="Any rate"></label><div id="sections"></div></section><p role="status" id="status"></p></main><script>
+const el=id=>document.getElementById(id),money=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});let items=[],photoURL,limits=new Map();
+async function load(){try{let r=await fetch('https://aabhushan-sales-catalogue.jigar-rock13.chatgpt.site/api/items');if(!r.ok)throw Error();items=await r.json();render()}catch{el('status').textContent='Could not load the catalogue. Refresh to retry.'}}
+function draw(img,w,h){let c=document.createElement('canvas');c.width=w;c.height=h;return [c,c.getContext('2d')]}
+const blob=c=>new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(Error('Photo conversion failed.')),'image/jpeg',.92));
+function designCard(i){
+let a=document.createElement('article');let img=new Image();img.loading='lazy';img.crossOrigin='anonymous';img.src='https://aabhushan-sales-catalogue.jigar-rock13.chatgpt.site/photo/'+encodeURIComponent(i.code);img.alt=i.code;a.append(img);for(let [tag,t] of [['h3',i.code],['p',money(i.rate)+' / piece'],['p',i.pcs+' pcs · '+money(i.pcs*i.rate)+' / box']]){let x=document.createElement(tag);x.textContent=t;a.append(x)}let btn=document.createElement('button');btn.textContent='Share card';btn.onclick=()=>share(i,img);a.append(btn);return a
+}
+function render(){
+ const container=el('sections');
+ container.replaceChildren();
+ const query=el('search').value.trim().toLowerCase();
+ const max=el('max').value;
+ const selected=el('collection').value;
+ const order=el('sort').value;
+ const collections=new Map(["Ladies Rings","Gents Rings","Earrings","Pendant Sets","Necklaces","Bangles","Chains","Bracelets","Other"].map(name=>[name,[]]));
+ for(const item of items){
+   if(selected && item.category!==selected)continue;
+   if(max!=='' && item.rate>Number(max))continue;
+   if(!(item.code+' '+item.category).toLowerCase().includes(query))continue;
+   collections.get(item.category)?.push(item);
+ }
+ for(const [name,designs] of collections){
+   if(!designs.length)continue;
+   designs.sort((a,b)=>{
+     const price=order==='asc'?a.rate-b.rate:order==='desc'?b.rate-a.rate:0;
+     return price || b.created-a.created || a.code.localeCompare(b.code);
+   });
+   const section=document.createElement('section');
+   const heading=document.createElement('h2');
+   heading.className='collection-heading';
+   heading.textContent=name+' ('+designs.length+')';
+   const grid=document.createElement('div');
+   grid.className='grid';
+   const limit=limits.get(name)||12;
+   for(const item of designs.slice(0,limit))grid.append(designCard(item));
+   section.append(heading,grid);
+   if(designs.length>limit){
+     const more=document.createElement('button');
+     more.className='more';more.textContent='Show more '+name.toLowerCase();
+     more.onclick=()=>{
+       const next=designs.slice(limits.get(name)||12,(limits.get(name)||12)+32);
+       for(const item of next)grid.append(designCard(item));
+       const count=grid.childElementCount;
+       limits.set(name,count);
+       if(count>=designs.length)more.remove();
+     };
+     section.append(more);
+   }
+   container.append(section);
+ }
+ el('status').textContent=container.childElementCount?'':items.length?'No designs match your filters.':'Your saved designs will appear here.';
+}
+async function share(i,img){try{await img.decode();let [c,g]=draw(img,1000,1250);g.fillStyle='#fffaf4';g.fillRect(0,0,1000,1250);g.fillStyle='#49182a';g.fillRect(0,0,1000,140);g.fillStyle='#fff4de';g.font='54px Georgia';g.fillText('Aabhushan Sales',42,75);g.font='22px sans-serif';g.fillText('PREMIUM MICRO JEWELLERY',44,111);let s=Math.min(916/img.naturalWidth,780/img.naturalHeight),w=img.naturalWidth*s,h=img.naturalHeight*s;g.drawImage(img,(1000-w)/2,166+(780-h)/2,w,h);g.fillStyle='#49182a';g.font='50px Georgia';g.fillText(i.code,42,1020,916);g.font='30px sans-serif';g.fillText(i.category,44,1072);g.fillText(money(i.rate)+' per piece',44,1135);g.fillText(i.pcs+' pieces per box   ·   '+money(i.rate*i.pcs)+' per box',44,1190);let file=new File([await blob(c)],i.code+'.jpg',{type:'image/jpeg'});if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file]})}else{let u=URL.createObjectURL(file),a=document.createElement('a');a.href=u;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),30000)}}catch(e){if(e.name!=='AbortError')el('status').textContent='Could not share the card. Please try again.'}}
+function resetFiltersView(){limits.clear();render()}
+el('search').oninput=el('max').oninput=resetFiltersView;
+el('collection').onchange=el('sort').onchange=resetFiltersView;
+load();
+</script></html>
